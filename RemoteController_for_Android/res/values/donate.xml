@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="donate_100">1USD</string>
+    <string name="donate_500">5USD</string>
+    <string name="donate_desc">Thank you for your use.\nIf you like this app, I\'d appreciate it if you donate to me.</string>
+    <string name="donate_im">Please note the following points.</string>
+    <string name="donate_im_1">There is no provision of additional functionality by that you donate.</string>
+    <string name="donate_im_2">If you want to put your name on app, send me a mail with your order-ID and your nickname.</string>
+    <string name="donate_im_3">Google gets 30% of your donation.</string>
+    <string name="donate_im_4">If you want to donate the other ways, please send me a mail.</string>
+    <string name="donate_im_5">If you don\'t install this app from Google Play, you can\'t donate on this app via Google Play.</string>
+    <string name="donate_thanks">Thank you for donation!</string>
+
+</resources>

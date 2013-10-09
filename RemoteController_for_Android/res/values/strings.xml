@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="str_players">Players</string>
+    <string name="str_console">Console</string>
+    <string name="str_editfile">Edit File</string>
+    <string name="str_chat">Chat</string>
+    <string name="str_plugin">Plugins</string>
+    <string name="str_config">Config</string>
+    <string name="str_server_infomation">Server Infomation</string>
+    <string name="str_address">Address:</string>
+    <string name="str_peoples">Players：</string>
+    <string name="str_add_infomation">Additional Infomation</string>
+    <string name="str_desc_launcher_icon">Icon</string>
+    <string name="str_port">Port:</string>
+    <string name="str_username">Username:</string>
+    <string name="str_password">Password：</string>
+    <string name="str_or">-OR-</string>
+    <string name="str_login">Login</string>
+    <string name="str_save_login">Save this login</string>
+    <string name="str_new_connection">Create new connection</string>
+    <string name="str_exist_connection">Use an existing connection</string>
+    <string name="str_select_exist_connection">Saved connection</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_server_name">Server Name:</string>
+    <string name="str_disconnect_by_network_reason">Has been disconnected.\n%1$s</string>
+    <string name="str_disconnect_by_own">Disconnected.</string>
+    <string name="str_send">Send</string>
+    <string name="str_error_on_server_data">Failed to get the data.</string>
+    <string name="str_date">Date</string>
+    <string name="str_log_level">Log level</string>
+    <string name="str_general">General</string>
+    <string name="str_donate">Donate</string>
+    <string name="str_console_show_date">Show date</string>
+    <string name="str_console_show_log_level">Show log level</string>
+    <string name="str_ellipsize">Wrap lines</string>
+    <string name="str_ellipsize_desc">Choose whether to wrap the case that can not be displayed on a single line.</string>
+    <string name="str_starting_service">Starting service&#8230;</string>
+    <string name="str_error_on_starting_service">Failed to start service.</string>
+    <string name="str_error_on_handle">An error has occurred in handling.</string>
+    <string name="str_move_bottom">Scroll to bottom</string>
+    <string name="str_move_bottom_short">Move to bottom</string>
+    <string name="str_console_move_bottom_desc"></string>
+    <string name="str_chat_move_bottom_desc">Choose whether to scroll to the bottom when the console has been updated.</string>
+    <string name="str_font_size">Fontsize</string>
+    <string name="str_unit_dip">dip</string>
+    <string name="str_icon">Icon</string>
+    <string name="str_no_user_logged_in">No player has logged in.</string>
+    <string name="str_loading">Losding&#8230;</string>
+    <string name="str_handle">Handle</string>
+    <string name="str_kick">Kick</string>
+    <string name="str_ban">Ban</string>
+    <string name="str_give">Give</string>
+    <string name="str_gamemode_short">Mode</string>
+    <string name="str_gamemode">Gamemode</string>
+    <string name="str_confirm_kick">Do you kick the player \"%1$s\"?</string>
+    <string name="str_confirm_ban">Do you ban the player \"%1$s\"?</string>
+
+    <string-array name="strarr_gamemode">
+        <item>Survival</item>
+        <item>Creative</item>
+        <item>Adventure</item>
+    </string-array>
+
+    <string name="str_yes">Yes</string>
+    <string name="str_no">No</string>
+    <string name="str_reason">Reason</string>
+    <string name="str_item">Item</string>
+    <string name="str_num">Num</string>
+    <string name="str_select_give_item">Please specify the quantity and the ID of the item.</string>
+    <string name="str_select">Select</string>
+    <string name="str_select_item">Select Item</string>
+    <string name="str_ok">OK</string>
+    <string name="str_input_item_id_or_name">Enter item name or ID</string>
+    <string name="str_ID">ID:</string>
+    <string name="str_no_data_found">There is no corresponding item.</string>
+    <string name="str_not_auth">You are not logged in.</string>
+    <string name="str_no_player">Player not found.</string>
+    <string name="str_no_item">Item not found.</string>
+    <string name="str_unknown_message">Not registered response.</string>
+    <string name="str_success">Success!</string>
+    <string name="str_exception">Exception occured.\n%1$s</string>
+    <string name="str_auth_error">Failed to authenticate.</string>
+    <string name="str_not_recommended_server_continue">You\'re trying to connect to the server that is not the recommended version.\nDo you want to continue?</string>
+    <string name="str_continue">Continue</string>
+    <string name="str_disconnect">Disconnect</string>
+    <string name="str_player_image_url">Player image URL</string>
+    <string name="str_player_image_url_desc" formatted="false">The URL when you get the texture image of the player.\n\"%Player%\" is replaced by the player name.</string>
+    <string name="str_directory">Directory:</string>
+    <string name="str_save_and_close">Save and close</string>
+    <string name="str_close_without_save">Close without saving</string>
+    <string name="str_change_save_encoding">Change charset</string>
+    <string name="str_charset">Charset</string>
+    <string name="str_confirm">Confirm</string>
+    <string name="str_file_close_confirm_message">Do you want to save this file?</string>
+
+    <string-array name="strarr_file_handle_directory">
+        <item>Rename</item>
+        <item>Delete</item>
+    </string-array>
+    <string-array name="strarr_file_handle_file">
+        <item>Open</item>
+        <item>Open with select charset</item>
+        <item>Rename</item>
+        <item>Delete</item>
+    </string-array>
+
+    <string name="str_input_new_name">Please enter a new name.</string>
+    <string name="str_rename">Rename</string>
+    <string name="str_delete">Delete</string>
+    <string name="str_confirm_delete_file">Do you want to delete this file?</string>
+    <string name="str_confirm_delete_directory">Do you want to delete this directory?</string>
+    <string name="str_failed">Failed</string>
+    <string name="str_mkdir">Make a directory</string>
+    <string name="str_mkfile">Make a file</string>
+    <string name="str_input_directory_name">Enter the directory name.</string>
+    <string name="str_input_file_name">Enter the file name.</string>
+    <string name="str_create">New</string>
+    <string name="str_no_add_info">There is no additional information.</string>
+    <string name="str_account_manager">Account manager</string>
+
+    <string-array name="strarr_account_manager_handle">
+        <item>Up</item>
+        <item>Down</item>
+        <item>Delete</item>
+    </string-array>
+
+    <string name="str_confirm_delete_account">Delete this account?</string>
+    <string name="str_other">Other</string>
+    <string name="str_about_this_app">About this app</string>
+    <string name="str_dot">・</string>
+    <string name="str_mail">Mail:</string>
+    <string name="str_web">Web:</string>
+
+</resources>

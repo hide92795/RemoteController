@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="info_app_name">RemoteController</string>
+    <string name="info_version">v1.6.2_1</string>
+    <string name="info_recommend_server_version">1.6.2_1</string>
+
+</resources>

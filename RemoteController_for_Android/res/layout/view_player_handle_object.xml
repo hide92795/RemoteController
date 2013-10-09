@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp" >
+
+    <TextView
+        android:id="@+id/text_player_handle_kick_ban_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/str_handle"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_player_handle_kick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/str_kick"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_player_handle_ban"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2.5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/str_ban"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_player_handle_give"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/str_give"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_player_handle_gamemode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/str_gamemode_short"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>

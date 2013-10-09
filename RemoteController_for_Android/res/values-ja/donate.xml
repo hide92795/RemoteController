@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="donate_100">100円</string>
+    <string name="donate_500">500円</string>
+    <string name="donate_desc">ご利用ありがとうございます。\nもし、このアプリを気に入っていただけたならば、寄付をしていただけると幸いです。</string>
+    <string name="donate_im">以下の点に注意して下さい。</string>
+    <string name="donate_im_1">寄付を行ったことによる追加機能の提供はありません。</string>
+    <string name="donate_im_2">名前(ペンネーム)の掲示を希望する方は、注文番号と掲載する名前を添えて作者までメールしてください。</string>
+    <string name="donate_im_3">寄付金額のうち30%は手数料としてGoogleが取得します。</string>
+    <string name="donate_im_4">その他の方法での寄付を希望の場合は、作者までメール連絡してください。</string>
+    <string name="donate_im_5">Google Play以外からダウンロードしたアプリではGoogle Play経由での寄付は行えません。</string>
+    <string name="donate_thanks">寄付ありがとうございます。</string>
+
+</resources>

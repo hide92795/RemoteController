@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_players">プレイヤー</string>
+    <string name="str_console">コンソール</string>
+    <string name="str_editfile">ファイル編集</string>
+    <string name="str_chat">チャット</string>
+    <string name="str_plugin">プラグイン</string>
+    <string name="str_config">設定</string>
+    <string name="str_server_infomation">サーバー情報</string>
+    <string name="str_address">アドレス：</string>
+    <string name="str_peoples">人数：</string>
+    <string name="str_add_infomation">追加情報</string>
+    <string name="str_desc_launcher_icon">アイコン</string>
+    <string name="str_port">ポート：</string>
+    <string name="str_username">ユーザー名：</string>
+    <string name="str_password">パスワード：</string>
+    <string name="str_or">ーもしくはー</string>
+    <string name="str_login">ログイン</string>
+    <string name="str_save_login">このログインを保存</string>
+    <string name="str_new_connection">新しく接続を作成</string>
+    <string name="str_exist_connection">既存の接続を使用</string>
+    <string name="str_select_exist_connection">保存済みの接続</string>
+    <string name="str_cancel">キャンセル</string>
+    <string name="str_server_name">サーバー名：</string>
+    <string name="str_disconnect_by_network_reason">切断されました。\n%1$s</string>
+    <string name="str_disconnect_by_own">切断しました。</string>
+    <string name="str_send">送信</string>
+    <string name="str_error_on_server_data">データの取得に失敗しました。</string>
+    <string name="str_date">日時</string>
+    <string name="str_log_level">ログレベル</string>
+    <string name="str_general">一般</string>
+    <string name="str_donate">寄付</string>
+    <string name="str_console_show_date">日時を表示</string>
+    <string name="str_console_show_log_level">ログレベルを表示</string>
+    <string name="str_ellipsize">折り返す</string>
+    <string name="str_ellipsize_desc">1行で表示できない場合に折り返しを行うかを選択します。</string>
+    <string name="str_starting_service">サービスを起動しています。</string>
+    <string name="str_error_on_starting_service">サービスの起動中にエラーが発生しました。</string>
+    <string name="str_error_on_handle">処理中にエラーが発生しました。</string>
+    <string name="str_move_bottom">一番下へスクロール</string>
+    <string name="str_move_bottom_short">一番下へ</string>
+    <string name="str_console_move_bottom_desc">コンソールが更新された時に一番下へスクロールするかを選択します。</string>
+    <string name="str_chat_move_bottom_desc">チャットが更新された時に一番下へスクロールするかを選択します。</string>
+    <string name="str_font_size">フォントサイズ</string>
+    <string name="str_unit_dip">dip</string>
+    <string name="str_icon">アイコン</string>
+    <string name="str_no_user_logged_in">ログインしているプレイヤーはいません。</string>
+    <string name="str_loading">ロード中です&#8230;</string>
+    <string name="str_handle">操作</string>
+    <string name="str_kick">Kick</string>
+    <string name="str_ban">Ban</string>
+    <string name="str_give">Give</string>
+    <string name="str_gamemode_short">Mode</string>
+    <string name="str_gamemode">Gamemode</string>
+    <string name="str_confirm_kick">プレイヤー「%1$s」をキックしますか？</string>
+    <string name="str_confirm_ban">プレイヤー「%1$s」をBanしますか？</string>
+
+    <string-array name="strarr_gamemode">
+        <item>サバイバル</item>
+        <item>クリエイティブ</item>
+        <item>アドベンチャー</item>
+    </string-array>
+
+    <string name="str_yes">はい</string>
+    <string name="str_no">いいえ</string>
+    <string name="str_reason">理由</string>
+    <string name="str_item">アイテム</string>
+    <string name="str_num">個数</string>
+    <string name="str_select_give_item">アイテムのIDと個数を指定してください。</string>
+    <string name="str_select">選択</string>
+    <string name="str_select_item">アイテム選択</string>
+    <string name="str_ok">OK</string>
+    <string name="str_input_item_id_or_name">アイテム名,IDを入力</string>
+    <string name="str_ID">ID:</string>
+    <string name="str_no_data_found">該当するアイテムはありません。</string>
+    <string name="str_not_auth">ログインしていません。</string>
+    <string name="str_no_player">プレイヤーが見つかりません。</string>
+    <string name="str_no_item">アイテムが見つかりません。</string>
+    <string name="str_unknown_message">登録されていないレスポンスです。</string>
+    <string name="str_success">成功しました。</string>
+    <string name="str_exception">例外が発生しました。\n%1$s</string>
+    <string name="str_auth_error">認証に失敗しました。</string>
+    <string name="str_not_recommended_server_continue">推奨バージョンではないサーバーに接続しようとしています。\n続行しますか？</string>
+    <string name="str_continue">続行</string>
+    <string name="str_disconnect">切断</string>
+    <string name="str_player_image_url">プレイヤー画像URL</string>
+    <string name="str_player_image_url_desc" formatted="false">プレイヤーのテクスチャ画像を取得する際のURLです。「%player%」がプレイヤー名に置き換わります。</string>
+    <string name="str_directory">フォルダ：</string>
+    <string name="str_save_and_close">保存して閉じる</string>
+    <string name="str_close_without_save">保存せずに閉じる</string>
+    <string name="str_change_save_encoding">文字コード変更</string>
+    <string name="str_charset">文字コード</string>
+    <string name="str_confirm">確認</string>
+    <string name="str_file_close_confirm_message">編集中のファイルを保存しますか？</string>
+    <string-array name="strarr_file_handle_directory">
+        <item >名前の変更</item>
+        <item >削除</item>
+    </string-array>
+    <string-array name="strarr_file_handle_file">
+        <item >開く</item>
+        <item >文字コードを指定して開く</item>
+        <item >名前を変更</item>
+        <item >削除</item>
+    </string-array>
+    <string name="str_input_new_name">新しい名前を入力してください。</string>
+    <string name="str_rename">名前の変更</string>
+    <string name="str_delete">削除</string>
+    <string name="str_confirm_delete_file">このファイルを削除しますか？</string>
+    <string name="str_confirm_delete_directory">このフォルダを削除しますか？</string>
+    <string name="str_failed">失敗しました。</string>
+    <string name="str_mkdir">フォルダを作成</string>
+    <string name="str_mkfile">ファイルを作成</string>
+    <string name="str_input_directory_name">フォルダ名を入力して下さい。</string>
+    <string name="str_input_file_name">ファイル名を入力して下さい。</string>
+    <string name="str_create">新規作成</string>
+    <string name="str_no_add_info">追加情報はありません。</string>
+    <string name="str_account_manager">アカウントマネージャー</string>
+    <string-array name="strarr_account_manager_handle">
+        <item >上へ</item>
+        <item >下へ</item>
+        <item >削除</item>
+    </string-array>
+    <string name="str_confirm_delete_account">このアカウントを削除しますか？</string>
+    <string name="str_other">その他</string>
+    <string name="str_about_this_app">このアプリについて</string>
+    <string name="str_dot">・</string>
+    <string name="str_mail">Mail:</string>
+    <string name="str_web">Web:</string>
+
+</resources>

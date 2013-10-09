@@ -1,0 +1,7 @@
+Language: jp
+Port: 25570
+MaxLog: 100
+MaxChat: 100
+EditableExtension:
+ - yml
+ - txt

@@ -1,0 +1,234 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TableLayout1"
+    style="@style/AppThemeWithBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right|center_vertical"
+    android:padding="5dp"
+    android:stretchColumns="@string/str_server_name"
+    tools:context=".MainActivity" >
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_main_players"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_users"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_players" />
+
+        <Button
+            android:id="@+id/btn_main_console"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_terminal"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_console" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_main_editfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_folder"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_editfile" />
+
+        <Button
+            android:id="@+id/btn_main_chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_chats"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_chat" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/btn_main_plugin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_plugin"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_plugin" />
+
+        <Button
+            android:id="@+id/btn_main_config"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_settings"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_config" />
+    </TableRow>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/text_main_server_infomation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/str_server_infomation"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/text_main_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_main_logo_str"
+            android:layout_alignBottom="@+id/text_main_logo_str"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/text_main_logo_str"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/text_main_peoples_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/text_main_logo_str"
+            android:text="@string/str_peoples"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/text_main_add_infomation_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/text_main_peoples_str"
+            android:layout_marginTop="10dp"
+            android:text="@string/str_add_infomation"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ScrollView
+            android:id="@+id/ScrollView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/text_main_add_infomation_str" >
+
+            <TextView
+                android:id="@+id/text_main_add_infomation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/text_main_server_name_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/text_main_server_infomation"
+            android:text="@string/str_server_name"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/text_main_logo_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/text_main_server_name_str"
+            android:text="@string/str_address"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/text_main_peoples"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/text_main_add_infomation_str"
+            android:layout_alignBaseline="@id/text_main_peoples_str"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/text_main_peoples_str"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/text_main_server_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/text_main_server_name_str"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/text_main_server_infomation"
+            android:layout_toRightOf="@+id/text_main_server_name_str"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+    </RelativeLayout>
+
+</TableLayout>

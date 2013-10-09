@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="UnitablleEditTextPreference">
+        <attr name="inputType" format="string" />
+        <attr name="maxLength" format="string" />
+        <attr name="unit" format="string|reference" />
+        <attr name="defaultValue" format="string" />
+    </declare-styleable>
+</resources>

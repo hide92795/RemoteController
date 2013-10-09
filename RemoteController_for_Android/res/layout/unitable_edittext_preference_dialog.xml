@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="true"
+    android:orientation="horizontal" >
+
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dip"
+        android:layout_toLeftOf="@+id/unit"
+        android:inputType="number"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text"
+        android:layout_alignBottom="@+id/text"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dip" />
+
+</RelativeLayout>

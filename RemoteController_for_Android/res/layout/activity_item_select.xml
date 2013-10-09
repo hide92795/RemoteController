@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppThemeWithBackground"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="5dp" >
+
+    <EditText
+        android:id="@+id/edittext_item_select_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="@string/str_input_item_id_or_name"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <ListView
+        android:id="@+id/list_item_select_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edittext_item_select_item"
+        android:divider="@color/background"
+        android:dividerHeight="5dp" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/text_item_select_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/list_item_select_list"
+        android:gravity="center_horizontal"
+        android:text="@string/str_no_data_found"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+
+</RelativeLayout>

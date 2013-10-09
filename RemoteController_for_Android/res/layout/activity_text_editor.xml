@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/edittext_text_editor_editor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:fadingEdge="none"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="true"
+        android:scrollbars="vertical|horizontal" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

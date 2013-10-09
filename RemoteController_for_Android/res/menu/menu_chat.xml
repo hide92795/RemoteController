@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_chat_ellipsize"
+        android:checkable="true"
+        android:title="@string/str_ellipsize">
+    </item>
+    <item
+        android:id="@+id/menu_chat_move_bottom"
+        android:checkable="true"
+        android:title="@string/str_move_bottom_short">
+    </item>
+
+</menu>

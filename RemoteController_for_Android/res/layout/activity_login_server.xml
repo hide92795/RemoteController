@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppThemeWithBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/text_main_logo_str"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:gravity="left|center"
+        android:inputType="none"
+        android:text="@string/info_app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" >
+
+        <requestFocus />
+    </TextView>
+
+    <ViewSwitcher
+        android:id="@+id/switcher_login_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/text_main_logo_str" >
+
+        <ScrollView
+            android:id="@+id/view_login_new_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:clickable="true" >
+
+                <TableLayout
+                    android:id="@+id/tableLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true" >
+
+                    <TableRow
+                        android:id="@+id/tableRow1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/text_main_peoples_str"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center"
+                            android:text="@string/str_address"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/edittext_login_address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textEmailAddress" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/text_login_port"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_port"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/edittext_login_port"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="number" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/text_main_peoples"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_username"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/edittext_login_username"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textEmailAddress" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/text_main_add_infomation_str"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_password"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/edittext_login_password"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="textVisiblePassword" />
+                    </TableRow>
+                </TableLayout>
+
+                <CheckBox
+                    android:id="@+id/checkbox_login_save_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tableLayout1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/str_save_login" />
+
+                <Button
+                    android:id="@+id/btn_login_login_as_new_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/checkbox_login_save_connection"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_bg"
+                    android:enabled="false"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/str_login" />
+
+                <TextView
+                    android:id="@+id/text_donate_infomation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_login_login_as_new_connection"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/str_or"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/btn_login_move_exist_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_donate_infomation"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_bg"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/str_exist_connection" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/view_login_exist_connection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:clickable="true" >
+
+            <TextView
+                android:id="@+id/text_item_select_item_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/str_select_exist_connection"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spinner_login_exist_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/text_item_select_item_id" />
+
+            <Button
+                android:id="@+id/btn_login_login_as_exist_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinner_login_exist_connection"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_bg"
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:text="@string/str_login" />
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_login_login_as_exist_connection"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/str_or"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/btn_login_move_new_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextView01"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_bg"
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:text="@string/str_new_connection" />
+        </RelativeLayout>
+    </ViewSwitcher>
+
+</RelativeLayout>

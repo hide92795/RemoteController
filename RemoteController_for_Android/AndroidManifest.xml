@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="hide92795.android.remotecontroller"
+    android:versionCode="2"
+    android:versionName="@string/info_version" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="18" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+
+    <application
+        android:name="hide92795.android.remotecontroller.Session"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/info_app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/info_app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.OnlinePlayerActivity"
+            android:label="@string/str_players"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.LoginServerActivity"
+            android:label="@string/info_app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ConsoleActivity"
+            android:label="@string/str_console"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DonateActivity"
+            android:label="@string/str_donate"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.PreferenceActivity"
+            android:label="@string/str_config"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ItemSelectActivity"
+            android:label="@string/str_select_item"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.ChatActivity"
+            android:label="@string/str_chat"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.EditFileActivity"
+            android:label="@string/str_editfile"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.TextEditorActivity"
+            android:label="@string/str_editfile"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.AccountManagerActivity"
+            android:label="@string/str_account_manager"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/str_about_this_app"
+            android:screenOrientation="portrait" >
+        </activity>
+    </application>
+
+</manifest>

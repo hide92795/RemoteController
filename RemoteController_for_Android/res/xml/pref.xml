@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hide92795="http://schemas.android.com/apk/res/hide92795.android.remotecontroller" >
+
+    <PreferenceCategory android:title="@string/str_general" >
+        <PreferenceScreen
+            android:key="account_manager"
+            android:title="@string/str_account_manager" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="hide92795.android.remotecontroller.activity.AccountManagerActivity"
+                android:targetPackage="hide92795.android.remotecontroller" />
+        </PreferenceScreen>
+
+        <EditTextPreference
+            android:defaultValue="http://s3.amazonaws.com/MinecraftSkins/%player%.png"
+            android:key="player_face_image_url"
+            android:summary="@string/str_player_image_url_desc"
+            android:title="@string/str_player_image_url" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/str_console" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="console_date"
+            android:title="@string/str_console_show_date" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="console_log_level"
+            android:title="@string/str_console_show_log_level" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="console_ellipsize"
+            android:summary="@string/str_ellipsize_desc"
+            android:title="@string/str_ellipsize" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="console_move_bottom"
+            android:summary="@string/str_console_move_bottom_desc"
+            android:title="@string/str_move_bottom" />
+
+        <hide92795.android.remotecontroller.ui.UnitablleEditTextPreference
+            android:key="console_font_size"
+            android:title="@string/str_font_size"
+            hide92795:defaultValue="18"
+            hide92795:inputType="number"
+            hide92795:unit="@string/str_unit_dip" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/str_chat" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="chat_ellipsize"
+            android:summary="@string/str_ellipsize_desc"
+            android:title="@string/str_ellipsize" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="chat_move_bottom"
+            android:summary="@string/str_chat_move_bottom_desc"
+            android:title="@string/str_move_bottom" />
+
+        <hide92795.android.remotecontroller.ui.UnitablleEditTextPreference
+            android:key="chat_font_size"
+            android:title="@string/str_font_size"
+            hide92795:defaultValue="18"
+            hide92795:inputType="number"
+            hide92795:unit="@string/str_unit_dip" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/str_other" >
+        <PreferenceScreen
+            android:key="about_this_app"
+            android:title="@string/str_about_this_app" >
+        <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="hide92795.android.remotecontroller.activity.AboutActivity"
+                android:targetPackage="hide92795.android.remotecontroller" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>
