@@ -6,6 +6,7 @@ import hide92795.bukkit.plugin.remotecontroller.api.AdditionalInfo;
 import hide92795.bukkit.plugin.remotecontroller.api.AdditionalInfoCreator;
 import hide92795.bukkit.plugin.remotecontroller.api.RemoteControllerAPI;
 import hide92795.bukkit.plugin.remotecontroller.listener.BroadcastListener;
+import hide92795.bukkit.plugin.remotecontroller.listener.ChatListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,6 +42,7 @@ public class RemoteController extends JavaPlugin {
 	private RemoteControllerAPI api;
 	private Usage usage_user;
 	private Usage usage_reload;
+	private boolean chat_event_type_is_broadcast;
 
 	@Override
 	public void onEnable() {
@@ -80,9 +82,12 @@ public class RemoteController extends JavaPlugin {
 		try {
 			Class.forName("org.bukkit.event.server.ServerBroadcastEvent");
 			getServer().getPluginManager().registerEvents(new BroadcastListener(this), this);
-			logger.info("Start redirect chat log.");
+			chat_event_type_is_broadcast = true;
+			logger.info("Start redirect chat log with ServerBroadcastEvent.");
 		} catch (Exception e) {
-			logger.warning("Chat function was disabled.");
+			getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+			chat_event_type_is_broadcast = false;
+			logger.info("Start redirect chat log with AsyncPlayerChatEvent.");
 		}
 	}
 
@@ -267,14 +272,14 @@ public class RemoteController extends JavaPlugin {
 		server.removeConnection(address);
 	}
 
-	public void addConsoleLog(String log_s) {
+	private void addConsoleLog(String log_s) {
 		log.add(log_s);
 		if (log.size() > config.log_max) {
 			log.poll();
 		}
 	}
 
-	public void addChatLog(String chat_s) {
+	private void addChatLog(String chat_s) {
 		chat.add(chat_s);
 		if (chat.size() > config.chat_max) {
 			chat.poll();
@@ -321,5 +326,9 @@ public class RemoteController extends JavaPlugin {
 
 	public String getVersion() {
 		return getDescription().getVersion();
+	}
+
+	public boolean isChatTypeBroadcast() {
+		return chat_event_type_is_broadcast;
 	}
 }
