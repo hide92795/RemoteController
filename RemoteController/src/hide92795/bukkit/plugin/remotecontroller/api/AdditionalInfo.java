@@ -8,7 +8,7 @@ public class AdditionalInfo {
 
 	public AdditionalInfo(String name, String data) {
 		this.name = name;
-		this.data = Util.removeEscapeSequence(data);
+		this.data = Util.convertColorCode(data);
 	}
 
 	public String getName() {

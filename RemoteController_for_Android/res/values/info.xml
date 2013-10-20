@@ -2,17 +2,17 @@
 <resources>
 
     <string name="info_copyright">&#169; 2013 hide92795 All rights reserved.</string>
-    <string name="info_copyright_desc">This app is licensed under the following license.</string>
     <string name="info_ccl">Creative Commons License BY-NC-SA 3.0</string>
     <string name="info_ccl_url">http://creativecommons.org/licenses/by-nc-sa/3.0/</string>
-    <string name="info_use_libs">Also, I use following external library and resources.</string>
     <string name="info_Base64Coder">Base64Coder</string>
     <string name="info_Base64Coder_url">http://www.source-code.biz/base64coder/java/</string>
     <string name="info_Base64Coder_copyright">Copyright 2003&#8211;2010 Christian d\'Heureuse, Inventec Informatik AG, Zurich, Switzerland</string>
     <string name="info_Minecraft_Wiki">Minecraft Wiki</string>
     <string name="info_Minecraft_Wiki_url">http://minecraft.gamepedia.com/Minecraft_Wiki</string>
-    <string name="info_The_Android_Open_Source_Project">The Android Open Source Project</string>
+    <string name="info_ColorPickerPreference">android-ColorPickerPreference</string>
+    <string name="info_ColorPickerPreference_url">https://github.com/attenzione/android-ColorPickerPreference</string>
     <string name="info_The_Android_Open_Source_Project_url">http://source.android.com/</string>
+    <string name="info_The_Android_Open_Source_Project">The Android Open Source Project</string>
     <string name="info_mail">hide92795.android@gmail.com</string>
     <string name="info_web">http://www.hide92795.org/</string>
 

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="str_players">プレイヤー</string>
     <string name="str_console">コンソール</string>
     <string name="str_editfile">ファイル編集</string>
     <string name="str_chat">チャット</string>
     <string name="str_plugin">プラグイン</string>
     <string name="str_config">設定</string>
-    <string name="str_server_infomation">サーバー情報</string>
+    <string name="str_server_information">サーバー情報</string>
     <string name="str_address">アドレス：</string>
     <string name="str_peoples">人数：</string>
-    <string name="str_add_infomation">追加情報</string>
+    <string name="str_add_information">追加情報</string>
     <string name="str_desc_launcher_icon">アイコン</string>
     <string name="str_port">ポート：</string>
     <string name="str_username">ユーザー名：</string>
@@ -92,16 +93,18 @@
     <string name="str_charset">文字コード</string>
     <string name="str_confirm">確認</string>
     <string name="str_file_close_confirm_message">編集中のファイルを保存しますか？</string>
+
     <string-array name="strarr_file_handle_directory">
-        <item >名前の変更</item>
-        <item >削除</item>
+        <item>名前の変更</item>
+        <item>削除</item>
     </string-array>
     <string-array name="strarr_file_handle_file">
-        <item >開く</item>
-        <item >文字コードを指定して開く</item>
-        <item >名前を変更</item>
-        <item >削除</item>
+        <item>開く</item>
+        <item>文字コードを指定して開く</item>
+        <item>名前を変更</item>
+        <item>削除</item>
     </string-array>
+
     <string name="str_input_new_name">新しい名前を入力してください。</string>
     <string name="str_rename">名前の変更</string>
     <string name="str_delete">削除</string>
@@ -115,16 +118,30 @@
     <string name="str_create">新規作成</string>
     <string name="str_no_add_info">追加情報はありません。</string>
     <string name="str_account_manager">アカウントマネージャー</string>
+
     <string-array name="strarr_account_manager_handle">
-        <item >上へ</item>
-        <item >下へ</item>
-        <item >削除</item>
+        <item>上へ</item>
+        <item>下へ</item>
+        <item>削除</item>
     </string-array>
+
     <string name="str_confirm_delete_account">このアカウントを削除しますか？</string>
     <string name="str_other">その他</string>
     <string name="str_about_this_app">このアプリについて</string>
     <string name="str_dot">・</string>
     <string name="str_mail">Mail:</string>
     <string name="str_web">Web:</string>
+    <string name="str_copyright_desc">このアプリは以下のライセンスの下に公開されています。</string>
+    <string name="str_use_libs">また、以下のリソース及び外部ライブラリを使用しています。</string>
+    <string name="str_press_color_to_apply">色をタップして決定</string>
+    <string name="str_dialog_color_picker">色選択</string>
+    <string name="str_color_background">背景色</string>
+    <string name="str_color_font">フォント色</string>
+    <string name="str_desc_console_background_color">コンソール画面の背景色を選択します。</string>
+    <string name="str_desc_console_font_color">コンソール画面のフォント色を選択します。</string>
+    <string name="str_desc_console_font_size">コンソール画面のフォントサイズを選択します。</string>
+    <string name="str_desc_chat_background_color">チャット画面の背景色を選択します。</string>
+    <string name="str_desc_chat_font_color">チャット画面のフォント色を選択します。</string>
+    <string name="str_desc_chat_font_size">チャット画面のフォントサイズを選択します。</string>
 
 </resources>

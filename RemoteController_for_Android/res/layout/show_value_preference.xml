@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@android:id/title"
             android:layout_below="@android:id/title"
+            android:layout_toLeftOf="@+id/inputValue"
             android:maxLines="2"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -38,10 +39,14 @@
             android:id="@+id/inputValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+android:id/title"
+            android:layout_alignBottom="@+android:id/summary"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignTop="@+android:id/title"
+            android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/aqua_blue" />
+
     </RelativeLayout>
     <!-- Preference should place its actual preference widget here. -->
 

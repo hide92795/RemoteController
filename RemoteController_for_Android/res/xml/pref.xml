@@ -40,10 +40,26 @@
 
         <hide92795.android.remotecontroller.ui.UnitablleEditTextPreference
             android:key="console_font_size"
+            android:summary="@string/str_desc_console_font_size"
             android:title="@string/str_font_size"
             hide92795:defaultValue="18"
             hide92795:inputType="number"
             hide92795:unit="@string/str_unit_dip" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/white"
+            android:key="console_background_color"
+            android:summary="@string/str_desc_console_background_color"
+            android:title="@string/str_color_background"
+            hide92795:alphaSlider="false"
+            hide92795:hexValue="true" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/black"
+            android:key="console_font_color"
+            android:summary="@string/str_desc_console_font_color"
+            android:title="@string/str_color_font"
+            hide92795:alphaSlider="false"
+            hide92795:hexValue="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/str_chat" >
         <CheckBoxPreference
@@ -59,16 +75,32 @@
 
         <hide92795.android.remotecontroller.ui.UnitablleEditTextPreference
             android:key="chat_font_size"
+            android:summary="@string/str_desc_chat_font_size"
             android:title="@string/str_font_size"
             hide92795:defaultValue="18"
             hide92795:inputType="number"
             hide92795:unit="@string/str_unit_dip" />
+
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/white"
+            android:key="chat_background_color"
+            android:summary="@string/str_desc_chat_background_color"
+            android:title="@string/str_color_background"
+            hide92795:alphaSlider="false"
+            hide92795:hexValue="true" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/black"
+            android:key="chat_font_color"
+            android:summary="@string/str_desc_chat_font_color"
+            android:title="@string/str_color_font"
+            hide92795:alphaSlider="false"
+            hide92795:hexValue="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/str_other" >
         <PreferenceScreen
             android:key="about_this_app"
             android:title="@string/str_about_this_app" >
-        <intent
+            <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="hide92795.android.remotecontroller.activity.AboutActivity"
                 android:targetPackage="hide92795.android.remotecontroller" />

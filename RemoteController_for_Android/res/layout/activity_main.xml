@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="@string/str_server_infomation"
+            android:text="@string/str_server_information"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -170,7 +170,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/text_main_peoples_str"
             android:layout_marginTop="10dp"
-            android:text="@string/str_add_infomation"
+            android:text="@string/str_add_information"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ScrollView

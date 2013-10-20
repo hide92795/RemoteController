@@ -53,9 +53,14 @@ public class ChatListAdapter extends BaseAdapter {
 		if (item != null) {
 			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(session);
 			int fontsize = Integer.parseInt(pref.getString(ConfigKeys.CHAT_FONT_SIZE, ConfigDefaults.CHAT_FONT_SIZE));
+			int backgroundcolor = pref.getInt(ConfigKeys.CHAT_BACKGOUND_COLOR, ConfigDefaults.CHAT_BACKGOUND_COLOR);
+			int fontcolor = pref.getInt(ConfigKeys.CHAT_FONT_COLOR, ConfigDefaults.CHAT_FONT_COLOR);
 
 			holder.message.setText(item.getMessage());
 			holder.message.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontsize);
+
+			view.setBackgroundColor(backgroundcolor);
+			holder.message.setTextColor(fontcolor);
 
 			if (pref.getBoolean(ConfigKeys.CHAT_ELLIPSIZE, ConfigDefaults.CHAT_ELLIPSIZE)) {
 				// 折り返す

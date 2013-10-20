@@ -35,7 +35,7 @@ public class LogHandler extends Handler {
 			builder.append("-[");
 			builder.append(record.getLevel().getLocalizedName().toUpperCase());
 			builder.append("]-");
-			builder.append(Util.removeEscapeSequence(record.getMessage()));
+			builder.append(Util.convertColorCode(record.getMessage()));
 
 			if (ex != null) {
 				StringWriter writer = new StringWriter();

@@ -17,6 +17,6 @@ public class ChatListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBroadcast(AsyncPlayerChatEvent event) {
 		String chat = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
-		plugin.onChatLogUpdate(Util.removeEscapeSequence(chat));
+		plugin.onChatLogUpdate(Util.convertColorCode(chat));
 	}
 }

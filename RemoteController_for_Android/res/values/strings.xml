@@ -7,10 +7,10 @@
     <string name="str_chat">Chat</string>
     <string name="str_plugin">Plugins</string>
     <string name="str_config">Config</string>
-    <string name="str_server_infomation">Server Infomation</string>
+    <string name="str_server_information">Server Information</string>
     <string name="str_address">Address:</string>
     <string name="str_peoples">Players：</string>
-    <string name="str_add_infomation">Additional Infomation</string>
+    <string name="str_add_information">Additional Information</string>
     <string name="str_desc_launcher_icon">Icon</string>
     <string name="str_port">Port:</string>
     <string name="str_username">Username:</string>
@@ -79,7 +79,7 @@
     <string name="str_no_item">Item not found.</string>
     <string name="str_unknown_message">Not registered response.</string>
     <string name="str_success">Success!</string>
-    <string name="str_exception">Exception occured.\n%1$s</string>
+    <string name="str_exception">Exception occurred.\n%1$s</string>
     <string name="str_auth_error">Failed to authenticate.</string>
     <string name="str_not_recommended_server_continue">You\'re trying to connect to the server that is not the recommended version.\nDo you want to continue?</string>
     <string name="str_continue">Continue</string>
@@ -131,5 +131,17 @@
     <string name="str_dot">・</string>
     <string name="str_mail">Mail:</string>
     <string name="str_web">Web:</string>
+    <string name="str_copyright_desc">This app is licensed under the following license.</string>
+    <string name="str_use_libs">Also, I use following external library and resources.</string>
+    <string name="str_press_color_to_apply">Press on Color to apply</string>
+    <string name="str_dialog_color_picker">Color Picker</string>
+    <string name="str_color_background">Backbround Color</string>
+    <string name="str_color_font">Font Color</string>
+    <string name="str_desc_console_background_color">Select console background color.</string>
+    <string name="str_desc_console_font_color">Select console font color.</string>
+    <string name="str_desc_console_font_size">Select console font size.</string>
+    <string name="str_desc_chat_background_color">Select chat background color.</string>
+    <string name="str_desc_chat_font_color">Select chat font color.</string>
+    <string name="str_desc_chat_font_size">Select chat font size.</string>
 
 </resources>

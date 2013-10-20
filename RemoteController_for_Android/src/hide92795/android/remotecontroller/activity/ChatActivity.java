@@ -7,11 +7,13 @@ import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter.OnAddChatLi
 import hide92795.android.remotecontroller.util.ConfigDefaults;
 import hide92795.android.remotecontroller.util.ConfigKeys;
 import hide92795.android.remotecontroller.util.LogUtil;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,12 +21,15 @@ import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class ChatActivity extends FragmentActivity implements OnClickListener, OnAddChatListener {
+public class ChatActivity extends FragmentActivity implements OnClickListener, OnAddChatListener, OnKeyListener {
 	private ScaleGestureDetector gesture_detector;
 
 	@Override
@@ -34,6 +39,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 		setContentView(R.layout.activity_chat);
 		gesture_detector = new ScaleGestureDetector(this, onScaleGestureListener);
 		setListener();
+		setColor();
 	}
 
 	private void setListener() {
@@ -50,6 +56,15 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 		list.setSelection(list.getCount() - 1);
 		Button btn_send = (Button) findViewById(R.id.btn_chat_send);
 		btn_send.setOnClickListener(this);
+		EditText editText = (EditText) findViewById(R.id.edittext_chat_send);
+		editText.setOnKeyListener(this);
+	}
+
+	private void setColor() {
+		ListView list = (ListView) findViewById(R.id.list_chat_chat);
+		list.setDivider(null);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		list.setBackgroundColor(pref.getInt(ConfigKeys.CHAT_BACKGOUND_COLOR, ConfigDefaults.CHAT_BACKGOUND_COLOR));
 	}
 
 	@Override
@@ -146,6 +161,23 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 	public void onAddChat() {
 		ListView list = (ListView) findViewById(R.id.list_chat_chat);
 		list.setSelection(list.getCount() - 1);
+	}
+
+	@Override
+	public boolean onKey(View v, int keyCode, KeyEvent event) {
+		if (v.getId() == R.id.edittext_chat_send) {
+			if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+				String message = ((TextView) v).getText().toString();
+				if (message.length() != 0) {
+					InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+					((Session) getApplication()).getConnection().requests.requestChat(message);
+					((TextView) v).setText("");
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private final SimpleOnScaleGestureListener onScaleGestureListener = new SimpleOnScaleGestureListener() {

@@ -1,16 +1,19 @@
 package hide92795.android.remotecontroller.receivedata;
 
+import android.text.Html;
+import android.text.Spanned;
+
 public class ConsoleData extends ReceiveData {
 	private String date;
 	private String log_level;
-	private String text;
+	private Spanned text;
 
-	public String getText() {
+	public Spanned getText() {
 		return text;
 	}
 
 	public void setText(String text) {
-		this.text = text;
+		this.text = Html.fromHtml(text);
 	}
 
 	public String getLogLevel() {

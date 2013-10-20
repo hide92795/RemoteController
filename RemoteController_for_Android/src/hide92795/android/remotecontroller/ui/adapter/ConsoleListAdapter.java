@@ -59,6 +59,8 @@ public class ConsoleListAdapter extends BaseAdapter {
 		if (item != null) {
 			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(session);
 			int fontsize = Integer.parseInt(pref.getString(ConfigKeys.CONSOLE_FONT_SIZE, ConfigDefaults.CONSOLE_FONT_SIZE));
+			int backgroundcolor = pref.getInt(ConfigKeys.CONSOLE_BACKGOUND_COLOR, ConfigDefaults.CONSOLE_BACKGOUND_COLOR);
+			int fontcolor = pref.getInt(ConfigKeys.CONSOLE_FONT_COLOR, ConfigDefaults.CONSOLE_FONT_COLOR);
 
 			if (pref.getBoolean(ConfigKeys.CONSOLE_DATE, ConfigDefaults.CONSOLE_DATE)) {
 				// 日時表示
@@ -78,6 +80,11 @@ public class ConsoleListAdapter extends BaseAdapter {
 				// ログレベル非表示
 				holder.log_level.setVisibility(View.GONE);
 			}
+
+			view.setBackgroundColor(backgroundcolor);
+			holder.date.setTextColor(fontcolor);
+			holder.log_level.setTextColor(fontcolor);
+			holder.text.setTextColor(fontcolor);
 
 			holder.text.setText(item.getText());
 			holder.text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontsize);

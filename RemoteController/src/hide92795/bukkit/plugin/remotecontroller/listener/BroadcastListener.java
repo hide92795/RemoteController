@@ -15,6 +15,6 @@ public class BroadcastListener implements Listener {
 
 	@EventHandler
 	public void onBroadcast(ServerBroadcastEvent event) {
-		plugin.onChatLogUpdate(Util.removeEscapeSequence(event.getMessage()));
+		plugin.onChatLogUpdate(Util.convertColorCode(event.getMessage()));
 	}
 }

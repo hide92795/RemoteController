@@ -1,10 +1,54 @@
 package hide92795.bukkit.plugin.remotecontroller.util;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Util {
-	public static String removeEscapeSequence(String text) {
-		return text.replaceAll("\\e\\[(\\d|;)*m", "").replaceAll("§.", "");
+	private static Pattern esc_seq = Pattern.compile("\\[((?:\\d|;)*)m(.*)");
+
+	public static String convertColorCode(String text) {
+		String convertedEscapeSeq = convertEscapeSequence(text);
+		String convertedAll = convertBukkitChatColor(convertedEscapeSeq);
+		// Logger.getLogger("Minecraft").info(text.replaceAll("\\e", "ESC"));
+		// return text.replaceAll("\\e\\[(\\d|;)*m", "").replaceAll("§.", "");
+		return convertedAll;
+	}
+
+	public static String convertEscapeSequence(String text) {
+		text = text.replaceAll("<", "&lt;");
+		text = text.replaceAll(">", "&gt;");
+		text = text.replaceAll("\n", "<br />");
+		String[] spilit = text.split("\\e");
+		StringBuilder sb = new StringBuilder();
+		for (String s : spilit) {
+			Matcher m = esc_seq.matcher(s);
+			if (m.find()) {
+				String esc = m.group(1);
+				String target = m.group(2);
+				if (esc == null || target == null || target.length() == 0) {
+					continue;
+				}
+				sb.append(FontUtil.convertEscapeSequence(esc, target));
+			} else {
+				sb.append(s);
+			}
+		}
+		return sb.toString();
+	}
+
+	public static String convertBukkitChatColor(String text) {
+		String[] spilit = text.split("§");
+		StringBuilder sb = new StringBuilder();
+		for (String s : spilit) {
+			if (s == null || s.length() == 0) {
+				continue;
+			}
+			String color = String.valueOf(s.charAt(0));
+			String target = s.substring(1);
+			sb.append(FontUtil.convertBukkitChatColor(color, target));
+		}
+		return sb.toString();
 	}
 
 	public static String[] toFileStringArray(File[] files) {

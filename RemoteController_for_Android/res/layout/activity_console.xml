@@ -7,38 +7,32 @@
         android:id="@+id/linearLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/linearLayout1"
+        android:layout_above="@+id/btn_console_send"
         android:orientation="vertical" >
 
         <ListView
             android:id="@+id/list_console_console"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
+    <Button
+        android:id="@+id/btn_console_send"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/str_send" />
 
-        <EditText
-            android:id="@+id/edittext_console_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text|textNoSuggestions" >
-
-            <requestFocus />
-        </EditText>
-
-        <Button
-            android:id="@+id/btn_console_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/str_send" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/edittext_console_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout"
+        android:layout_toLeftOf="@+id/btn_console_send"
+        android:ems="10"
+        android:inputType="text|textNoSuggestions" />
 
 </RelativeLayout>

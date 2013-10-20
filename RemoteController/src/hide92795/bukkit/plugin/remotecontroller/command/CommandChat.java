@@ -13,7 +13,7 @@ public class CommandChat implements Command {
 			if (connection.isAuthorized()) {
 				String message = String.format(plugin.localize.getString(Type.CHAT_PREFIX), connection.getUser()) + arg;
 				if (!plugin.isChatTypeBroadcast()) {
-					plugin.onChatLogUpdate(Util.removeEscapeSequence(message));
+					plugin.onChatLogUpdate(Util.convertColorCode(message));
 				}
 				Bukkit.broadcastMessage(message);
 				connection.send("SUCCESS", pid, "");
