@@ -3,6 +3,7 @@ package hide92795.bukkit.plugin.remotecontroller.util;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.bukkit.ChatColor;
 
 public class Util {
 	private static Pattern esc_seq = Pattern.compile("\\[((?:\\d|;)*)m(.*)");
@@ -16,6 +17,7 @@ public class Util {
 	}
 
 	public static String convertEscapeSequence(String text) {
+		text = ChatColor.translateAlternateColorCodes('&', text);
 		text = text.replaceAll("<", "&lt;");
 		text = text.replaceAll(">", "&gt;");
 		text = text.replaceAll("\n", "<br />");

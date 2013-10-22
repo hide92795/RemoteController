@@ -10,9 +10,9 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class UnitablleEditTextPreference extends DialogPreference {
@@ -44,14 +44,14 @@ public class UnitablleEditTextPreference extends DialogPreference {
 		tArray.recycle();
 	}
 
-	@Override
-	protected View onCreateView(ViewGroup parent) {
-		LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View preference_view = layoutInflater.inflate(R.layout.show_value_preference, null);
-		inputValueTextView = (TextView) preference_view.findViewById(R.id.inputValue);
-		setLayoutResource(android.R.id.widget_frame);
-		return preference_view;
-	}
+	// @Override
+	// protected View onCreateView(ViewGroup parent) {
+	// LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	// View preference_view = layoutInflater.inflate(R.layout.show_value_preference, null);
+	// inputValueTextView = (TextView) preference_view.findViewById(R.id.inputValue);
+	// setLayoutResource(android.R.id.widget_frame);
+	// return preference_view;
+	// }
 
 	@Override
 	protected void onBindView(View view) {
@@ -61,8 +61,30 @@ public class UnitablleEditTextPreference extends DialogPreference {
 		} else {
 			saveVal = pref.getString(getKey(), defaultVal);
 		}
-		updateInputValue();
 		super.onBindView(view);
+		setUpView(view);
+		updateInputValue();
+	}
+
+	private void setUpView(View view) {
+		if (view == null) {
+			return;
+		}
+		inputValueTextView = new TextView(getContext());
+		inputValueTextView.setTextColor(getContext().getResources().getColor(R.color.aqua_blue));
+		LinearLayout frame = ((LinearLayout) view.findViewById(android.R.id.widget_frame));
+		if (frame == null) {
+			return;
+		}
+		frame.setVisibility(View.VISIBLE);
+		float density = getContext().getResources().getDisplayMetrics().density;
+		frame.setPadding(frame.getPaddingLeft(), frame.getPaddingTop(), (int) (density * 8), frame.getPaddingBottom());
+		int count = frame.getChildCount();
+		if (count > 0) {
+			frame.removeViews(0, count);
+		}
+		frame.addView(inputValueTextView);
+		frame.setMinimumWidth(0);
 	}
 
 	@Override

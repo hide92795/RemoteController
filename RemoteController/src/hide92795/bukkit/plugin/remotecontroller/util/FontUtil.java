@@ -97,7 +97,7 @@ public class FontUtil {
 
 	public static StringBuilder convertBukkitChatColor(String color, String target) {
 		StringBuilder sb = new StringBuilder();
-		switch (color) {
+		switch (color.toLowerCase()) {
 		case BUKKIT_BOLD:
 			sb.append("<b>");
 			sb.append(target);

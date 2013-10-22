@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hide92795.android.remotecontroller"
-    android:versionCode="4"
-    android:versionName="1.6.2_3" >
+    android:versionCode="5"
+    android:versionName="1.6.2_4" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -39,8 +39,7 @@
         </activity>
         <activity
             android:name=".activity.ConsoleActivity"
-            android:label="@string/str_console"
-            android:screenOrientation="portrait" >
+            android:label="@string/str_console" >
         </activity>
         <activity
             android:name=".activity.DonateActivity"
@@ -59,8 +58,7 @@
         </activity>
         <activity
             android:name=".activity.ChatActivity"
-            android:label="@string/str_chat"
-            android:screenOrientation="portrait" >
+            android:label="@string/str_chat" >
         </activity>
         <activity
             android:name=".activity.EditFileActivity"
@@ -80,6 +78,11 @@
         <activity
             android:name=".activity.AboutActivity"
             android:label="@string/str_about_this_app"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.PluginActivity"
+            android:label="@string/str_plugin"
             android:screenOrientation="portrait" >
         </activity>
     </application>

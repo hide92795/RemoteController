@@ -1,6 +1,6 @@
 name: RemoteController
 main: hide92795.bukkit.plugin.remotecontroller.RemoteController
-version: 1.6.2_3
+version: 1.6.2_4
 description: RemoteController
 author: hide92795
 depend: [hide92795CoreLib]

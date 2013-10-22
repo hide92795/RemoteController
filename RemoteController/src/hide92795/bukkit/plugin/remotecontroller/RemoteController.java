@@ -199,7 +199,7 @@ public class RemoteController extends JavaPlugin {
 		} catch (Exception e1) {
 			logger.severe("Can't load language file.");
 			try {
-				localize.reload("jp");
+				localize.reload("en");
 				logger.severe("Loaded default language file.");
 			} catch (Exception e) {
 				throw e;
