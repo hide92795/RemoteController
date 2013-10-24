@@ -13,6 +13,9 @@
     <string name="info_ColorPickerPreference_url">https://github.com/attenzione/android-ColorPickerPreference</string>
     <string name="info_The_Android_Open_Source_Project_url">http://source.android.com/</string>
     <string name="info_The_Android_Open_Source_Project">The Android Open Source Project</string>
+    <string name="info_Crisp_Icon_Set">Crisp Icon Set</string>
+    <string name="info_Crisp_Icon_Set_author">by Matt Gentile</string>
+    <string name="info_Crisp_Icon_Set_url">http://www.icondeposit.com/theicondeposit:108</string>
     <string name="info_mail">hide92795.android@gmail.com</string>
     <string name="info_web">http://www.hide92795.org/</string>
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hide92795.android.remotecontroller"
-    android:versionCode="5"
-    android:versionName="1.6.2_4" >
+    android:versionCode="6"
+    android:versionName="1.6.2_5" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -81,9 +81,9 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.PluginActivity"
-            android:label="@string/str_plugin"
-            android:screenOrientation="portrait" >
+            android:name=".activity.DynmapActivity"
+            android:hardwareAccelerated="true"
+            android:label="@string/str_dynmap" >
         </activity>
     </application>
 

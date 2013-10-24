@@ -15,7 +15,7 @@
     <string name="str_port">ポート：</string>
     <string name="str_username">ユーザー名：</string>
     <string name="str_password">パスワード：</string>
-    <string name="str_or">ーもしくはー</string>
+    <string name="str_or">―もしくは―</string>
     <string name="str_login">ログイン</string>
     <string name="str_save_login">このログインを保存</string>
     <string name="str_new_connection">新しく接続を作成</string>
@@ -143,5 +143,6 @@
     <string name="str_desc_chat_background_color">チャット画面の背景色を選択します。</string>
     <string name="str_desc_chat_font_color">チャット画面のフォント色を選択します。</string>
     <string name="str_desc_chat_font_size">チャット画面のフォントサイズを選択します。</string>
+    <string name="str_dynmap">Dynmap</string>
 
 </resources>

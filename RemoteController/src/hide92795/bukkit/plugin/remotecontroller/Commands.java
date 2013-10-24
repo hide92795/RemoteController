@@ -8,6 +8,7 @@ import hide92795.bukkit.plugin.remotecontroller.command.CommandChatLog;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandConsoleCommand;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandConsoleLog;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandDirectory;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandDynmap;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandFileDelete;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandFileEdit;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandFileOpen;
@@ -41,5 +42,6 @@ public class Commands {
 		commands.put("FILE_EDIT", new CommandFileEdit());
 		commands.put("MK", new CommandMk());
 		commands.put("CHAT", new CommandChat());
+		commands.put("DYNMAP", new CommandDynmap());
 	}
 }

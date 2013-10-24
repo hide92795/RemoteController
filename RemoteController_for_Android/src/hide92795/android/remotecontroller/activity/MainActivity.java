@@ -1,9 +1,11 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.InitialReceive;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
 import hide92795.android.remotecontroller.Session;
+import hide92795.android.remotecontroller.receivedata.DynmapData;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.receivedata.ServerData;
 import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerDialogFragment;
@@ -18,11 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements OnClickListener, ReceiveListener, Callback {
 	private boolean first_show = true;
+	private InitialReceive initial_receive;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 		setContentView(R.layout.activity_main);
 		setListener();
 
+		initial_receive = new InitialReceive();
 		// Check version
 		boolean recommend_server = getIntent().getExtras().getBoolean("RECOMMENDED_SERVER_VERSION");
 		if (!recommend_server) {
@@ -60,8 +65,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 		if (connection != null) {
 			connection.requests.startReceiveConsoleLog();
 			connection.requests.startReceiveChatLog();
-			int pid = connection.requests.requestServerInfo();
-			connection.addListener(pid, this);
+			int pid_server_info = connection.requests.requestServerInfo();
+			connection.addListener(pid_server_info, this);
+			int pid_dynmap = connection.requests.requestDynmap();
+			connection.addListener(pid_dynmap, this);
 		}
 		((Session) getApplication()).showProgressDialog(this, false, null);
 	}
@@ -130,6 +137,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 		btn_chat.setOnClickListener(this);
 		Button btn_editfile = (Button) findViewById(R.id.btn_main_editfile);
 		btn_editfile.setOnClickListener(this);
+		Button btn_dynmap = (Button) findViewById(R.id.btn_main_dynmap);
+		btn_dynmap.setOnClickListener(this);
 	}
 
 	@Override
@@ -166,6 +175,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 			startActivity(intent);
 			break;
 		}
+		case R.id.btn_main_dynmap: {
+			Intent intent = new Intent(this, DynmapActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+			startActivity(intent);
+			break;
+		}
 		default:
 			break;
 		}
@@ -174,8 +189,31 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 	@Override
 	public void onReceiveData(String sended_cmd, int pid, ReceiveData data) {
 		if (sended_cmd.equals("SERVER_INFO")) {
-			setServerInfo((ServerData) data);
-			((Session) getApplication()).dismissProgressDialog();
+			if (data.isSuccessed()) {
+				setServerInfo((ServerData) data);
+				initial_receive.server_info = true;
+				if (initial_receive.isAllReceived()) {
+					((Session) getApplication()).dismissProgressDialog();
+				}
+			}
+		} else if (sended_cmd.equals("DYNMAP")) {
+			if (data.isSuccessed()) {
+				initial_receive.dynmap = true;
+				checkDynmapState((DynmapData) data);
+				if (initial_receive.isAllReceived()) {
+					((Session) getApplication()).dismissProgressDialog();
+				}
+			}
+		}
+	}
+
+	private void checkDynmapState(DynmapData data) {
+		((Session) getApplication()).setDynmapData(data);
+		TableRow row = (TableRow) findViewById(R.id.tablerow_main_dynmap);
+		if (data.isEnable()) {
+			row.setVisibility(View.VISIBLE);
+		} else {
+			row.setVisibility(View.GONE);
 		}
 	}
 
@@ -184,7 +222,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 			TextView text_server_name = (TextView) findViewById(R.id.text_main_server_name);
 			text_server_name.setText(data.getServername());
 			TextView text_address = (TextView) findViewById(R.id.text_main_address);
-			String address = ((Session) getApplication()).getConnection().getServerAddressWithPort();
+			String address = ((Session) getApplication()).getConnection().getServerAddress() + ":" + data.getPort();
 			text_address.setText(address);
 			TextView text_peoples = (TextView) findViewById(R.id.text_main_peoples);
 			text_peoples.setText(data.getCurrent() + "/" + data.getMax());

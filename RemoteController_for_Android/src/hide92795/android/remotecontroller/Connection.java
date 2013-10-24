@@ -81,10 +81,6 @@ public class Connection {
 		connect.execute();
 	}
 
-	public String getServerAddressWithPort() {
-		return getServerAddress() + ":" + getServerPort();
-	}
-
 	public String getServerAddress() {
 		return connection_data.getAddress();
 	}
@@ -397,6 +393,12 @@ public class Connection {
 		public int requestChat(String chat) {
 			int pid = nextPid();
 			send("CHAT", pid, chat);
+			return pid;
+		}
+
+		public int requestDynmap() {
+			int pid = nextPid();
+			send("DYNMAP", pid, "");
 			return pid;
 		}
 	}

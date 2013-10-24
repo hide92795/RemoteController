@@ -3,6 +3,7 @@ package hide92795.android.remotecontroller.receivedata;
 
 public class ServerData extends ReceiveData {
 	private String servername;
+	private int port;
 	private int max;
 	private int current;
 	private String add_info;
@@ -13,6 +14,14 @@ public class ServerData extends ReceiveData {
 
 	public void setServername(String servername) {
 		this.servername = servername;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 	public int getMax() {

@@ -14,11 +14,13 @@ public class CommandServerInfo implements Command {
 		try {
 			if (connection.isAuthorized()) {
 				String servername = plugin.getServer().getServerName();
+				String port = String.valueOf(plugin.getServer().getPort());
 				String max = String.valueOf(plugin.getServer().getMaxPlayers());
 				String current = String.valueOf(plugin.getServer().getOnlinePlayers().length);
 
 				ArrayList<String> datas = new ArrayList<>();
 				datas.add(new String(Base64Coder.encode(servername.getBytes(Charset.forName("UTF-8")))));
+				datas.add(port);
 				datas.add(max);
 				datas.add(current);
 				datas.addAll(plugin.getAdditionalInfo());

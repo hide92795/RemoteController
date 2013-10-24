@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -86,16 +85,21 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 
 	private void checkSavedConnection() {
 		ArrayList<ConnectionData> saved_connection = ((Session) getApplication()).getSavedConnection();
+		Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
+		ArrayAdapter<ConnectionData> adapter = new ArrayAdapter<ConnectionData>(this, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		for (ConnectionData connection_data : saved_connection) {
+			adapter.add(connection_data);
+		}
+		spinner.setAdapter(adapter);
+		Button move_exist_connection = (Button) findViewById(R.id.btn_login_move_exist_connection);
 		if (saved_connection.size() > 0) {
 			changeDisplayToExistConnection();
-			Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
-			ArrayAdapter<ConnectionData> adapter = new ArrayAdapter<ConnectionData>(this, android.R.layout.simple_spinner_item);
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-			for (ConnectionData connection_data : saved_connection) {
-				adapter.add(connection_data);
-			}
-			spinner.setAdapter(adapter);
+			move_exist_connection.setEnabled(true);
+		} else {
+			changeDisplayToNewConnection();
+			move_exist_connection.setEnabled(false);
 		}
 	}
 
@@ -117,10 +121,6 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 		case R.id.btn_login_move_exist_connection:
 			ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.switcher_login_panel);
 			switcher.showNext();
-			View parent = (View) v.getParent();
-			ViewGroup p = (ViewGroup) parent.getParent();
-			p.removeView(parent);
-			p.addView(parent, 0);
 			break;
 		case R.id.btn_login_login_as_exist_connection: {
 			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(),
@@ -178,6 +178,14 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 			switcher.showNext();
 		}
 	}
+
+	private void changeDisplayToNewConnection() {
+		ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.switcher_login_panel);
+		if (switcher.getCurrentView().getId() != R.id.view_login_new_connection) {
+			switcher.showNext();
+		}
+	}
+
 
 	private void checkTextInput() {
 		EditText v_address = (EditText) findViewById(R.id.edittext_login_address);

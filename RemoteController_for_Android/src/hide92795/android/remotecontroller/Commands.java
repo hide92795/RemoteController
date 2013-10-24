@@ -6,6 +6,7 @@ import hide92795.android.remotecontroller.command.CommandCharset;
 import hide92795.android.remotecontroller.command.CommandChat;
 import hide92795.android.remotecontroller.command.CommandConsole;
 import hide92795.android.remotecontroller.command.CommandDirectory;
+import hide92795.android.remotecontroller.command.CommandDynmap;
 import hide92795.android.remotecontroller.command.CommandError;
 import hide92795.android.remotecontroller.command.CommandFileOpen;
 import hide92795.android.remotecontroller.command.CommandPlayers;
@@ -27,5 +28,6 @@ public class Commands {
 		commands.put("CHARSET", new CommandCharset());
 		commands.put("SUCCESS", new CommandSuccess());
 		commands.put("ERROR", new CommandError());
+		commands.put("DYNMAP", new CommandDynmap());
 	}
 }

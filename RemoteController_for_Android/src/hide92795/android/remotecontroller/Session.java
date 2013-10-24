@@ -1,8 +1,8 @@
 package hide92795.android.remotecontroller;
 
-import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.activity.LoginServerActivity;
 import hide92795.android.remotecontroller.data.ConnectionData;
+import hide92795.android.remotecontroller.receivedata.DynmapData;
 import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment;
@@ -27,6 +27,7 @@ public class Session extends Application {
 	private ConsoleListAdapter console_adapter;
 	private ChatListAdapter chat_adapter;
 	private PlayerFaceManager face_manager;
+	private DynmapData dynmap_data;
 
 	@Override
 	public void onCreate() {
@@ -64,6 +65,11 @@ public class Session extends Application {
 
 	public void addSavedConnection(ConnectionData connection_data) {
 		saved_connection.add(connection_data);
+		saveConnection();
+	}
+
+	public void removeSavedConnection(int position) {
+		saved_connection.remove(position);
 		saveConnection();
 	}
 
@@ -147,5 +153,13 @@ public class Session extends Application {
 
 	public String getRecommendServerVersion() {
 		return getString(R.string.info_recommend_server_version);
+	}
+
+	public DynmapData getDynmapData() {
+		return dynmap_data;
+	}
+
+	public void setDynmapData(DynmapData dynmap_data) {
+		this.dynmap_data = dynmap_data;
 	}
 }

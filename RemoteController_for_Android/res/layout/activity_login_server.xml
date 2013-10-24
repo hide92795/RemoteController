@@ -92,7 +92,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/tableRow3"
+                        android:id="@+id/tablerow_main_dynmap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 

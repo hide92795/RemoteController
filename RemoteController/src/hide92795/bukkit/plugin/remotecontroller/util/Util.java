@@ -8,11 +8,13 @@ import org.bukkit.ChatColor;
 public class Util {
 	private static Pattern esc_seq = Pattern.compile("\\[((?:\\d|;)*)m(.*)");
 
+	public static String removeColorCode(String text) {
+		return text.replaceAll("\\e\\[(\\d|;)*m", "").replaceAll("§.", "");
+	}
+
 	public static String convertColorCode(String text) {
 		String convertedEscapeSeq = convertEscapeSequence(text);
 		String convertedAll = convertBukkitChatColor(convertedEscapeSeq);
-		// Logger.getLogger("Minecraft").info(text.replaceAll("\\e", "ESC"));
-		// return text.replaceAll("\\e\\[(\\d|;)*m", "").replaceAll("§.", "");
 		return convertedAll;
 	}
 
@@ -42,7 +44,9 @@ public class Util {
 	public static String convertBukkitChatColor(String text) {
 		String[] spilit = text.split("§");
 		StringBuilder sb = new StringBuilder();
-		for (String s : spilit) {
+		sb.append(spilit[0]);
+		for (int i = 1; i < spilit.length; i++) {
+			String s = spilit[i];
 			if (s == null || s.length() == 0) {
 				continue;
 			}

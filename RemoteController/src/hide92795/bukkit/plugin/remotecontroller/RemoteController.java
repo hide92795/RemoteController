@@ -38,7 +38,7 @@ public class RemoteController extends JavaPlugin {
 	private RemoteServer server;
 	private ConcurrentLinkedQueue<String> log;
 	private ConcurrentLinkedQueue<String> chat;
-	private ArrayList<AdditionalInfoCreator> creators;
+	private ArrayList<AdditionalInfoCreator> additional_info_creators;
 	private RemoteControllerAPI api;
 	private Usage usage_user;
 	private Usage usage_reload;
@@ -54,7 +54,7 @@ public class RemoteController extends JavaPlugin {
 		users = new ConcurrentHashMap<>();
 		log = new ConcurrentLinkedQueue<>();
 		chat = new ConcurrentLinkedQueue<>();
-		creators = new ArrayList<>();
+		additional_info_creators = new ArrayList<>();
 		api = new RemoteControllerAPI(this);
 		try {
 			reload();
@@ -186,6 +186,7 @@ public class RemoteController extends JavaPlugin {
 			sb.append("  ");
 			sb.append(name);
 			sb.append("\n");
+			i++;
 		}
 		sb.append(ChatColor.YELLOW);
 		sb.append("====================");
@@ -308,7 +309,7 @@ public class RemoteController extends JavaPlugin {
 	}
 
 	public void addAdditionalInfoCreator(AdditionalInfoCreator creator) {
-		this.creators.add(creator);
+		this.additional_info_creators.add(creator);
 	}
 
 	public RemoteControllerAPI getAPI() {
@@ -317,7 +318,7 @@ public class RemoteController extends JavaPlugin {
 
 	public ArrayList<String> getAdditionalInfo() {
 		ArrayList<String> datas = new ArrayList<>();
-		for (AdditionalInfoCreator creator : creators) {
+		for (AdditionalInfoCreator creator : additional_info_creators) {
 			AdditionalInfo info = creator.createAdditionalInfo();
 			datas.add(new String(Base64Coder.encode(info.toString().getBytes(Charset.forName("UTF-8")))));
 		}

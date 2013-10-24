@@ -143,5 +143,6 @@
     <string name="str_desc_chat_background_color">Select chat background color.</string>
     <string name="str_desc_chat_font_color">Select chat font color.</string>
     <string name="str_desc_chat_font_size">Select chat font size.</string>
+    <string name="str_dynmap">Dynmap</string>
 
 </resources>

@@ -42,6 +42,7 @@ public class AccountManagerActivity extends FragmentActivity implements OnItemLo
 	private void setListener() {
 		ListView list = (ListView) findViewById(R.id.list_account_manager_list);
 		list.setOnItemLongClickListener(this);
+		list.setDivider(null);
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class AccountManagerActivity extends FragmentActivity implements OnItemLo
 
 	@Override
 	public void onAccountDelete(int position) {
-		((Session) getApplication()).getSavedConnection().remove(position);
+		((Session) getApplication()).removeSavedConnection(position);
 		adapter.notifyDataSetChanged();
 	}
 }
