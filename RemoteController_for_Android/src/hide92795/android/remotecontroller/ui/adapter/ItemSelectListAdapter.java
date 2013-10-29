@@ -1,8 +1,8 @@
 package hide92795.android.remotecontroller.ui.adapter;
 
 import hide92795.android.remotecontroller.Items;
-import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Items.ItemData;
+import hide92795.android.remotecontroller.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

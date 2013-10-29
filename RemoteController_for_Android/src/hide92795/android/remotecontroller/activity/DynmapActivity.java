@@ -28,7 +28,7 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 	@SuppressLint("SetJavaScriptEnabled")
 	private void startLoad() {
 		LogUtil.d("DynmapActivity", "onResume()");
-		DynmapData data = ((Session) getApplication()).getDynmapData();
+		DynmapData data = ((Session) getApplication()).getServerInfo().getDynmapData();
 		if (data != null) {
 			String address = ((Session) getApplication()).getConnection().getServerAddress();
 			int port = data.getPort();

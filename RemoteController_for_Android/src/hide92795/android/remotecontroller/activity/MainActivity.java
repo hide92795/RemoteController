@@ -208,7 +208,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 	}
 
 	private void checkDynmapState(DynmapData data) {
-		((Session) getApplication()).setDynmapData(data);
+		((Session) getApplication()).getServerInfo().setDynmapData(data);
 		TableRow row = (TableRow) findViewById(R.id.tablerow_main_dynmap);
 		if (data.isEnable()) {
 			row.setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package hide92795.android.remotecontroller.command;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.MinecraftVersion;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.activity.MainActivity;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
@@ -12,11 +13,14 @@ public class CommandAuthentication implements Command {
 	@Override
 	public ReceiveData doCommand(final Connection connection, int pid, String arg) {
 		String[] args = arg.split(":");
-		if (args[0].equals("OK") && args.length == 2) {
+		if (args[0].equals("OK") && args.length == 3) {
 			final String version = args[1];
+			MinecraftVersion server_minecraft_version = MinecraftVersion.getByVersion(args[2]);
+			connection.getSession().getServerInfo().setServerMinecraftVersion(server_minecraft_version);
+
 			connection.authorize();
 			LogUtil.d("RemoteController", "Auth success.");
-			LogUtil.d("RemoteController", "Server version:" + version);
+			LogUtil.d("RemoteController", "Server version:" + version + ", Minecraft version:" + args[2]);
 			connection.getSession().getHandler().post(new Runnable() {
 				@Override
 				public void run() {

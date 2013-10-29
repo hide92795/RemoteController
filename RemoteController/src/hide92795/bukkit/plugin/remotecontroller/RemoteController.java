@@ -332,4 +332,8 @@ public class RemoteController extends JavaPlugin {
 	public boolean isChatTypeBroadcast() {
 		return chat_event_type_is_broadcast;
 	}
+
+	public String getMinecraftVersion() {
+		return getServer().getBukkitVersion().split("-")[0];
+	}
 }

@@ -1,8 +1,9 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Items;
-import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Items.ItemData;
+import hide92795.android.remotecontroller.R;
+import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.ui.adapter.ItemSelectListAdapter;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.app.Activity;
@@ -32,6 +33,7 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 		ListView item_list = (ListView) findViewById(R.id.list_item_select_list);
 		EditText input = (EditText) findViewById(R.id.edittext_item_select_item);
 		this.adapter = new ItemSelectListAdapter(this);
+		onInputTextChanged("");
 		item_list.setAdapter(adapter);
 		item_list.setOnItemClickListener(this);
 		input.addTextChangedListener(new TextWatcher() {
@@ -69,7 +71,7 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 	}
 
 	private void onInputTextChanged(String filter) {
-		ItemData[] filtered = Items.filter(this, filter);
+		ItemData[] filtered = Items.filter((Session) getApplication(), filter);
 		adapter.setItems(filtered);
 		if (filtered.length > 0) {
 			findViewById(R.id.text_item_select_empty).setVisibility(View.GONE);
