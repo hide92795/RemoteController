@@ -13,7 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -276,7 +276,7 @@ public class RemoteController extends JavaPlugin {
 		addChatLog(message);
 	}
 
-	public void removeConnection(InetAddress address) {
+	public void removeConnection(InetSocketAddress address) {
 		server.removeConnection(address);
 	}
 

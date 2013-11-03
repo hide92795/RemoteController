@@ -1,8 +1,8 @@
 package hide92795.android.remotecontroller.ui.dialog;
 
+import hide92795.android.remotecontroller.ConnectionData;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Session;
-import hide92795.android.remotecontroller.data.ConnectionData;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;

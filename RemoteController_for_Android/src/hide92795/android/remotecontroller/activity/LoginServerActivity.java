@@ -1,9 +1,9 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.ConnectionData;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Session;
-import hide92795.android.remotecontroller.data.ConnectionData;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment.OnCancelListener;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.util.ArrayList;

@@ -43,6 +43,17 @@ public class AboutActivity extends Activity {
 		} catch (Exception e) {
 			android_color_picker_preference.setText("Error: can't show license.");
 		}
+
+		TextView java_websocket = (TextView) findViewById(R.id.text_about_java_websocket);
+		try {
+			Resources res = getResources();
+			InputStream in_s = res.openRawResource(R.raw.java_websocket);
+			byte[] b = new byte[in_s.available()];
+			in_s.read(b);
+			java_websocket.setText(new String(b));
+		} catch (Exception e) {
+			java_websocket.setText("Error: can't show license.");
+		}
 	}
 
 	@Override

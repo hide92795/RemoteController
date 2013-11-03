@@ -1,18 +1,13 @@
 package hide92795.android.remotecontroller;
 
 import hide92795.android.remotecontroller.command.Command;
-import hide92795.android.remotecontroller.data.ConnectionData;
 import hide92795.android.remotecontroller.receivedata.FileData;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.util.Base64Coder;
 import hide92795.android.remotecontroller.util.LogUtil;
 import hide92795.android.remotecontroller.util.StringUtils;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.math.BigInteger;
-import java.net.Socket;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -23,7 +18,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -31,7 +25,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import android.os.AsyncTask;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
 
 
 public class Connection {
@@ -39,13 +36,11 @@ public class Connection {
 	private final ConcurrentHashMap<Integer, ReceiveListener> listeners;
 	private final ConcurrentHashMap<Integer, String> sendedrequests;
 	private final Session session;
-	private AtomicBoolean running = new AtomicBoolean(true);
+	private AtomicBoolean key_excanged = new AtomicBoolean(false);
 	private AtomicBoolean auth = new AtomicBoolean(false);
 	private final byte[] key;
-	private SendConnection send;
-	private ReceiveConnection receive;
 	private int pid = 1;
-	private Socket socket;
+	private ClientSocket socket;
 	private final ConnectionData connection_data;
 
 	public Connection(Session session, ConnectionData connection_data) {
@@ -69,31 +64,14 @@ public class Connection {
 	}
 
 	public void start() {
-		AsyncTask<Void, Void, Socket> connect = new AsyncTask<Void, Void, Socket>() {
-			@Override
-			protected Socket doInBackground(Void... params) {
-				try {
-					socket = new Socket(connection_data.getAddress(), connection_data.getPort());
-					socket.setSoTimeout(0);
-					send = new SendConnection(new PrintWriter(socket.getOutputStream(), true));
-					receive = new ReceiveConnection(new BufferedReader(new InputStreamReader(socket.getInputStream())));
-				} catch (Exception e) {
-					session.close(true, e.getMessage());
-				}
-				return socket;
-			}
-
-			@Override
-			protected void onPostExecute(Socket result) {
-				if (running.get()) {
-					LogUtil.d("", "Connection start.");
-					Connection.this.socket = socket;
-					send.start();
-					receive.start();
-				}
-			}
-		};
-		connect.execute();
+		try {
+			this.socket = new ClientSocket(connection_data.getURI(), new Draft_17());
+			Thread thread = new Thread(socket);
+			thread.start();
+			LogUtil.d("", "Connection start.");
+		} catch (Exception e) {
+			session.close(true, e.getMessage());
+		}
 	}
 
 	public String getServerAddress() {
@@ -113,24 +91,13 @@ public class Connection {
 	}
 
 	public void close() {
-		if (running.get()) {
-			running.set(false);
-			if (socket != null) {
-				LogUtil.d("", "Close socket.");
-				try {
-					socket.shutdownInput();
-				} catch (IOException e) {
-				}
-				try {
-					socket.shutdownOutput();
-				} catch (IOException e) {
-				}
-				try {
-					socket.close();
-				} catch (IOException e) {
-				}
-				socket = null;
+		if (socket != null) {
+			LogUtil.d("", "Close socket.");
+			try {
+				socket.close();
+			} catch (Exception e) {
 			}
+			socket = null;
 		}
 	}
 
@@ -140,7 +107,7 @@ public class Connection {
 
 	private void send(String cmd, int pid, String text) {
 		sendedrequests.put(pid, cmd);
-		send.send(encrypt(StringUtils.join(":", cmd, pid, text)));
+		send(encrypt(StringUtils.join(":", cmd, pid, text)));
 		LogUtil.d("", "Send request : " + cmd + ", pid : " + pid);
 	}
 
@@ -210,49 +177,20 @@ public class Connection {
 		return result;
 	}
 
-	private class SendConnection extends Thread {
-		private final PrintWriter out;
-		private final ConcurrentLinkedQueue<String> queue;
-
-		public SendConnection(PrintWriter out) {
-			this.out = out;
-			this.queue = new ConcurrentLinkedQueue<String>();
-		}
-
-		private void send(String text) {
-			queue.add(text);
-		}
-
-		@Override
-		public void run() {
-			while (running.get()) {
-				try {
-					String text = queue.poll();
-					if (text != null) {
-						out.println(text);
-						out.flush();
-					}
-					Thread.sleep(10);
-				} catch (Exception e) {
-					session.close(true, e.getMessage());
-				}
-			}
+	private void send(String data) {
+		try {
+			socket.send(data);
+		} catch (Exception e) {
+			session.close(true, e.getMessage());
 		}
 	}
 
-	private class ReceiveConnection extends Thread {
-		private final BufferedReader in;
-
-		public ReceiveConnection(BufferedReader in) {
-			this.in = in;
-		}
-
-		@Override
-		public void run() {
-			// Receive public key
+	private void receive(String data) {
+		if (!key_excanged.get()) {
+			// Key Excange
+			key_excanged.set(true);
 			try {
-				String key_s = in.readLine();
-				String[] key_sa = key_s.split(":");
+				String[] key_sa = data.split(":");
 				String modules_s = key_sa[0];
 				String publicExponent_s = key_sa[1];
 
@@ -269,38 +207,63 @@ public class Connection {
 				byte[] common_key_encrypted = cipher.doFinal(key);
 
 				char[] common_key_base64_encoded = Base64Coder.encode(common_key_encrypted);
-				send.send(new String(common_key_base64_encoded));
+				send(new String(common_key_base64_encoded));
 				LogUtil.d("", "Received Public Key.");
 			} catch (Exception e) {
 				e.printStackTrace();
 				session.close(true, e.getMessage());
 			}
-
-			while (running.get()) {
-				try {
-					String inputLine = in.readLine();
-
-					if (inputLine == null) {
-						session.close(true, "Disconnected by server.");
-						break;
-					}
-					String[] command_s = decrypt(inputLine).split(":", 3);
-
-					if (command_s != null) {
-						Command command = Commands.commands.get(command_s[0]);
-						int pid = Integer.parseInt(command_s[1]);
-						LogUtil.d("", "Receive command : " + command_s[0] + ", pid : " + pid);
-						if (command == null) {
-						} else {
-							doCommand(command, pid, command_s[2]);
-						}
-					}
-					Thread.sleep(10);
-				} catch (Exception e) {
-					session.close(true, e.getMessage());
+		} else {
+			try {
+				if (data == null) {
+					session.close(true, "Disconnected by server.");
+					return;
 				}
+				String[] command_s = decrypt(data).split(":", 3);
+
+				if (command_s != null) {
+					Command command = Commands.commands.get(command_s[0]);
+					int pid = Integer.parseInt(command_s[1]);
+					LogUtil.d("", "Receive command : " + command_s[0] + ", pid : " + pid);
+					if (command == null) {
+					} else {
+						doCommand(command, pid, command_s[2]);
+					}
+				}
+				Thread.sleep(10);
+			} catch (Exception e) {
+				session.close(true, e.getMessage());
 			}
 		}
+	}
+
+	private class ClientSocket extends WebSocketClient {
+		public ClientSocket(URI serverUri, Draft draft) {
+			super(serverUri, draft);
+		}
+
+		@Override
+		public void onClose(int arg0, String arg1, boolean remote) {
+			if (remote) {
+				session.close(true, "Disconnected by server.");
+			}
+		}
+
+		@Override
+		public void onError(Exception arg0) {
+			session.close(true, "An error has occurred.\n" + arg0.getClass().toString() + "\n" + arg0.getLocalizedMessage());
+		}
+
+		@Override
+		public void onMessage(String data) {
+			receive(data);
+		}
+
+		@Override
+		public void onOpen(ServerHandshake arg0) {
+			LogUtil.d("", "Connection opened.");
+		}
+
 	}
 
 	private void doCommand(Command command, final int pid, String raw_data) {

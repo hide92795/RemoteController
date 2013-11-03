@@ -1,7 +1,6 @@
 package hide92795.android.remotecontroller;
 
 import hide92795.android.remotecontroller.activity.LoginServerActivity;
-import hide92795.android.remotecontroller.data.ConnectionData;
 import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment;

@@ -1,6 +1,7 @@
-package hide92795.android.remotecontroller.data;
+package hide92795.android.remotecontroller;
 
 import java.io.Serializable;
+import java.net.URI;
 
 public class ConnectionData implements Serializable {
 	private static final long serialVersionUID = -2002235175255239898L;
@@ -41,6 +42,10 @@ public class ConnectionData implements Serializable {
 		this.address = address;
 	}
 
+	public URI getURI() {
+		URI uri = URI.create("ws://" + address + ":" + port);
+		return uri;
+	}
 
 	@Override
 	public String toString() {
