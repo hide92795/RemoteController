@@ -11,18 +11,22 @@ import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
@@ -31,7 +35,6 @@ import com.google.common.primitives.Bytes;
 public class ClientConnection {
 	private final RemoteController plugin;
 	private final Socket socket;
-	private final byte[] key;
 	private final InetAddress address;
 	private AtomicBoolean send_old_log = new AtomicBoolean(false);
 	private AtomicBoolean send_old_chat = new AtomicBoolean(false);
@@ -42,17 +45,23 @@ public class ClientConnection {
 	private AtomicBoolean sendChatLog = new AtomicBoolean(false);
 	private SendConnection send;
 	private ReceiveConnection receive;
+	private RSAPrivateKey privateKey;
+	private RSAPublicKey publicKey;
+	private AtomicReference<byte[]> key;
 
 
 	public ClientConnection(RemoteController plugin, InetAddress address, Socket socket) {
 		this.plugin = plugin;
 		this.socket = socket;
 		this.address = address;
-		this.key = RandomStringUtils.randomAlphabetic(16).getBytes(Charset.forName("UTF-8"));
 	}
 
 	public void close() {
-		plugin.getLogger().info("User \"" + user + "\" has logged off.");
+		if (user == null) {
+			plugin.getLogger().info("The connection has been attempted from " + address.getCanonicalHostName());
+		} else {
+			plugin.getLogger().info("User \"" + user + "\" has logged off.");
+		}
 		running.set(false);
 		plugin.removeConnection(address);
 		if (socket != null) {
@@ -84,9 +93,22 @@ public class ClientConnection {
 			e.printStackTrace();
 			close();
 		}
+		try {
+			KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
+			keygen.initialize(1024);
+			KeyPair keyPair = keygen.generateKeyPair();
 
-		// SendKey
-		send.send(new String(key, Charset.forName("UTF-8")));
+			privateKey = (RSAPrivateKey) keyPair.getPrivate();
+			publicKey = (RSAPublicKey) keyPair.getPublic();
+		} catch (Exception e) {
+			plugin.getLogger().severe("An error has occured in creating RSA key!");
+			e.printStackTrace();
+			close();
+		}
+		// Send public key
+		String modules = publicKey.getModulus().toString();
+		String publicExponent = publicKey.getPublicExponent().toString();
+		send.send(modules + ":" + publicExponent);
 	}
 
 	public void setConsoleLogSendState(boolean send) {
@@ -156,7 +178,7 @@ public class ClientConnection {
 	private String encrypt(String text) {
 		String result = "";
 		try {
-			SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+			SecretKeySpec keySpec = new SecretKeySpec(key.get(), "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
 
@@ -186,7 +208,7 @@ public class ClientConnection {
 			byte[] iv = Arrays.copyOfRange(data, 0, 16);
 			byte[] text_b = Arrays.copyOfRange(data, 16, data.length);
 
-			Key keySpec = new SecretKeySpec(key, "AES");
+			Key keySpec = new SecretKeySpec(key.get(), "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 			cipher.init(Cipher.DECRYPT_MODE, keySpec, ivspec);
@@ -250,6 +272,23 @@ public class ClientConnection {
 
 		@Override
 		public void run() {
+			try {
+				String receive_key = in.readLine();
+				if (receive_key == null) {
+					// Socket Close
+					close();
+					return;
+				}
+				byte[] receive_key_decoded = Base64Coder.decode(receive_key);
+				Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+				cipher.init(Cipher.DECRYPT_MODE, privateKey);
+				ClientConnection.this.key = new AtomicReference<byte[]>(cipher.doFinal(receive_key_decoded));
+				send("REQUEST_AUTH", 0, "");
+			} catch (Exception e) {
+				e.printStackTrace();
+				running.set(false);
+				close();
+			}
 			while (running.get()) {
 				try {
 					String inputLine = in.readLine();

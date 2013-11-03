@@ -11,12 +11,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -34,10 +38,10 @@ public class Connection {
 	public final Requests requests;
 	private final ConcurrentHashMap<Integer, ReceiveListener> listeners;
 	private final ConcurrentHashMap<Integer, String> sendedrequests;
-	private Session session;
+	private final Session session;
 	private AtomicBoolean running = new AtomicBoolean(true);
 	private AtomicBoolean auth = new AtomicBoolean(false);
-	private byte[] key;
+	private final byte[] key;
 	private SendConnection send;
 	private ReceiveConnection receive;
 	private int pid = 1;
@@ -51,6 +55,17 @@ public class Connection {
 		this.connection_data = connection_data;
 		this.listeners = new ConcurrentHashMap<Integer, ReceiveListener>();
 		this.sendedrequests = new ConcurrentHashMap<Integer, String>();
+		// try {
+		// char[] password = UUID.randomUUID().toString().toCharArray();
+		// byte[] salt = new byte[] { 1 };
+		// SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		// KeySpec spec = new PBEKeySpec(password, salt, 65536, 128);
+		// SecretKey tmp = factory.generateSecret(spec);
+		// this.key = tmp.getEncoded();
+		// } catch (Exception e) {
+		// session.close(true, e.getMessage());
+		// }
+		this.key = StringUtils.getRandomString(16).getBytes(Charset.forName("UTF-8"));
 	}
 
 	public void start() {
@@ -119,17 +134,13 @@ public class Connection {
 		}
 	}
 
-	public void setKey(byte[] key) {
-		this.key = key;
-	}
-
 	public void authorize() {
 		this.auth.set(true);
 	}
 
 	private void send(String cmd, int pid, String text) {
 		sendedrequests.put(pid, cmd);
-		send.send(StringUtils.join(":", cmd, pid, text));
+		send.send(encrypt(StringUtils.join(":", cmd, pid, text)));
 		LogUtil.d("", "Send request : " + cmd + ", pid : " + pid);
 	}
 
@@ -182,7 +193,6 @@ public class Connection {
 
 			byte[] resultBytes = cipher.doFinal(text_b);
 			result = new String(resultBytes, Charset.forName("UTF-8"));
-
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -219,7 +229,7 @@ public class Connection {
 				try {
 					String text = queue.poll();
 					if (text != null) {
-						out.println(encrypt(text));
+						out.println(text);
 						out.flush();
 					}
 					Thread.sleep(10);
@@ -239,17 +249,29 @@ public class Connection {
 
 		@Override
 		public void run() {
-			// Key
+			// Receive public key
 			try {
 				String key_s = in.readLine();
-				if (key_s == null) {
-					session.close(true, "Failed to receive encryption key.");
-					return;
-				}
-				setKey(key_s.getBytes(Charset.forName("UTF-8")));
-				LogUtil.d("", "Receive Key.");
-				requests.sendAuthorizeData();
-			} catch (IOException e) {
+				String[] key_sa = key_s.split(":");
+				String modules_s = key_sa[0];
+				String publicExponent_s = key_sa[1];
+
+				BigInteger modules = new BigInteger(modules_s);
+				BigInteger publicExponent = new BigInteger(publicExponent_s);
+
+				RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(modules, publicExponent);
+
+				KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+				RSAPublicKey publicKey = (RSAPublicKey) keyFactory.generatePublic(publicKeySpec);
+
+				Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+				cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+				byte[] common_key_encrypted = cipher.doFinal(key);
+
+				char[] common_key_base64_encoded = Base64Coder.encode(common_key_encrypted);
+				send.send(new String(common_key_base64_encoded));
+				LogUtil.d("", "Received Public Key.");
+			} catch (Exception e) {
 				e.printStackTrace();
 				session.close(true, e.getMessage());
 			}
@@ -303,7 +325,7 @@ public class Connection {
 
 	public class Requests {
 		public void sendAuthorizeData() {
-			send("AUTH", 0, StringUtils.join(":", connection_data.getUsername(), connection_data.getPassword(), "test"));
+			send("AUTH", 0, StringUtils.join(":", connection_data.getUsername(), connection_data.getPassword()));
 		}
 
 		public int requestServerInfo() {

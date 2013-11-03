@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -94,10 +95,8 @@ public class RemoteController extends JavaPlugin {
 	private void createUsage() {
 		usage_user = new Usage(this);
 		usage_reload = new Usage(this);
-		usage_user.addCommand("/remotecontroller-user add <" + localize.getString(Type.USERNAME) + "> <" + localize.getString(Type.PASSWORD) + ">",
-				localize.getString(Type.USAGE_USER_ADD));
-		usage_user
-				.addCommand("/remotecontroller-user remove <" + localize.getString(Type.USERNAME) + ">", localize.getString(Type.USAGE_USER_REMOVE));
+		usage_user.addCommand("/remotecontroller-user add <" + localize.getString(Type.USERNAME) + "> <" + localize.getString(Type.PASSWORD) + ">", localize.getString(Type.USAGE_USER_ADD));
+		usage_user.addCommand("/remotecontroller-user remove <" + localize.getString(Type.USERNAME) + ">", localize.getString(Type.USAGE_USER_REMOVE));
 		usage_user.addCommand("/remotecontroller-user list", localize.getString(Type.USAGE_USER_LIST));
 		usage_reload.addCommand("/remotecontroller-reload", localize.getString(Type.USAGE_RELOAD_SETTING));
 	}
@@ -195,8 +194,16 @@ public class RemoteController extends JavaPlugin {
 
 	private void reload() throws Exception {
 		reloadConfig();
+		String lang = getConfig().getString("Language");
+		if (lang.equals("detect")) {
+			lang = Locale.getDefault().getLanguage();
+			getConfig().set("Language", lang);
+			saveConfig();
+		} else {
+			lang = "en";
+		}
 		try {
-			localize.reload(getConfig().getString("Language"));
+			localize.reload(lang, "en");
 		} catch (Exception e1) {
 			logger.severe("Can't load language file.");
 			try {

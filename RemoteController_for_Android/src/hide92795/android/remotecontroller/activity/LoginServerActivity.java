@@ -123,8 +123,7 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 			switcher.showNext();
 			break;
 		case R.id.btn_login_login_as_exist_connection: {
-			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(),
-					InputMethodManager.HIDE_NOT_ALWAYS);
+			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 			Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
 
 			ConnectionData connection_data = (ConnectionData) spinner.getSelectedItem();
@@ -136,8 +135,7 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 			break;
 		}
 		case R.id.btn_login_login_as_new_connection: {
-			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(),
-					InputMethodManager.HIDE_NOT_ALWAYS);
+			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 			CheckBox save = (CheckBox) findViewById(R.id.checkbox_login_save_connection);
 
 			EditText v_address = (EditText) findViewById(R.id.edittext_login_address);
@@ -198,8 +196,41 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 		String username = v_username.getText().toString();
 		String password = v_password.getText().toString();
 
+		boolean b_address;
+		if (address.length() == 0) {
+			b_address = false;
+		} else {
+			b_address = true;
+		}
+
+		boolean b_port;
+		try {
+			int port_i = Integer.parseInt(port);
+			if (port_i >= 0 && port_i <= 65535) {
+				b_port = true;
+			} else {
+				b_port = false;
+			}
+		} catch (Exception e) {
+			b_port = false;
+		}
+
+		boolean b_username;
+		if (username.length() == 0) {
+			b_username = false;
+		} else {
+			b_username = true;
+		}
+
+		boolean b_password;
+		if (password.length() == 0) {
+			b_password = false;
+		} else {
+			b_password = true;
+		}
+
 		Button btn = (Button) findViewById(R.id.btn_login_login_as_new_connection);
-		if (!address.equals("") && !port.equals("") && !username.equals("") && !password.equals("")) {
+		if (b_address && b_port && b_username && b_password) {
 			btn.setEnabled(true);
 		} else {
 			btn.setEnabled(false);

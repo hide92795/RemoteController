@@ -10,6 +10,7 @@ import hide92795.android.remotecontroller.command.CommandDynmap;
 import hide92795.android.remotecontroller.command.CommandError;
 import hide92795.android.remotecontroller.command.CommandFileOpen;
 import hide92795.android.remotecontroller.command.CommandPlayers;
+import hide92795.android.remotecontroller.command.CommandRequestAuthentication;
 import hide92795.android.remotecontroller.command.CommandServerInfo;
 import hide92795.android.remotecontroller.command.CommandSuccess;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class Commands {
 	public static final HashMap<String, Command> commands;
 	static {
 		commands = new HashMap<String, Command>();
+		commands.put("REQUEST_AUTH", new CommandRequestAuthentication());
 		commands.put("AUTH", new CommandAuthentication());
 		commands.put("SERVER_INFO", new CommandServerInfo());
 		commands.put("CONSOLE", new CommandConsole());

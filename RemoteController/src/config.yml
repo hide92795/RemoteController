@@ -1,4 +1,4 @@
-Language: jp
+Language: detect
 Port: 25570
 MaxLog: 100
 MaxChat: 100
