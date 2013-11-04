@@ -244,13 +244,15 @@ public class RemoteController extends JavaPlugin {
 	}
 
 	private void startServer() {
+		getLogger().info("Starting remote server...");
+		getLogger().info("The server is powered by Java-WebSocket.");
+		getLogger().info("http://java-websocket.org/");
 		server = new RemoteServer(this);
 		server.start();
-		getLogger().info("Starting server...");
 	}
 
 	private void stopServer() {
-		getLogger().info("Stopping server...");
+		getLogger().info("Stopping remote server...");
 		server.stopServer();
 	}
 
