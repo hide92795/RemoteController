@@ -11,7 +11,6 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,8 +23,8 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.java_websocket.WebSocket;
+import org.java_websocket.util.Base64;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-import com.google.common.primitives.Bytes;
 
 public class ClientConnection {
 	private final RemoteController plugin;
@@ -48,7 +47,7 @@ public class ClientConnection {
 		this.address = address;
 	}
 
-	public void close() {
+	public void closed() {
 		if (user == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("The connection has been attempted from \"");
@@ -60,33 +59,23 @@ public class ClientConnection {
 		} else {
 			plugin.getLogger().info("User \"" + user + "\" has logged off.");
 		}
-		plugin.removeConnection(address);
-		if (socket != null) {
-			if (!socket.isClosed()) {
-				try {
-					socket.close();
-				} catch (Exception e) {
-					plugin.getLogger().severe("An error has occured closing connection!");
-					e.printStackTrace();
-				}
-			}
+	}
+
+	private void close() {
+		if (socket != null && (socket.isClosing() || socket.isClosed())) {
+			socket.close();
 			socket = null;
 		}
 	}
 
-	public void start() {
-		try {
-			KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
-			keygen.initialize(1024);
-			KeyPair keyPair = keygen.generateKeyPair();
+	public void start() throws Exception {
+		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
+		keygen.initialize(1024);
+		KeyPair keyPair = keygen.generateKeyPair();
 
-			privateKey = (RSAPrivateKey) keyPair.getPrivate();
-			publicKey = (RSAPublicKey) keyPair.getPublic();
-		} catch (Exception e) {
-			plugin.getLogger().severe("An error has occured in creating RSA key!");
-			e.printStackTrace();
-			close();
-		}
+		privateKey = (RSAPrivateKey) keyPair.getPrivate();
+		publicKey = (RSAPublicKey) keyPair.getPublic();
+
 		// Send public key
 		String modules = publicKey.getModulus().toString();
 		String publicExponent = publicKey.getPublicExponent().toString();
@@ -161,9 +150,12 @@ public class ClientConnection {
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
 
 			byte[] iv = cipher.getIV();
-			byte[] result_b = cipher.doFinal(text.getBytes(Charset.forName("UTF-8")));
+			byte[] encrypted = cipher.doFinal(text.getBytes(Charset.forName("UTF-8")));
 
-			result = new String(Base64Coder.encode(Bytes.concat(iv, result_b)));
+			String iv_b64 = String.valueOf(Base64Coder.encode(iv));
+			String encrypted_b64 = String.valueOf(Base64Coder.encode(encrypted));
+
+			result = iv_b64 + ":" + encrypted_b64;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -175,25 +167,26 @@ public class ClientConnection {
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		}
-
 		return result;
 	}
 
 	private String decrypt(String text) {
 		String result = "";
 		try {
-			byte[] data = Base64Coder.decode(text);
-			byte[] iv = Arrays.copyOfRange(data, 0, 16);
-			byte[] text_b = Arrays.copyOfRange(data, 16, data.length);
+			String[] datas = text.split(":");
+			String iv_b64 = datas[0];
+			String encrypted_b64 = datas[1];
+
+			byte[] iv = Base64Coder.decode(iv_b64);
+			byte[] encrypted = Base64Coder.decode(encrypted_b64);
 
 			Key keySpec = new SecretKeySpec(key.get(), "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 			cipher.init(Cipher.DECRYPT_MODE, keySpec, ivspec);
 
-			byte[] resultBytes = cipher.doFinal(text_b);
+			byte[] resultBytes = cipher.doFinal(encrypted);
 			result = new String(resultBytes, Charset.forName("UTF-8"));
-
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -233,7 +226,10 @@ public class ClientConnection {
 				byte[] receive_key_decoded = Base64Coder.decode(data);
 				Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 				cipher.init(Cipher.DECRYPT_MODE, privateKey);
-				ClientConnection.this.key = new AtomicReference<byte[]>(cipher.doFinal(receive_key_decoded));
+				byte[] key_b64 = cipher.doFinal(receive_key_decoded);
+				byte[] key = Base64.decode(key_b64);
+
+				ClientConnection.this.key = new AtomicReference<byte[]>(key);
 				send("REQUEST_AUTH", 0, "");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -243,7 +239,7 @@ public class ClientConnection {
 			try {
 				if (data == null) {
 					// Socket Close
-					close();
+					closed();
 					return;
 				}
 				final String[] command_s = decrypt(data).split(":", 3);
@@ -265,7 +261,7 @@ public class ClientConnection {
 					}
 				}
 			} catch (Exception e) {
-				close();
+				closed();
 			}
 		}
 

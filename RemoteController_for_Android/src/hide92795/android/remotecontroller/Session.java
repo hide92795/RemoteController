@@ -80,8 +80,9 @@ public class Session extends Application {
 
 	public synchronized void close(boolean moveActivity, final String reason) {
 		if (connection != null) {
-			connection.close();
+			Connection conn = this.connection;
 			connection = null;
+			conn.close();
 			if (moveActivity) {
 				handler.post(new Runnable() {
 					@Override

@@ -14,21 +14,27 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.KeySpec;
 import java.security.spec.RSAPublicKeySpec;
-import java.util.Arrays;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
+import org.java_websocket.util.Base64;
 
 
 public class Connection {
@@ -38,7 +44,7 @@ public class Connection {
 	private final Session session;
 	private AtomicBoolean key_excanged = new AtomicBoolean(false);
 	private AtomicBoolean auth = new AtomicBoolean(false);
-	private final byte[] key;
+	private byte[] key;
 	private int pid = 1;
 	private ClientSocket socket;
 	private final ConnectionData connection_data;
@@ -50,17 +56,7 @@ public class Connection {
 		this.connection_data = connection_data;
 		this.listeners = new ConcurrentHashMap<Integer, ReceiveListener>();
 		this.sendedrequests = new ConcurrentHashMap<Integer, String>();
-		// try {
-		// char[] password = UUID.randomUUID().toString().toCharArray();
-		// byte[] salt = new byte[] { 1 };
-		// SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		// KeySpec spec = new PBEKeySpec(password, salt, 65536, 128);
-		// SecretKey tmp = factory.generateSecret(spec);
-		// this.key = tmp.getEncoded();
-		// } catch (Exception e) {
-		// session.close(true, e.getMessage());
-		// }
-		this.key = StringUtils.getRandomString(16).getBytes(Charset.forName("UTF-8"));
+		// this.key = StringUtils.getRandomString(16).getBytes(Charset.forName("UTF-8"));
 	}
 
 	public void start() {
@@ -124,13 +120,12 @@ public class Connection {
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
 
 			byte[] iv = cipher.getIV();
-			byte[] result_b = cipher.doFinal(text.getBytes(Charset.forName("UTF-8")));
+			byte[] encrypted = cipher.doFinal(text.getBytes(Charset.forName("UTF-8")));
 
-			byte[] data = new byte[iv.length + result_b.length];
-			System.arraycopy(iv, 0, data, 0, iv.length);
-			System.arraycopy(result_b, 0, data, iv.length, result_b.length);
+			String iv_b64 = String.valueOf(Base64Coder.encode(iv));
+			String encrypted_b64 = String.valueOf(Base64Coder.encode(encrypted));
 
-			result = new String(Base64Coder.encode(data));
+			result = iv_b64 + ":" + encrypted_b64;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -149,17 +144,21 @@ public class Connection {
 	private String decrypt(String text) {
 		String result = "";
 		try {
-			byte[] data = Base64Coder.decode(text);
-			byte[] iv = Arrays.copyOfRange(data, 0, 16);
-			byte[] text_b = Arrays.copyOfRange(data, 16, data.length);
+			String[] datas = text.split(":");
+
+			String iv_b64 = datas[0];
+			String encrypted_b64 = datas[1];
+
+			byte[] iv = Base64Coder.decode(iv_b64);
+			byte[] text_b = Base64Coder.decode(encrypted_b64);
 
 			Key keySpec = new SecretKeySpec(key, "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 			cipher.init(Cipher.DECRYPT_MODE, keySpec, ivspec);
 
-			byte[] resultBytes = cipher.doFinal(text_b);
-			result = new String(resultBytes, Charset.forName("UTF-8"));
+			byte[] decrypted = cipher.doFinal(text_b);
+			result = new String(decrypted, Charset.forName("UTF-8"));
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -190,9 +189,9 @@ public class Connection {
 			// Key Excange
 			key_excanged.set(true);
 			try {
-				String[] key_sa = data.split(":");
-				String modules_s = key_sa[0];
-				String publicExponent_s = key_sa[1];
+				String[] rsa_key_sa = data.split(":");
+				String modules_s = rsa_key_sa[0];
+				String publicExponent_s = rsa_key_sa[1];
 
 				BigInteger modules = new BigInteger(modules_s);
 				BigInteger publicExponent = new BigInteger(publicExponent_s);
@@ -204,10 +203,24 @@ public class Connection {
 
 				Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 				cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-				byte[] common_key_encrypted = cipher.doFinal(key);
 
+				// Gen key
+				try {
+					char[] password = UUID.randomUUID().toString().toCharArray();
+					SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+					byte[] salt = new byte[16];
+					random.nextBytes(salt);
+					SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+					KeySpec spec = new PBEKeySpec(password, salt, 10, 128);
+					SecretKey tmp = factory.generateSecret(spec);
+					this.key = tmp.getEncoded();
+				} catch (Exception e) {
+					session.close(true, e.getMessage());
+				}
+				byte[] common_key_base64 = Base64.encodeBytesToBytes(key);
+				byte[] common_key_encrypted = cipher.doFinal(common_key_base64);
 				char[] common_key_base64_encoded = Base64Coder.encode(common_key_encrypted);
-				send(new String(common_key_base64_encoded));
+				send(String.valueOf(common_key_base64_encoded));
 				LogUtil.d("", "Received Public Key.");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -244,9 +257,7 @@ public class Connection {
 
 		@Override
 		public void onClose(int arg0, String arg1, boolean remote) {
-			if (remote) {
-				session.close(true, "Disconnected by server.");
-			}
+			session.close(true, "Disconnected by server.");
 		}
 
 		@Override

@@ -13,6 +13,3 @@ commands:
   remotecontroller-user:
     permission: remotecontroller.user
     aliases: [rcu]
-  remotecontroller-reload:
-    permission: remotecontroller.reload
-    aliases: [rcr]

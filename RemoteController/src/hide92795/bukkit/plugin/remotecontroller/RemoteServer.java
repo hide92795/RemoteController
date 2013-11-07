@@ -22,31 +22,36 @@ public class RemoteServer extends WebSocketServer {
 	@Override
 	public void onOpen(WebSocket client_socket, ClientHandshake handshake) {
 		InetSocketAddress clientAddress = client_socket.getRemoteSocketAddress();
-		plugin.getLogger().info("Connection start. (" + clientAddress.getAddress().getCanonicalHostName() + ")");
+		plugin.getLogger().info("Connection start. (" + clientAddress.getAddress().getHostAddress() + ")");
 		if (clients.containsKey(clientAddress)) {
-			clients.get(clientAddress).close();
+			clients.get(clientAddress).closed();
 		}
 		ClientConnection client = new ClientConnection(plugin, clientAddress, client_socket);
-		client.start();
-		clients.put(clientAddress, client);
+		try {
+			client.start();
+			clients.put(clientAddress, client);
+		} catch (Exception e) {
+			plugin.getLogger().severe("An erro has occurred in creating RSA key.");
+		}
 	}
 
 	@Override
 	public void onClose(WebSocket client_socket, int code, String reason, boolean remote) {
 		InetSocketAddress clientAddress = client_socket.getRemoteSocketAddress();
-		if (clients.containsKey(clientAddress)) {
-			clients.get(clientAddress).close();
+		ClientConnection client = clients.remove(clientAddress);
+		if (client != null) {
+			client.closed();
 		}
 	}
 
 	@Override
 	public void onError(WebSocket client_socket, Exception ex) {
-		InetSocketAddress clientAddress = client_socket.getRemoteSocketAddress();
-		if (clients.containsKey(clientAddress)) {
-			clients.get(clientAddress).close();
+		if (client_socket != null) {
+			plugin.getLogger().warning("An error has occured in the connection. : " + client_socket.getRemoteSocketAddress().getAddress().getHostAddress());
+		} else {
+			plugin.getLogger().warning("An internal error has occurred.");
 		}
-		plugin.getLogger().warning("The connection is stopped by error.");
-		ex.printStackTrace();
+		plugin.getLogger().warning(ex.getLocalizedMessage());
 	}
 
 	@Override
@@ -58,11 +63,6 @@ public class RemoteServer extends WebSocketServer {
 	}
 
 	public void stopServer() {
-		for (InetSocketAddress key : clients.keySet()) {
-			clients.get(key).close();
-			clients.remove(key);
-		}
-
 		try {
 			stop();
 		} catch (Exception e) {
