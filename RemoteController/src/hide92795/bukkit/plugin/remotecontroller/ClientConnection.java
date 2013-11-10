@@ -1,6 +1,9 @@
 package hide92795.bukkit.plugin.remotecontroller;
 
 import hide92795.bukkit.plugin.remotecontroller.command.Command;
+import hide92795.bukkit.plugin.remotecontroller.compatibility.CommandDispatcher;
+import hide92795.bukkit.plugin.remotecontroller.compatibility.CommandDispatcherWithBukkitRunnable;
+import hide92795.bukkit.plugin.remotecontroller.org.apache.commons.lang3.StringUtils;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
@@ -20,8 +23,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.lang3.StringUtils;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.java_websocket.WebSocket;
 import org.java_websocket.util.Base64;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
@@ -40,6 +41,23 @@ public class ClientConnection {
 	private RSAPublicKey publicKey;
 	private AtomicReference<byte[]> key;
 
+	private static final CommandDispatcher COMMAND_DISPATCHER;
+	static {
+		if (isAvailableBukkitRunnable()) {
+			COMMAND_DISPATCHER = new CommandDispatcherWithBukkitRunnable();
+		} else {
+			COMMAND_DISPATCHER = new CommandDispatcher();
+		}
+	}
+
+	private static boolean isAvailableBukkitRunnable() {
+		try {
+			Class.forName("org.bukkit.scheduler.BukkitRunnable");
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	public ClientConnection(RemoteController plugin, InetSocketAddress address, WebSocket socket) {
 		this.plugin = plugin;
@@ -249,16 +267,7 @@ public class ClientConnection {
 				if (command == null) {
 					send("ERROR", pid, "UK_CMD");
 				} else {
-					if (command.mustRunOnMainThread()) {
-						new BukkitRunnable() {
-							@Override
-							public void run() {
-								command.doCommand(plugin, ClientConnection.this, pid, command_s[2]);
-							}
-						}.runTaskLater(plugin, 0);
-					} else {
-						command.doCommand(plugin, ClientConnection.this, pid, command_s[2]);
-					}
+					COMMAND_DISPATCHER.dispatch(command, plugin, this, pid, command_s[2]);
 				}
 			} catch (Exception e) {
 				closed();

@@ -2,8 +2,8 @@ package hide92795.bukkit.plugin.remotecontroller.command;
 
 import hide92795.bukkit.plugin.remotecontroller.ClientConnection;
 import hide92795.bukkit.plugin.remotecontroller.RemoteController;
+import hide92795.bukkit.plugin.remotecontroller.org.apache.commons.io.FileUtils;
 import java.io.File;
-import org.apache.commons.io.FileUtils;
 
 public class CommandFileDelete implements Command {
 	@Override

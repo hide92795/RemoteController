@@ -31,7 +31,7 @@ public class RemoteServer extends WebSocketServer {
 			client.start();
 			clients.put(clientAddress, client);
 		} catch (Exception e) {
-			plugin.getLogger().severe("An erro has occurred in creating RSA key.");
+			plugin.getLogger().severe("An error has occurred in creating RSA key.");
 		}
 	}
 
@@ -49,9 +49,9 @@ public class RemoteServer extends WebSocketServer {
 		if (client_socket != null) {
 			plugin.getLogger().warning("An error has occured in the connection. : " + client_socket.getRemoteSocketAddress().getAddress().getHostAddress());
 		} else {
-			plugin.getLogger().warning("An internal error has occurred.");
+			plugin.getLogger().severe("An internal error has occurred.");
 		}
-		plugin.getLogger().warning(ex.getLocalizedMessage());
+		plugin.getLogger().warning(ex.toString());
 	}
 
 	@Override

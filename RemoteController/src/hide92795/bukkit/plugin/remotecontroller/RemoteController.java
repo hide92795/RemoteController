@@ -6,7 +6,8 @@ import hide92795.bukkit.plugin.remotecontroller.api.AdditionalInfo;
 import hide92795.bukkit.plugin.remotecontroller.api.AdditionalInfoCreator;
 import hide92795.bukkit.plugin.remotecontroller.api.RemoteControllerAPI;
 import hide92795.bukkit.plugin.remotecontroller.listener.BroadcastListener;
-import hide92795.bukkit.plugin.remotecontroller.listener.ChatListener;
+import hide92795.bukkit.plugin.remotecontroller.listener.ChatListenerWithAsyncPlayerChatEvent;
+import hide92795.bukkit.plugin.remotecontroller.listener.ChatListenerWithPlayerChatEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -85,9 +86,16 @@ public class RemoteController extends JavaPlugin {
 			chat_event_type_is_broadcast = true;
 			logger.info("Start redirect chat log with ServerBroadcastEvent.");
 		} catch (Exception e) {
-			getServer().getPluginManager().registerEvents(new ChatListener(this), this);
-			chat_event_type_is_broadcast = false;
-			logger.info("Start redirect chat log with AsyncPlayerChatEvent.");
+			try {
+				Class.forName("org.bukkit.event.player.AsyncPlayerChatEvent");
+				getServer().getPluginManager().registerEvents(new ChatListenerWithAsyncPlayerChatEvent(this), this);
+				chat_event_type_is_broadcast = false;
+				logger.info("Start redirect chat log with AsyncPlayerChatEvent.");
+			} catch (Exception e2) {
+				getServer().getPluginManager().registerEvents(new ChatListenerWithPlayerChatEvent(this), this);
+				chat_event_type_is_broadcast = false;
+				logger.info("Start redirect chat log with PlayerChatEvent.");
+			}
 		}
 	}
 

@@ -13,7 +13,7 @@ public class CommandAuthentication implements Command {
 	@Override
 	public ReceiveData doCommand(final Connection connection, int pid, String arg) {
 		String[] args = arg.split(":");
-		if (args[0].equals("OK") && args.length == 3) {
+		if (args.length == 3 && args[0].equals("OK")) {
 			final String version = args[1];
 			MinecraftVersion server_minecraft_version = MinecraftVersion.getByVersion(args[2]);
 			connection.getSession().getServerInfo().setServerMinecraftVersion(server_minecraft_version);

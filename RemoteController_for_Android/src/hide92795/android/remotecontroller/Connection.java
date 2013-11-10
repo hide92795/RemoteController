@@ -205,18 +205,15 @@ public class Connection {
 				cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
 				// Gen key
-				try {
-					char[] password = UUID.randomUUID().toString().toCharArray();
-					SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-					byte[] salt = new byte[16];
-					random.nextBytes(salt);
-					SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-					KeySpec spec = new PBEKeySpec(password, salt, 10, 128);
-					SecretKey tmp = factory.generateSecret(spec);
-					this.key = tmp.getEncoded();
-				} catch (Exception e) {
-					session.close(true, e.getMessage());
-				}
+				char[] password = UUID.randomUUID().toString().toCharArray();
+				SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+				byte[] salt = new byte[16];
+				random.nextBytes(salt);
+				SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+				KeySpec spec = new PBEKeySpec(password, salt, 10, 128);
+				SecretKey tmp = factory.generateSecret(spec);
+				this.key = tmp.getEncoded();
+
 				byte[] common_key_base64 = Base64.encodeBytesToBytes(key);
 				byte[] common_key_encrypted = cipher.doFinal(common_key_base64);
 				char[] common_key_base64_encoded = Base64Coder.encode(common_key_encrypted);

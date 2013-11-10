@@ -2,7 +2,7 @@ package hide92795.bukkit.plugin.remotecontroller.command;
 
 import hide92795.bukkit.plugin.remotecontroller.ClientConnection;
 import hide92795.bukkit.plugin.remotecontroller.RemoteController;
-import org.apache.commons.lang3.StringUtils;
+import hide92795.bukkit.plugin.remotecontroller.org.apache.commons.lang3.StringUtils;
 
 public class CommandPlayers implements Command {
 
