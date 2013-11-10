@@ -178,6 +178,7 @@
                 android:id="@+id/textView24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="web"
                 android:text="@string/info_Java_WebSocket_url"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 

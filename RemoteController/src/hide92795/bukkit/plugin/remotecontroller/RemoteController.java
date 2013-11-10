@@ -42,7 +42,6 @@ public class RemoteController extends JavaPlugin {
 	private ArrayList<AdditionalInfoCreator> additional_info_creators;
 	private RemoteControllerAPI api;
 	private Usage usage_user;
-	private Usage usage_reload;
 	private boolean chat_event_type_is_broadcast;
 
 	@Override
@@ -101,11 +100,9 @@ public class RemoteController extends JavaPlugin {
 
 	private void createUsage() {
 		usage_user = new Usage(this);
-		usage_reload = new Usage(this);
 		usage_user.addCommand("/remotecontroller-user add <" + localize.getString(Type.USERNAME) + "> <" + localize.getString(Type.PASSWORD) + ">", localize.getString(Type.USAGE_USER_ADD));
 		usage_user.addCommand("/remotecontroller-user remove <" + localize.getString(Type.USERNAME) + ">", localize.getString(Type.USAGE_USER_REMOVE));
 		usage_user.addCommand("/remotecontroller-user list", localize.getString(Type.USAGE_USER_LIST));
-		usage_reload.addCommand("/remotecontroller-reload", localize.getString(Type.USAGE_RELOAD_SETTING));
 	}
 
 	@Override
@@ -118,7 +115,6 @@ public class RemoteController extends JavaPlugin {
 		switch (command.getName().toLowerCase()) {
 		case "remotecontroller":
 			sender.sendMessage(usage_user.toString());
-			sender.sendMessage(usage_reload.toString());
 			break;
 		case "remotecontroller-user":
 			if (args.length == 0) {
