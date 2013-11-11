@@ -18,7 +18,7 @@ public class NotRecommendedVersionServerDialogFragment extends DialogFragment {
 		} else if (getActivity() != null && getActivity() instanceof Callback) {
 			callback = (Callback) getActivity();
 		} else {
-			throw new RuntimeException("Caller activity must implemants Callback!");
+			throw new RuntimeException("Caller activity must implement callback!");
 		}
 		Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(R.string.info_app_name);
