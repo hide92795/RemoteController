@@ -16,4 +16,5 @@ public class ConfigDefaults {
 	public static final String CHAT_FONT_SIZE = "18";
 	public static final int CHAT_BACKGOUND_COLOR = Color.WHITE;
 	public static final int CHAT_FONT_COLOR = Color.BLACK;
+	public static final boolean SAVE_LOG = false;
 }

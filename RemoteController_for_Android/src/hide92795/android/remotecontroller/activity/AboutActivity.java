@@ -13,7 +13,7 @@ public class AboutActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("AboutActivity", "onCreate");
+		LogUtil.d("AboutActivity#onCreate()");
 		setContentView(R.layout.activity_about);
 
 		TextView version = (TextView) findViewById(R.id.text_about_version);
@@ -59,6 +59,6 @@ public class AboutActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("AboutActivity", "onDestroy");
+		LogUtil.d("AboutActivity#onDestroy()");
 	}
 }

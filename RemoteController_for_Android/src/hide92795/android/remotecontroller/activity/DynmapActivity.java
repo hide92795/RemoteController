@@ -19,7 +19,7 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("DynmapActivity", "onCreate()");
+		LogUtil.d("DynmapActivity#onCreate()");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_dynmap);
 		startLoad();
@@ -27,7 +27,7 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 
 	@SuppressLint("SetJavaScriptEnabled")
 	private void startLoad() {
-		LogUtil.d("DynmapActivity", "onResume()");
+		LogUtil.d("DynmapActivity#onResume()");
 		DynmapData data = ((Session) getApplication()).getServerInfo().getDynmapData();
 		if (data != null) {
 			String address = ((Session) getApplication()).getConnection().getServerAddress();
@@ -66,7 +66,7 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("DynmapActivity", "onDestroy()");
+		LogUtil.d("DynmapActivity#onDestroy()");
 	}
 
 	@Override

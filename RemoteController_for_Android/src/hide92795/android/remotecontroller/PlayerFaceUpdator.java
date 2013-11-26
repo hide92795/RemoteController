@@ -24,17 +24,18 @@ public class PlayerFaceUpdator extends AsyncTask<String, Void, Void> {
 	protected Void doInBackground(String... params) {
 		for (String username : params) {
 			if (face_manager.existFace(username)) {
-				LogUtil.d("", "Skip loading skin. Username: \"" + username + "\"");
+				LogUtil.d("Skip loading skin. Username: \"" + username + "\"");
 				continue;
 			}
-			LogUtil.d("", "Start loading skin. Username: \"" + username + "\"");
+			LogUtil.d("Start loading skin. Username: \"" + username + "\"");
 			Bitmap image = null;
 			try {
 				URL url = new URL(this.url.replace("%player%", username));
 				InputStream inputStream = url.openStream();
 				image = BitmapFactory.decodeStream(inputStream);
 			} catch (Exception e) {
-				LogUtil.d("", "An error has occurred loading skin. Username: \"" + username + "\", Reason : " + e);
+				LogUtil.d("An error has occurred loading skin. Username: \"" + username + "\", Reason : " + e.toString());
+				LogUtil.exception(e);
 				face_manager.addFaceDefault(username);
 				continue;
 			}

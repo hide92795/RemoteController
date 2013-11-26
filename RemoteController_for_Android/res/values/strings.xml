@@ -144,5 +144,11 @@
     <string name="str_desc_chat_font_color">Select chat font color.</string>
     <string name="str_desc_chat_font_size">Select chat font size.</string>
     <string name="str_dynmap">Dynmap</string>
+    <string name="str_log">Log</string>
+    <string name="str_save_log">Save log</string>
+    <string name="str_save_log_desc">Choose whether to save the log to file.</string>
+    <string name="str_copy_log_dir">Copy log directory path</string>
+    <string name="str_copied">Copied</string>
+    <string name="str_cant_copy">Could\'t copy</string>
 
 </resources>

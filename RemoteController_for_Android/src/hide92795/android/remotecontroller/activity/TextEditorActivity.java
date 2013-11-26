@@ -3,8 +3,8 @@ package hide92795.android.remotecontroller.activity;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.receivedata.FileData;
 import hide92795.android.remotecontroller.ui.dialog.CharsetDialogFragment;
-import hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment;
 import hide92795.android.remotecontroller.ui.dialog.CharsetDialogFragment.Callback;
+import hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,15 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-public class TextEditorActivity extends FragmentActivity implements Callback,
-		hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment.Callback {
+public class TextEditorActivity extends FragmentActivity implements Callback, hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment.Callback {
 	private FileData old_data;
 	private FileData new_data;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		LogUtil.d("TextEditorActivity", "onCreate()");
+		LogUtil.d("TextEditorActivity#onCreate()");
 		setContentView(R.layout.activity_text_editor);
 		setListener();
 		setData();
@@ -61,7 +60,7 @@ public class TextEditorActivity extends FragmentActivity implements Callback,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("TextEditorActivity", "onDestroy()");
+		LogUtil.d("TextEditorActivity#onDestroy()");
 	}
 
 	@Override

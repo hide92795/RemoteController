@@ -25,7 +25,7 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_select);
-		LogUtil.d("ItemSelectActivity", "onCreate()");
+		LogUtil.d("ItemSelectActivity#onCreate()");
 		setListener();
 	}
 
@@ -83,7 +83,7 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("ItemSelectActivity", "onDestroy()");
+		LogUtil.d("ItemSelectActivity#onDestroy()");
 	}
 
 	@Override
@@ -98,6 +98,5 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 			setResult(RESULT_OK, i);
 			finish();
 		}
-
 	}
 }

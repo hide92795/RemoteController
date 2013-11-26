@@ -5,10 +5,10 @@ import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
 import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.receivedata.DirectoryData;
+import hide92795.android.remotecontroller.receivedata.DirectoryData.File;
 import hide92795.android.remotecontroller.receivedata.ErrorData;
 import hide92795.android.remotecontroller.receivedata.FileData;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
-import hide92795.android.remotecontroller.receivedata.DirectoryData.File;
 import hide92795.android.remotecontroller.ui.adapter.FileListAdapter;
 import hide92795.android.remotecontroller.ui.dialog.CharsetDialogFragment;
 import hide92795.android.remotecontroller.ui.dialog.FileDeleteDialogFragment;
@@ -31,9 +31,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EditFileActivity extends FragmentActivity implements ReceiveListener, OnItemLongClickListener, OnItemClickListener,
-		FileHandleDialogFragment.Callback, CharsetDialogFragment.Callback, FileRenameDialogFragment.Callback, FileDeleteDialogFragment.Callback,
-		MkDialogFragment.Callback {
+public class EditFileActivity extends FragmentActivity implements ReceiveListener, OnItemLongClickListener, OnItemClickListener, FileHandleDialogFragment.Callback, CharsetDialogFragment.Callback,
+		FileRenameDialogFragment.Callback, FileDeleteDialogFragment.Callback, MkDialogFragment.Callback {
 	private static final int REQUEST_CODE = 22;
 	private FileListAdapter adapter;
 	private String current_directory;
@@ -41,7 +40,7 @@ public class EditFileActivity extends FragmentActivity implements ReceiveListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("EditFileActivity", "onCreate()");
+		LogUtil.d("EditFileActivity#onCreate()");
 		setContentView(R.layout.activity_editfile);
 		setListener();
 		moveDirectory("");
@@ -58,7 +57,7 @@ public class EditFileActivity extends FragmentActivity implements ReceiveListene
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("EditFileActivity", "onDestroy()");
+		LogUtil.d("EditFileActivity#onDestroy()");
 	}
 
 	@Override
@@ -131,7 +130,6 @@ public class EditFileActivity extends FragmentActivity implements ReceiveListene
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				LogUtil.d("", "EDITED");
 				FileData new_data = intent.getParcelableExtra("FILE");
 				Connection connection = ((Session) getApplication()).getConnection();
 				int pid = connection.requests.requestFileEdit(new_data);

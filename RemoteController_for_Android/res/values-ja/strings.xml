@@ -144,5 +144,11 @@
     <string name="str_desc_chat_font_color">チャット画面のフォント色を選択します。</string>
     <string name="str_desc_chat_font_size">チャット画面のフォントサイズを選択します。</string>
     <string name="str_dynmap">Dynmap</string>
+    <string name="str_log">ログ</string>
+    <string name="str_save_log">ログを保存</string>
+    <string name="str_save_log_desc">ログをファイルに保存するかを選択します。</string>
+    <string name="str_copy_log_dir">保存フォルダのパスをコピー</string>
+    <string name="str_copied">コピーしました</string>
+    <string name="str_cant_copy">コピー出来ませんでした</string>
 
 </resources>

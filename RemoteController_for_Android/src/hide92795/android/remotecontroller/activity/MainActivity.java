@@ -8,8 +8,7 @@ import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.receivedata.DynmapData;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.receivedata.ServerData;
-import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerDialogFragment;
-import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerDialogFragment.Callback;
+import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,40 +23,18 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements OnClickListener, ReceiveListener, Callback {
+public class MainActivity extends FragmentActivity implements OnClickListener, ReceiveListener {
 	private boolean first_show = true;
 	private InitialReceive initial_receive;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("MainActivity", "onCreate()");
+		LogUtil.d("MainActivity#onCreate()");
 		setContentView(R.layout.activity_main);
 		setListener();
-
 		initial_receive = new InitialReceive();
-		// Check version
-		boolean recommend_server = getIntent().getExtras().getBoolean("RECOMMENDED_SERVER_VERSION");
-		if (!recommend_server) {
-			NotRecommendedVersionServerDialogFragment dialog = new NotRecommendedVersionServerDialogFragment();
-			dialog.show(getSupportFragmentManager(), "not_recommended_version_server_dialog");
-		} else {
-			initRequest();
-		}
-	}
-
-	@Override
-	public void onDialogClicked(boolean select_continue) {
-		if (select_continue) {
-			initRequest();
-		} else {
-			((Session) getApplication()).close(false, null);
-			((Session) getApplication()).showProgressDialog(this, false, null);
-			Intent intent = new Intent(this, LoginServerActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra("MODE", "DISCONNECT_BY_OWN");
-			startActivity(intent);
-		}
+		initRequest();
 	}
 
 	private void initRequest() {
@@ -76,13 +53,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("MainActivity", "onDestroy()");
+		LogUtil.d("MainActivity#onDestroy()");
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LogUtil.d("MainActivity", "onResume()");
+		LogUtil.d("MainActivity#onResume()");
 		if (first_show) {
 			first_show = false;
 		} else {
@@ -92,7 +69,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 				connection.addListener(pid, this);
 			}
 		}
-
 	}
 
 	@Override
@@ -121,7 +97,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			Intent intent = new Intent(this, LoginServerActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra("MODE", "DISCONNECT_BY_OWN");
+			Bundle data = new Bundle();
+			data.putInt("MODE", DisconnectDialogFragment.DISCONNECT_BY_OWN);
+			intent.putExtra("DISCONNECT", data);
 			startActivity(intent);
 			return true;
 		}

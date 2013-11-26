@@ -181,7 +181,6 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 		if (selectorthread != null)
 			throw new IllegalStateException(getClass().getName() + " can only be started once.");
 		new Thread(this).start();
-		;
 	}
 
 	/**
@@ -278,7 +277,6 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 			server = ServerSocketChannel.open();
 			server.configureBlocking(false);
 			ServerSocket socket = server.socket();
-			socket.setReuseAddress(true);
 			socket.setReceiveBufferSize(WebSocketImpl.RCVBUF);
 			socket.bind(address);
 			selector = Selector.open();

@@ -3,7 +3,6 @@ package org.java_websocket;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.NotYetConnectedException;
-
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.framing.Framedata;
 import org.java_websocket.framing.Framedata.Opcode;
@@ -30,9 +29,9 @@ public interface WebSocket {
 	 * sends the closing handshake.
 	 * may be send in response to an other handshake.
 	 */
-	public void close( int code, String message );
+	public void close(int code, String message);
 
-	public void close( int code );
+	public void close(int code);
 
 	/** Convenience function which behaves like close(CloseFrame.NORMAL) */
 	public void close();
@@ -41,7 +40,7 @@ public interface WebSocket {
 	 * This will close the connection immediately without a proper close handshake.
 	 * The code and the message therefore won't be transfered over the wire also they will be forwarded to onClose/onWebsocketClose.
 	 **/
-	public abstract void closeConnection( int code, String message );
+	public abstract void closeConnection(int code, String message);
 
 	/**
 	 * Send Text data to the other end.
@@ -49,7 +48,7 @@ public interface WebSocket {
 	 * @throws IllegalArgumentException
 	 * @throws NotYetConnectedException
 	 */
-	public abstract void send( String text ) throws NotYetConnectedException;
+	public abstract void send(String text) throws NotYetConnectedException;
 
 	/**
 	 * Send Binary data (plain bytes) to the other end.
@@ -57,16 +56,15 @@ public interface WebSocket {
 	 * @throws IllegalArgumentException
 	 * @throws NotYetConnectedException
 	 */
-	public abstract void send( ByteBuffer bytes ) throws IllegalArgumentException , NotYetConnectedException;
+	public abstract void send(ByteBuffer bytes) throws IllegalArgumentException, NotYetConnectedException;
 
-	public abstract void send( byte[] bytes ) throws IllegalArgumentException , NotYetConnectedException;
+	public abstract void send(byte[] bytes) throws IllegalArgumentException, NotYetConnectedException;
 
-	public abstract void sendFrame( Framedata framedata );
+	public abstract void sendFrame(Framedata framedata);
 
 	/**
 	 * Allows to send continuous/fragmented frames conveniently. <br>
 	 * For more into on this frame type see http://tools.ietf.org/html/rfc6455#section-5.4<br>
-	 * 
 	 * If the first frame you send is also the last then it is not a fragmented frame and will received via onMessage instead of onFragmented even though it was send by this method.
 	 * 
 	 * @param op
@@ -76,7 +74,7 @@ public interface WebSocket {
 	 * @param fin
 	 *            true means the current frame is the last in the sequence.
 	 **/
-	public abstract void sendFragmentedFrame( Opcode op, ByteBuffer buffer, boolean fin );
+	public abstract void sendFragmentedFrame(Opcode op, ByteBuffer buffer, boolean fin);
 
 	public abstract boolean hasBufferedData();
 
@@ -115,10 +113,16 @@ public interface WebSocket {
 	 * @return Returns '0 = CONNECTING', '1 = OPEN', '2 = CLOSING' or '3 = CLOSED'
 	 */
 	public abstract READYSTATE getReadyState();
-	
+
 	/**
 	 * Returns the HTTP Request-URI as defined by http://tools.ietf.org/html/rfc2616#section-5.1.2<br>
 	 * If the opening handshake has not yet happened it will return null.
 	 **/
 	public abstract String getResourceDescriptor();
+
+	// ORIGINAL
+	public abstract void setID(int id);
+
+	public abstract int getID();
+	// END
 }

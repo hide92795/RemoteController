@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 public class DonateActivity extends FragmentActivity implements OnClickListener {
 	private static final String SKU_DONATE_100 = "donate_100";
-	// private static final String SKU_DONATE_100 = "android.test.purchased";
 	private static final String SKU_DONATE_500 = "donate_500";
 	private static final String BILLING_PUBLIC_KEY = "TUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUEyT2p1Rkk0bm92VFVlT3NpQU15Z3dwckhUTzJKb1M5Q1dzdm1yY1pYWlRLQzZ0eU9LOTh6cHJPSlVzdmVnQTZxTmRmMlV3K1V5UHQ3UUpSL2JSTDNuQmg2ZVU3TXlNYVFlRWM1VHFZVmtTN1g2VWk2SGh4VDZ6U1JuV256cGlxN2QydTI4eFQ2L2NaUk1laUtOeElLWkd6YXc5MC9jdVhyVnkxWVNSSVh4UGUzNUk2aEpsMGx1VVRXb0ZWL2o4U08yQUtsZlVQMHUySzN1MXlqLy9ESGxFOFZCZ3Y3Wk8yYTU5akFmNnFOVWo2c25yTDZTSDF5SGdTeW9xMHpWZUhyazI3blZ3TmtxNmlTRnVKdXJmbS9ScmlaOUtvamxUUGRKRDRBNXptbVM0bDdVNkk0VHV6aUtEbEppckNDakVCb3grMWVsUisyNCtPaS9GdmdLSmtaeVFJREFRQUI=";
 	private static final int RC_REQUEST = 92795;
@@ -31,7 +30,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("DonateActivity", "onCreate");
+		LogUtil.d("DonateActivity#onCreate()");
 		setContentView(R.layout.activity_donate);
 		setListener();
 		setupBilling();
@@ -47,7 +46,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("DonateActivity", "onDestroy");
+		LogUtil.d("DonateActivity#onDestroy()");
 		shutdownBilling();
 	}
 
@@ -57,7 +56,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 		mBillingHelper.enableDebugLogging(false);
 		mBillingHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 			public void onIabSetupFinished(IabResult result) {
-				LogUtil.d("DonateActivity#IabHelper", "Setup finished.");
+				LogUtil.d("DonateActivity#IabHelper | Setup finished.");
 				if (result.isFailure()) {
 					Button btn_donate_100 = (Button) findViewById(R.id.btn_donate_100);
 					Button btn_donate_500 = (Button) findViewById(R.id.btn_donate_500);
@@ -65,7 +64,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 					btn_donate_100.setEnabled(false);
 					btn_donate_500.setEnabled(false);
 					text_infomation.setText(R.string.str_error_on_starting_service);
-					LogUtil.d("DonateActivity#IabHelper", "Problem setting up in-app billing: " + result);
+					LogUtil.d("DonateActivity#IabHelper | Problem setting up in-app billing: " + result);
 					return;
 				} else {
 					mBillingHelper.queryInventoryAsync(mGotInventoryListener);
@@ -95,7 +94,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 
 	private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
 		public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-			LogUtil.d("DonateActivity#IabHelper", "Query inventory finished.");
+			LogUtil.d("DonateActivity#IabHelper | Query inventory finished.");
 			if (result.isFailure()) {
 				Button btn_donate_100 = (Button) findViewById(R.id.btn_donate_100);
 				Button btn_donate_500 = (Button) findViewById(R.id.btn_donate_500);
@@ -103,11 +102,11 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 				btn_donate_100.setEnabled(false);
 				btn_donate_500.setEnabled(false);
 				text_infomation.setText(R.string.str_error_on_starting_service);
-				LogUtil.d("DonateActivity#IabHelper", "Query inventory was failed.");
+				LogUtil.d("DonateActivity#IabHelper | Query inventory was failed.");
 				return;
 			}
 
-			LogUtil.d("DonateActivity#IabHelper", "Query inventory was successful.");
+			LogUtil.d("DonateActivity#IabHelper | Query inventory was successful.");
 
 			Purchase donate_100 = inventory.getPurchase(SKU_DONATE_100);
 			Purchase donate_500 = inventory.getPurchase(SKU_DONATE_500);
@@ -116,7 +115,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 				mBillingHelper.consumeAsync(donate_100, new OnConsumeFinishedListener() {
 					@Override
 					public void onConsumeFinished(Purchase purchase, IabResult result) {
-						LogUtil.d("DonateActivity#IabHelper", "Consume successful.");
+						LogUtil.d("DonateActivity#IabHelper | Consume successful.");
 						consume_donate_100 = true;
 						checkAllConsumed();
 					}
@@ -129,7 +128,7 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 				mBillingHelper.consumeAsync(donate_500, new OnConsumeFinishedListener() {
 					@Override
 					public void onConsumeFinished(Purchase purchase, IabResult result) {
-						LogUtil.d("DonateActivity#IabHelper", "Consume successful.");
+						LogUtil.d("DonateActivity#IabHelper | Consume successful.");
 						consume_donate_500 = true;
 						checkAllConsumed();
 					}
@@ -144,15 +143,15 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 
 	private IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
 		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-			LogUtil.d("DonateActivity#IabHelper", "Purchase finished: " + result + ", purchase: " + purchase);
+			LogUtil.d("DonateActivity#IabHelper | Purchase finished: " + result + ", purchase: " + purchase);
 			TextView text_infomation = (TextView) findViewById(R.id.text_donate_infomation);
 			if (result.isSuccess()) {
-				LogUtil.d("DonateActivity#IabHelper", "Purchase successful.");
+				LogUtil.d("DonateActivity#IabHelper | Purchase successful.");
 				text_infomation.setText(R.string.donate_thanks);
 				mBillingHelper.consumeAsync(purchase, new OnConsumeFinishedListener() {
 					@Override
 					public void onConsumeFinished(Purchase purchase, IabResult result) {
-						LogUtil.d("DonateActivity#IabHelper", "Consume successful.");
+						LogUtil.d("DonateActivity#IabHelper | Consume successful.");
 					}
 				});
 			}

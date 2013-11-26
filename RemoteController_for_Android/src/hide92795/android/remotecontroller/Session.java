@@ -5,6 +5,7 @@ import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment.OnCancelListener;
+import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -30,7 +32,7 @@ public class Session extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		LogUtil.d("Session", "onCreate()");
+		LogUtil.d("Session#onCreate()");
 		this.handler = new Handler();
 		this.face_manager = new PlayerFaceManager(this);
 		loadSavedConnection();
@@ -71,26 +73,22 @@ public class Session extends Application {
 		saveConnection();
 	}
 
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-		LogUtil.d("Session", "onTerminate()");
-		close(false, null);
-	}
-
 	public synchronized void close(boolean moveActivity, final String reason) {
 		if (connection != null) {
 			Connection conn = this.connection;
 			connection = null;
 			conn.close();
+			LogUtil.stopSaveLog();
 			if (moveActivity) {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
 						Intent intent = new Intent(Session.this, LoginServerActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						intent.putExtra("MODE", "DISCONNECT_BY_NETWORK_REASON");
-						intent.putExtra("REASON", reason);
+						Bundle data = new Bundle();
+						data.putInt("MODE", DisconnectDialogFragment.DISCONNECT_BY_SERVER);
+						data.putString("REASON", reason);
+						intent.putExtra("DISCONNECT", data);
 						startActivity(intent);
 					}
 				});

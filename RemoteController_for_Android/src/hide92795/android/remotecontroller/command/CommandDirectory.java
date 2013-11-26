@@ -2,13 +2,11 @@ package hide92795.android.remotecontroller.command;
 
 import hide92795.android.remotecontroller.Connection;
 import hide92795.android.remotecontroller.receivedata.DirectoryData;
-import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.receivedata.DirectoryData.File;
-import hide92795.android.remotecontroller.util.LogUtil;
+import hide92795.android.remotecontroller.receivedata.ReceiveData;
 
 public class CommandDirectory implements Command {
 	public ReceiveData doCommand(Connection connection, int pid, String arg) {
-		LogUtil.d("Directory", arg);
 		String[] files_s = arg.split(":");
 		DirectoryData data = new DirectoryData();
 		String basedir = files_s[0];

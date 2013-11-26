@@ -5,7 +5,6 @@ import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.receivedata.ServerData;
 import hide92795.android.remotecontroller.util.Base64Coder;
-import hide92795.android.remotecontroller.util.LogUtil;
 import hide92795.android.remotecontroller.util.StringUtils;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ public class CommandServerInfo implements Command {
 
 	@Override
 	public ReceiveData doCommand(Connection connection, int pid, String arg) {
-		LogUtil.d("ServerInfo", arg);
 		String[] datas = arg.split(":");
 		String servername = new String(Base64Coder.decode(datas[0]), Charset.forName("UTF-8"));
 		int port = Integer.parseInt(datas[1]);

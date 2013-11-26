@@ -3,13 +3,11 @@ package hide92795.android.remotecontroller.command;
 import hide92795.android.remotecontroller.Connection;
 import hide92795.android.remotecontroller.receivedata.ConsoleData;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
-import hide92795.android.remotecontroller.util.LogUtil;
 
 public class CommandConsole implements Command {
 
 	@Override
 	public ReceiveData doCommand(final Connection connection, int pid, final String arg) {
-		LogUtil.d("Console", arg);
 		connection.getSession().getHandler().post(new Runnable() {
 			@Override
 			public void run() {

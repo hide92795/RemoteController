@@ -35,7 +35,7 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("ConsoleActivity", "onCreate()");
+		LogUtil.d("ConsoleActivity#onCreate()");
 		setContentView(R.layout.activity_console);
 		gesture_detector = new ScaleGestureDetector(this, onScaleGestureListener);
 		setListener();
@@ -70,7 +70,7 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LogUtil.d("ConsoleActivity", "onResume()");
+		LogUtil.d("ConsoleActivity#onResume()");
 		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(this);
 		((Session) getApplication()).getConsoleAdapter().notifyDataSetChanged();
 	}
@@ -78,7 +78,7 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 	@Override
 	protected void onPause() {
 		super.onPause();
-		LogUtil.d("ConsoleActivity", "onPause()");
+		LogUtil.d("ConsoleActivity#onPause()");
 		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(null);
 	}
 
@@ -239,7 +239,6 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 				pref.edit().putString(ConfigKeys.CONSOLE_FONT_SIZE, Integer.toString(calced)).commit();
 				((Session) getApplication()).getConsoleAdapter().notifyDataSetChanged();
 			}
-			LogUtil.d("ConsoleActivity", "Old size : " + fontsize + " ,New size : " + calced);
 		}
 	};
 }

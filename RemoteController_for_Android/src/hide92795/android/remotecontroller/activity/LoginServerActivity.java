@@ -3,19 +3,20 @@ package hide92795.android.remotecontroller.activity;
 import hide92795.android.remotecontroller.Connection;
 import hide92795.android.remotecontroller.ConnectionData;
 import hide92795.android.remotecontroller.R;
+import hide92795.android.remotecontroller.ReceiveListener;
 import hide92795.android.remotecontroller.Session;
+import hide92795.android.remotecontroller.receivedata.AuthorizedData;
+import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment.OnCancelListener;
+import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
+import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerDialogFragment;
+import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerDialogFragment.Callback;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.util.ArrayList;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -30,25 +31,24 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ViewSwitcher;
 
-public class LoginServerActivity extends FragmentActivity implements OnClickListener, TextWatcher, OnCancelListener {
+public class LoginServerActivity extends FragmentActivity implements OnClickListener, TextWatcher, OnCancelListener, ReceiveListener, Callback {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("LoginServerActivity", "onCreate()");
+		LogUtil.d("LoginServerActivity#onCreate()");
 		setContentView(R.layout.activity_login_server);
 		setListener();
-		String mode = getIntent().getStringExtra("MODE");
-		if (mode != null) {
-			FragmentManager manager = getSupportFragmentManager();
-			DisconnectDialogFragment dialog = new DisconnectDialogFragment();
-			dialog.show(manager, mode);
+		Bundle data = getIntent().getBundleExtra("DISCONNECT");
+		if (data != null) {
+			getIntent().removeExtra("DISCONNECT");
+			showDisconnectDialog(data);
 		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LogUtil.d("LoginServerActivity", "onResume()");
+		LogUtil.d("LoginServerActivity#onResume()");
 		checkSavedConnection();
 	}
 
@@ -80,7 +80,7 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("LoginServerActivity", "onDestroy()");
+		LogUtil.d("LoginServerActivity#onDestroy()");
 	}
 
 	private void checkSavedConnection() {
@@ -128,10 +128,7 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 
 			ConnectionData connection_data = (ConnectionData) spinner.getSelectedItem();
 
-			((Session) getApplication()).showProgressDialog(this, true, this);
-
-			Connection connection = new Connection((Session) getApplication(), connection_data);
-			connection.start();
+			login(connection_data);
 			break;
 		}
 		case R.id.btn_login_login_as_new_connection: {
@@ -158,16 +155,20 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 				((Session) getApplication()).addSavedConnection(connection_data);
 			}
 
-			((Session) getApplication()).showProgressDialog(this, true, this);
-
-			Connection connection = new Connection((Session) getApplication(), connection_data);
-			connection.start();
-
+			login(connection_data);
 			break;
 		}
 		default:
 			break;
 		}
+	}
+
+	private void login(ConnectionData data) {
+		LogUtil.startSaveLog((Session) getApplication());
+		((Session) getApplication()).showProgressDialog(this, true, this);
+		Connection connection = new Connection((Session) getApplication(), data);
+		connection.addListener(-1, this);
+		connection.start();
 	}
 
 	private void changeDisplayToExistConnection() {
@@ -183,7 +184,6 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 			switcher.showNext();
 		}
 	}
-
 
 	private void checkTextInput() {
 		EditText v_address = (EditText) findViewById(R.id.edittext_login_address);
@@ -250,28 +250,64 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 
-	public static class DisconnectDialogFragment extends DialogFragment {
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			String mode = getTag();
-			Builder builder = new Builder(getActivity());
-			builder.setTitle(R.string.info_app_name);
-			builder.setPositiveButton("OK", null);
-			if (mode.equals("DISCONNECT_BY_NETWORK_REASON")) {
-				LogUtil.d("LoginServerActivity", "DISCONNECT_BY_NETWORK_REASON");
-				builder.setMessage(getString(R.string.str_disconnect_by_network_reason, getActivity().getIntent().getStringExtra("REASON")));
-
-			} else if (mode.equals("DISCONNECT_BY_OWN")) {
-				LogUtil.d("LoginServerActivity", "DISCONNECT_BY_OWN");
-				builder.setMessage(R.string.str_disconnect_by_own);
-			}
-			AlertDialog dialog = builder.create();
-			return dialog;
-		}
-	}
-
 	@Override
 	public void onCancel() {
 		((Session) getApplication()).close(false, null);
+	}
+
+	@Override
+	public void onReceiveData(String sended_cmd, int pid, ReceiveData data) {
+		if (pid == -1) {
+			((Session) getApplication()).dismissProgressDialog();
+			if (data.isSuccessed()) {
+				// Success
+				AuthorizedData auth_data = (AuthorizedData) data;
+				if (((Session) getApplication()).getRecommendServerVersion().equals(auth_data.getServerBukkitVersion())) {
+					startMainActivity();
+				} else {
+					NotRecommendedVersionServerDialogFragment dialog = new NotRecommendedVersionServerDialogFragment();
+					dialog.show(getSupportFragmentManager(), "not_recommended_version_server_dialog");
+				}
+			} else {
+				((Session) getApplication()).close(false, "");
+				if (data instanceof AuthorizedData) {
+					// Auth failed
+					showDisconnectDialog(DisconnectDialogFragment.DISCONNECT_BY_SERVER, getString(R.string.str_auth_error));
+				} else {
+					// Some error
+					showDisconnectDialog(DisconnectDialogFragment.DISCONNECT_BY_NETWORK_REASON, "");
+				}
+			}
+		}
+	}
+
+	private void startMainActivity() {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		((Session) getApplication()).startActivity(intent);
+	}
+
+	@Override
+	public void onDialogClicked(boolean select_continue) {
+		if (select_continue) {
+			startMainActivity();
+		} else {
+			((Session) getApplication()).close(false, "");
+			showDisconnectDialog(DisconnectDialogFragment.DISCONNECT_BY_OWN, "");
+		}
+	}
+
+	private void showDisconnectDialog(int mode, String reason) {
+		LogUtil.stopSaveLog();
+		Bundle b = new Bundle();
+		b.putInt("MODE", mode);
+		b.putString("REASON", reason);
+		showDisconnectDialog(b);
+	}
+
+	private void showDisconnectDialog(Bundle data) {
+		DisconnectDialogFragment dialog = new DisconnectDialogFragment();
+		dialog.setArguments(data);
+		dialog.show(getSupportFragmentManager(), "disconnect_dialog");
 	}
 }

@@ -14,14 +14,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-public class AccountManagerActivity extends FragmentActivity implements OnItemLongClickListener, AccountHandleDialogFragment.Callback,
-		AccountDeleteDialogFragment.Callback {
+public class AccountManagerActivity extends FragmentActivity implements OnItemLongClickListener, AccountHandleDialogFragment.Callback, AccountDeleteDialogFragment.Callback {
 	private AccountManagerListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("AccountManagerActivity", "onCreate()");
+		LogUtil.d("AccountManagerActivity#onCreate()");
 		setContentView(R.layout.activity_account_manager);
 		setAdapter();
 		setListener();
@@ -30,7 +29,7 @@ public class AccountManagerActivity extends FragmentActivity implements OnItemLo
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("AccountManagerActivity", "onDestroy");
+		LogUtil.d("AccountManagerActivity#onDestroy()");
 	}
 
 	private void setAdapter() {

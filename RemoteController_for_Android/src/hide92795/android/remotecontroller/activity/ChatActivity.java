@@ -35,7 +35,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("ChatActivity", "onCreate()");
+		LogUtil.d("ChatActivity#onCreate()");
 		setContentView(R.layout.activity_chat);
 		gesture_detector = new ScaleGestureDetector(this, onScaleGestureListener);
 		setListener();
@@ -70,7 +70,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 	@Override
 	protected void onResume() {
 		super.onResume();
-		LogUtil.d("ChatActivity", "onResume()");
+		LogUtil.d("ChatActivity#onResume()");
 		((Session) getApplication()).getChatAdapter().setOnAddChatListener(this);
 		((Session) getApplication()).getChatAdapter().notifyDataSetChanged();
 	}
@@ -78,7 +78,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 	@Override
 	protected void onPause() {
 		super.onPause();
-		LogUtil.d("ChatActivity", "onPause()");
+		LogUtil.d("ChatActivity#onPause()");
 		((Session) getApplication()).getChatAdapter().setOnAddChatListener(null);
 	}
 
@@ -215,7 +215,6 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 				pref.edit().putString(ConfigKeys.CHAT_FONT_SIZE, Integer.toString(calced)).commit();
 				((Session) getApplication()).getChatAdapter().notifyDataSetChanged();
 			}
-			LogUtil.d("ChatActivity", "Old size : " + fontsize + " ,New size : " + calced);
 		}
 	};
 }

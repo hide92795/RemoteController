@@ -202,8 +202,6 @@ public class RemoteController extends JavaPlugin {
 			lang = Locale.getDefault().getLanguage();
 			getConfig().set("Language", lang);
 			saveConfig();
-		} else {
-			lang = "en";
 		}
 		try {
 			localize.reload(lang, "en");

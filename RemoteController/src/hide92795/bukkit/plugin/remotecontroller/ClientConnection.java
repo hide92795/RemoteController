@@ -30,7 +30,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 public class ClientConnection {
 	private final RemoteController plugin;
 	private final InetSocketAddress address;
-	private WebSocket socket;
+	private final WebSocket socket;
 	private AtomicBoolean send_old_log = new AtomicBoolean(false);
 	private AtomicBoolean send_old_chat = new AtomicBoolean(false);
 	private String user;
@@ -69,20 +69,17 @@ public class ClientConnection {
 		if (user == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("The connection has been attempted from \"");
-			sb.append(address.getAddress().getCanonicalHostName());
-			sb.append("\"(");
-			sb.append(address.getAddress().getHostAddress());
-			sb.append(")");
+			sb.append(address.toString());
+			sb.append("\"");
 			plugin.getLogger().info(sb.toString());
 		} else {
 			plugin.getLogger().info("User \"" + user + "\" has logged off.");
 		}
 	}
 
-	private void close() {
-		if (socket != null && (socket.isClosing() || socket.isClosed())) {
+	public void close() {
+		if (!socket.isClosed()) {
 			socket.close();
-			socket = null;
 		}
 	}
 
@@ -236,11 +233,6 @@ public class ClientConnection {
 	public synchronized void receive(String data) {
 		if (this.key == null) {
 			try {
-				if (data == null) {
-					// Socket Close
-					close();
-					return;
-				}
 				byte[] receive_key_decoded = Base64Coder.decode(data);
 				Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 				cipher.init(Cipher.DECRYPT_MODE, privateKey);
@@ -255,11 +247,6 @@ public class ClientConnection {
 			}
 		} else {
 			try {
-				if (data == null) {
-					// Socket Close
-					closed();
-					return;
-				}
 				final String[] command_s = decrypt(data).split(":", 3);
 				final Command command = Commands.commands.get(command_s[0]);
 				final int pid = Integer.parseInt(command_s[1]);

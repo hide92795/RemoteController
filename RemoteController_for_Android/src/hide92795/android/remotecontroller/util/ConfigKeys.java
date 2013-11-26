@@ -14,4 +14,5 @@ public class ConfigKeys {
 	public static final String CHAT_FONT_SIZE = "chat_font_size";
 	public static final String CHAT_BACKGOUND_COLOR = "chat_background_color";
 	public static final String CHAT_FONT_COLOR = "chat_font_color";
+	public static final String SAVE_LOG = "save_log";
 }

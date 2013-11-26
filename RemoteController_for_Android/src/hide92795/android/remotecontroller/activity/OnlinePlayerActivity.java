@@ -25,15 +25,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OnlinePlayerActivity extends FragmentActivity implements ReceiveListener, PlayerFaceUpdator.Callback, OnPlayerHandleClickListener,
-		PlayerDialogFragment.Callback {
+public class OnlinePlayerActivity extends FragmentActivity implements ReceiveListener, PlayerFaceUpdator.Callback, OnPlayerHandleClickListener, PlayerDialogFragment.Callback {
 	private PlayersExpandableListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_online_players);
-		LogUtil.d("OnlinePlayerActivity", "onCreate()");
+		LogUtil.d("OnlinePlayerActivity#onCreate()");
 		this.adapter = new PlayersExpandableListAdapter(getApplication());
 		initPlayersList();
 		updateOnlinePlayers();
@@ -48,7 +47,7 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		LogUtil.d("OnlinePlayerActivity", "onDestroy()");
+		LogUtil.d("OnlinePlayerActivity#onDestroy()");
 	}
 
 	private void updateOnlinePlayers() {
@@ -87,11 +86,9 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			((Session) getApplication()).dismissProgressDialog();
 			if (data.isSuccessed()) {
 				Toast.makeText(this, R.string.str_success, Toast.LENGTH_SHORT).show();
-				LogUtil.d(sended_cmd, "SUCCESS");
 			} else {
 				ErrorData errordata = (ErrorData) data;
 				Toast.makeText(this, getString(errordata.getMessageId(), errordata.getAddtionalInfo()), Toast.LENGTH_SHORT).show();
-				LogUtil.d(sended_cmd, "FAILED");
 			}
 			updateOnlinePlayers();
 		}
@@ -131,7 +128,6 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 	public void onDialogClicked(String username, int handle_id, Bundle data) {
 		switch (handle_id) {
 		case R.id.btn_player_handle_kick: {
-			LogUtil.d("KICK", username);
 			Connection connection = ((Session) getApplication()).getConnection();
 			int pid = connection.requests.requestKick(username, data.getString("REASON"));
 			connection.addListener(pid, this);
@@ -139,7 +135,6 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			break;
 		}
 		case R.id.btn_player_handle_ban: {
-			LogUtil.d("BAN", username);
 			Connection connection = ((Session) getApplication()).getConnection();
 			int pid = connection.requests.requestBan(username, data.getString("REASON"));
 			connection.addListener(pid, this);
@@ -147,7 +142,6 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			break;
 		}
 		case R.id.btn_player_handle_give: {
-			LogUtil.d("GIVE", username);
 			Connection connection = ((Session) getApplication()).getConnection();
 			String item = data.getString("ITEM");
 			String num_s = data.getString("NUM");
@@ -163,7 +157,6 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			break;
 		}
 		case R.id.btn_player_handle_gamemode: {
-			LogUtil.d("MODE", username);
 			Connection connection = ((Session) getApplication()).getConnection();
 			int pid = connection.requests.requestGamemode(username, data.getInt("GAMEMODE"));
 			connection.addListener(pid, this);

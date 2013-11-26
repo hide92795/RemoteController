@@ -56,16 +56,16 @@ public class Connection {
 		this.connection_data = connection_data;
 		this.listeners = new ConcurrentHashMap<Integer, ReceiveListener>();
 		this.sendedrequests = new ConcurrentHashMap<Integer, String>();
-		// this.key = StringUtils.getRandomString(16).getBytes(Charset.forName("UTF-8"));
 	}
 
 	public void start() {
 		try {
 			this.socket = new ClientSocket(connection_data.getURI(), new Draft_17());
-			Thread thread = new Thread(socket);
-			thread.start();
-			LogUtil.d("", "Connection start.");
+			socket.connect();
+			LogUtil.d("Connection start.");
 		} catch (Exception e) {
+			LogUtil.d("Can't start the connecton.");
+			LogUtil.exception(e);
 			session.close(true, e.getMessage());
 		}
 	}
@@ -88,7 +88,7 @@ public class Connection {
 
 	public void close() {
 		if (socket != null) {
-			LogUtil.d("", "Close socket.");
+			LogUtil.d("Close socket.");
 			try {
 				socket.close();
 			} catch (Exception e) {
@@ -104,7 +104,7 @@ public class Connection {
 	private void send(String cmd, int pid, String text) {
 		sendedrequests.put(pid, cmd);
 		send(encrypt(StringUtils.join(":", cmd, pid, text)));
-		LogUtil.d("", "Send request : " + cmd + ", pid : " + pid);
+		LogUtil.d("Send request : " + cmd + ", pid : " + pid);
 	}
 
 	public int nextPid() {
@@ -218,7 +218,7 @@ public class Connection {
 				byte[] common_key_encrypted = cipher.doFinal(common_key_base64);
 				char[] common_key_base64_encoded = Base64Coder.encode(common_key_encrypted);
 				send(String.valueOf(common_key_base64_encoded));
-				LogUtil.d("", "Received Public Key.");
+				LogUtil.d("Received Public Key.");
 			} catch (Exception e) {
 				e.printStackTrace();
 				session.close(true, e.getMessage());
@@ -234,7 +234,7 @@ public class Connection {
 				if (command_s != null) {
 					Command command = Commands.commands.get(command_s[0]);
 					int pid = Integer.parseInt(command_s[1]);
-					LogUtil.d("", "Receive command : " + command_s[0] + ", pid : " + pid);
+					LogUtil.d("Receive command : " + command_s[0] + ", pid : " + pid);
 					if (command == null) {
 					} else {
 						doCommand(command, pid, command_s[2]);
@@ -259,7 +259,9 @@ public class Connection {
 
 		@Override
 		public void onError(Exception arg0) {
-			session.close(true, "An error has occurred.\n" + arg0.getClass().toString() + "\n" + arg0.getLocalizedMessage());
+			LogUtil.d("An error has occurred at ClientSocket#onError().");
+			LogUtil.exception(arg0);
+			session.close(true, "An error has occurred.\n" + arg0.toString());
 		}
 
 		@Override
@@ -269,7 +271,7 @@ public class Connection {
 
 		@Override
 		public void onOpen(ServerHandshake arg0) {
-			LogUtil.d("", "Connection opened.");
+			LogUtil.d("Connection open.");
 		}
 
 	}
