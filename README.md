@@ -5,7 +5,7 @@ Bukkit遠隔操作プラグイン&amp;Android向けクライアント
 
 License
 =======
-RemoteController(BukktiPlugin) : GNU General Public License v3.0  
+RemoteController(BukkitPlugin) : GNU General Public License v3.0  
 RemoteController for Android : Creative Commons License Attribution-NonCommercial-ShareAlike 3.0 Unported  
 RemoteController Installer : GNU General Public License v3.0  
 RemoteController BroadcastEvent : GNU General Public License v3.0  
