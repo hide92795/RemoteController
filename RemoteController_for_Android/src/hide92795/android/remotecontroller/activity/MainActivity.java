@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,6 +116,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 		btn_editfile.setOnClickListener(this);
 		Button btn_dynmap = (Button) findViewById(R.id.btn_main_dynmap);
 		btn_dynmap.setOnClickListener(this);
+		Button btn_plugin = (Button) findViewById(R.id.btn_main_plugin);
+		btn_plugin.setOnClickListener(this);
 	}
 
 	@Override
@@ -149,6 +150,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 		}
 		case R.id.btn_main_editfile: {
 			Intent intent = new Intent(this, EditFileActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+			startActivity(intent);
+			break;
+		}
+		case R.id.btn_main_plugin: {
+			Intent intent = new Intent(this, PluginActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
 			startActivity(intent);
 			break;
@@ -187,11 +194,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 
 	private void checkDynmapState(DynmapData data) {
 		((Session) getApplication()).getServerInfo().setDynmapData(data);
-		TableRow row = (TableRow) findViewById(R.id.tablerow_main_dynmap);
+		Button button = (Button) findViewById(R.id.btn_main_dynmap);
 		if (data.isEnable()) {
-			row.setVisibility(View.VISIBLE);
+			button.setVisibility(View.VISIBLE);
 		} else {
-			row.setVisibility(View.GONE);
+			button.setVisibility(View.INVISIBLE);
 		}
 	}
 

@@ -54,6 +54,17 @@ public class AboutActivity extends Activity {
 		} catch (Exception e) {
 			java_websocket.setText("Error: can't show license.");
 		}
+
+		TextView jsonic = (TextView) findViewById(R.id.text_about_jsonic_license);
+		try {
+			Resources res = getResources();
+			InputStream in_s = res.openRawResource(R.raw.jsonic);
+			byte[] b = new byte[in_s.available()];
+			in_s.read(b);
+			jsonic.setText(new String(b));
+		} catch (Exception e) {
+			jsonic.setText("Error: can't show license.");
+		}
 	}
 
 	@Override

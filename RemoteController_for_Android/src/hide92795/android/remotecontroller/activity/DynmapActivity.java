@@ -30,9 +30,7 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 		LogUtil.d("DynmapActivity#onResume()");
 		DynmapData data = ((Session) getApplication()).getServerInfo().getDynmapData();
 		if (data != null) {
-			String address = ((Session) getApplication()).getConnection().getServerAddress();
-			int port = data.getPort();
-			final String dynmap_address = "http://" + address + ":" + port;
+			final String dynmap_address = data.getAddress();
 
 			WebView webview = (WebView) findViewById(R.id.web_dynmap_web);
 			webview.getSettings().setJavaScriptEnabled(true);
@@ -66,6 +64,8 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		WebView webview = (WebView) findViewById(R.id.web_dynmap_web);
+		webview.stopLoading();
 		LogUtil.d("DynmapActivity#onDestroy()");
 	}
 

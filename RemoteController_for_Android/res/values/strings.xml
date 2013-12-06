@@ -150,5 +150,27 @@
     <string name="str_copy_log_dir">Copy log directory path</string>
     <string name="str_copied">Copied</string>
     <string name="str_cant_copy">Could\'t copy</string>
+    <string name="str_refresh">Refres</string>
+    <string name="str_status">Status:</string>
+    <string name="str_enabled">Enabled</string>
+    <string name="str_disabled">Disabled</string>
+    <string name="str_view">View</string>
+    <string name="str_enable">Enable</string>
+    <string name="str_disable">Disable</string>
+    <string name="str_no_plugin">Plugin not found.</string>
+    <string name="str_plugin_already_enabled">Plugin has already enabled.</string>
+    <string name="str_plugin_already_disabled">Plugin has already disabled.</string>
+    <string name="str_name">Name:</string>
+    <string name="str_version">Version:</string>
+    <string name="str_author">Author:</string>
+    <string name="str_commands">Commands</string>
+    <string name="str_permissions">Permissions</string>
+    <string name="str_alias">Aliases:</string>
+    <string name="str_permission">Permission:</string>
+    <string name="str_usage">Usage:</string>
+    <string name="str_description">Description:</string>
+    <string name="str_default">Default:</string>
+    <string name="str_children">Children:</string>
+    <string name="str_inherits">Inherits:</string>
 
 </resources>

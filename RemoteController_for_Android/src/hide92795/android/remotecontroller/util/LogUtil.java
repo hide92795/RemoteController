@@ -18,7 +18,7 @@ import android.util.Log;
 
 public class LogUtil {
 	private static final SimpleDateFormat LOG_NAME = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS", Locale.ENGLISH);
-	private static final boolean debug = false;
+	private static final boolean debug = true;
 	private static PrintWriter logger;
 
 	public static final void d(String msg) {

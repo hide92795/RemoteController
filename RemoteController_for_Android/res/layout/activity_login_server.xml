@@ -7,7 +7,7 @@
     android:padding="5dp" >
 
     <TextView
-        android:id="@+id/text_main_logo_str"
+        android:id="@+id/const_text_login_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/text_main_logo_str" >
+        android:layout_below="@+id/const_text_login_1" >
 
         <ScrollView
             android:id="@+id/view_login_new_connection"
@@ -42,19 +42,19 @@
                 android:clickable="true" >
 
                 <TableLayout
-                    android:id="@+id/tableLayout1"
+                    android:id="@+id/const_table_login_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true" >
 
                     <TableRow
-                        android:id="@+id/tableRow1"
+                        android:id="@+id/const_table_row_login_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
                         <TextView
-                            android:id="@+id/text_main_peoples_str"
+                            android:id="@+id/const_text_login_2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="left|center"
@@ -71,12 +71,12 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/tableRow2"
+                        android:id="@+id/const_table_row_login_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
                         <TextView
-                            android:id="@+id/text_login_port"
+                            android:id="@+id/const_text_login_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_port"
@@ -92,12 +92,12 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/tablerow_main_dynmap"
+                        android:id="@+id/const_table_row_login_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
                         <TextView
-                            android:id="@+id/text_main_peoples"
+                            android:id="@+id/const_text_login_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_username"
@@ -113,12 +113,12 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/tableRow4"
+                        android:id="@+id/const_table_row_login_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
 
                         <TextView
-                            android:id="@+id/text_main_add_infomation_str"
+                            android:id="@+id/const_text_login_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_password"
@@ -138,7 +138,7 @@
                     android:id="@+id/checkbox_login_save_connection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tableLayout1"
+                    android:layout_below="@+id/const_table_login_1"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:text="@string/str_save_login" />
@@ -158,7 +158,7 @@
                     android:text="@string/str_login" />
 
                 <TextView
-                    android:id="@+id/text_donate_infomation"
+                    android:id="@+id/const_text_login_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btn_login_login_as_new_connection"
@@ -172,7 +172,7 @@
                     android:id="@+id/btn_login_move_exist_connection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_donate_infomation"
+                    android:layout_below="@+id/const_text_login_6"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/button_bg"
                     android:paddingBottom="15dp"
@@ -184,14 +184,14 @@
         </ScrollView>
 
         <RelativeLayout
-            android:id="@+id/view_login_exist_connection"
+            android:id="@+id/relative_login_exist_connection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
             android:clickable="true" >
 
             <TextView
-                android:id="@+id/text_item_select_item_id"
+                android:id="@+id/const_text_login_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -205,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/text_item_select_item_id" />
+                android:layout_below="@+id/const_text_login_7" />
 
             <Button
                 android:id="@+id/btn_login_login_as_exist_connection"
@@ -222,7 +222,7 @@
                 android:text="@string/str_login" />
 
             <TextView
-                android:id="@+id/TextView01"
+                android:id="@+id/const_text_login_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_login_login_as_exist_connection"
@@ -236,7 +236,7 @@
                 android:id="@+id/btn_login_move_new_connection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/TextView01"
+                android:layout_below="@+id/const_text_login_8"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/button_bg"
                 android:paddingBottom="15dp"

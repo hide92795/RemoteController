@@ -4,7 +4,7 @@
     android:background="@color/white" >
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/const_linear_chat_1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/btn_chat_send"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout"
+        android:layout_below="@+id/const_linear_chat_1"
         android:layout_toLeftOf="@+id/btn_chat_send"
         android:ems="10"
         android:inputType="text|textNoSuggestions" />

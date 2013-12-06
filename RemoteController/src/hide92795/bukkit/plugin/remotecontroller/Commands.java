@@ -18,6 +18,9 @@ import hide92795.bukkit.plugin.remotecontroller.command.CommandGive;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandKick;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandMk;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPlayers;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginInfo;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginList;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginState;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandServerInfo;
 import java.util.HashMap;
 
@@ -43,5 +46,8 @@ public class Commands {
 		commands.put("MK", new CommandMk());
 		commands.put("CHAT", new CommandChat());
 		commands.put("DYNMAP", new CommandDynmap());
+		commands.put("PLUGIN_LIST", new CommandPluginList());
+		commands.put("PLUGIN_STATE", new CommandPluginState());
+		commands.put("PLUGIN_INFO", new CommandPluginInfo());
 	}
 }

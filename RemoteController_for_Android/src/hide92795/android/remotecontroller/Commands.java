@@ -10,6 +10,8 @@ import hide92795.android.remotecontroller.command.CommandDynmap;
 import hide92795.android.remotecontroller.command.CommandError;
 import hide92795.android.remotecontroller.command.CommandFileOpen;
 import hide92795.android.remotecontroller.command.CommandPlayers;
+import hide92795.android.remotecontroller.command.CommandPluginInfo;
+import hide92795.android.remotecontroller.command.CommandPluginList;
 import hide92795.android.remotecontroller.command.CommandRequestAuthentication;
 import hide92795.android.remotecontroller.command.CommandServerInfo;
 import hide92795.android.remotecontroller.command.CommandSuccess;
@@ -31,5 +33,7 @@ public class Commands {
 		commands.put("SUCCESS", new CommandSuccess());
 		commands.put("ERROR", new CommandError());
 		commands.put("DYNMAP", new CommandDynmap());
+		commands.put("PLUGIN_LIST", new CommandPluginList());
+		commands.put("PLUGIN_INFO", new CommandPluginInfo());
 	}
 }

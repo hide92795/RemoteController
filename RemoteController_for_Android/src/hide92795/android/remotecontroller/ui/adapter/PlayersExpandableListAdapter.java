@@ -99,7 +99,7 @@ public class PlayersExpandableListAdapter extends BaseExpandableListAdapter impl
 	}
 
 	@Override
-	public Object getGroup(int groupPosition) {
+	public String getGroup(int groupPosition) {
 		return users.get(groupPosition);
 	}
 

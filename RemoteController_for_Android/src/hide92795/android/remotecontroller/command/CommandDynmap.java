@@ -7,16 +7,23 @@ import hide92795.android.remotecontroller.receivedata.ReceiveData;
 public class CommandDynmap implements Command {
 	@Override
 	public ReceiveData doCommand(Connection connection, int pid, String arg) {
-		int port = Integer.parseInt(arg);
+		String address;
 		boolean enabled;
-		if (port == 0) {
-			enabled = false;
-		} else {
+		try {
+			int port = Integer.parseInt(arg);
+			if (port == 0) {
+				enabled = false;
+			} else {
+				enabled = true;
+			}
+			address = "http://" + connection.getServerAddress() + ":" + port;
+		} catch (Exception e) {
 			enabled = true;
+			address = arg;
 		}
 		DynmapData data = new DynmapData();
 		data.setEnable(enabled);
-		data.setPort(port);
+		data.setAddress(address);
 		return data;
 	}
 }

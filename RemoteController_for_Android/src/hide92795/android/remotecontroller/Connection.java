@@ -396,5 +396,23 @@ public class Connection {
 			send("DYNMAP", pid, "");
 			return pid;
 		}
+
+		public int requestPluginList() {
+			int pid = nextPid();
+			send("PLUGIN_LIST", pid, "");
+			return pid;
+		}
+
+		public int requestChangePluginState(String name, boolean enable) {
+			int pid = nextPid();
+			send("PLUGIN_STATE", pid, StringUtils.join(":", Boolean.toString(enable), name));
+			return pid;
+		}
+
+		public int requestPluginInfo(String name) {
+			int pid = nextPid();
+			send("PLUGIN_INFO", pid, name);
+			return pid;
+		}
 	}
 }

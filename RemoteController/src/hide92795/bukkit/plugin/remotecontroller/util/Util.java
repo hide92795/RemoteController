@@ -1,9 +1,14 @@
 package hide92795.bukkit.plugin.remotecontroller.util;
 
+import hide92795.bukkit.plugin.remotecontroller.org.apache.commons.lang3.StringUtils;
 import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
+import org.bukkit.permissions.Permission;
 
 public class Util {
 	private static Pattern esc_seq = Pattern.compile("\\[((?:\\d|;)*)m(.*)");
@@ -19,26 +24,30 @@ public class Util {
 	}
 
 	public static String convertEscapeSequence(String text) {
-		text = ChatColor.translateAlternateColorCodes('&', text);
-		text = text.replaceAll("<", "&lt;");
-		text = text.replaceAll(">", "&gt;");
-		text = text.replaceAll("\n", "<br />");
-		String[] spilit = text.split("\\e");
-		StringBuilder sb = new StringBuilder();
-		for (String s : spilit) {
-			Matcher m = esc_seq.matcher(s);
-			if (m.find()) {
-				String esc = m.group(1);
-				String target = m.group(2);
-				if (esc == null || target == null || target.length() == 0) {
-					continue;
+		try {
+			text = ChatColor.translateAlternateColorCodes('&', text);
+			text = text.replaceAll("<", "&lt;");
+			text = text.replaceAll(">", "&gt;");
+			text = text.replaceAll("\n", "<br />");
+			String[] spilit = text.split("\\e");
+			StringBuilder sb = new StringBuilder();
+			for (String s : spilit) {
+				Matcher m = esc_seq.matcher(s);
+				if (m.find()) {
+					String esc = m.group(1);
+					String target = m.group(2);
+					if (esc == null || target == null || target.length() == 0) {
+						continue;
+					}
+					sb.append(FontUtil.convertEscapeSequence(esc, target));
+				} else {
+					sb.append(s);
 				}
-				sb.append(FontUtil.convertEscapeSequence(esc, target));
-			} else {
-				sb.append(s);
 			}
+			return sb.toString();
+		} catch (Exception e) {
+			return text;
 		}
-		return sb.toString();
 	}
 
 	public static String convertBukkitChatColor(String text) {
@@ -73,5 +82,36 @@ public class Util {
 
 	public static String[] marge(String... strs) {
 		return strs;
+	}
+
+	public static LinkedHashMap<String, LinkedHashMap<String, String>> permissionsToHashMap(List<Permission> permissions) {
+		LinkedHashMap<String, LinkedHashMap<String, String>> datas = new LinkedHashMap<>();
+		for (Permission permission : permissions) {
+			LinkedHashMap<String, String> desc = new LinkedHashMap<>();
+			desc.put("DESCRIPTION", permission.getDescription());
+			datas.put(permission.getName(), desc);
+		}
+		return datas;
+	}
+
+	public static LinkedHashMap<String, LinkedHashMap<String, String>> commandsToHashMap(Map<String, Map<String, Object>> commands) {
+		LinkedHashMap<String, LinkedHashMap<String, String>> datas = new LinkedHashMap<>();
+		if (commands != null) {
+			for (String command : commands.keySet()) {
+				LinkedHashMap<String, String> command_map = new LinkedHashMap<>();
+				Map<String, Object> command_desc = commands.get(command);
+				Object aliases = command_desc.get("aliases");
+				if (aliases instanceof String) {
+					command_map.put("ALIASES", (String) command_desc.get("aliases"));
+				} else {
+					command_map.put("ALIASES", StringUtils.join((List<?>) command_desc.get("aliases"), ", "));
+				}
+				command_map.put("PERMISSION", (String) command_desc.get("permission"));
+				command_map.put("DESCRIPTION", (String) command_desc.get("description"));
+				command_map.put("USAGE", (String) command_desc.get("usage"));
+				datas.put(command, command_map);
+			}
+		}
+		return datas;
 	}
 }

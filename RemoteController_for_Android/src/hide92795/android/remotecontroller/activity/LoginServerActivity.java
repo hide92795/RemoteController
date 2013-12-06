@@ -173,7 +173,7 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 
 	private void changeDisplayToExistConnection() {
 		ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.switcher_login_panel);
-		if (switcher.getCurrentView().getId() != R.id.view_login_exist_connection) {
+		if (switcher.getCurrentView().getId() != R.id.relative_login_exist_connection) {
 			switcher.showNext();
 		}
 	}

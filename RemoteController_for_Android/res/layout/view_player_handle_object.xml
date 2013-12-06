@@ -10,7 +10,7 @@
     android:paddingTop="5dp" >
 
     <TextView
-        android:id="@+id/text_player_handle_kick_ban_message"
+        android:id="@+id/const_text_player_handle_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"

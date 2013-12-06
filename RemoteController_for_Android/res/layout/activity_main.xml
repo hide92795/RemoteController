@@ -1,6 +1,6 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/TableLayout1"
+    android:id="@+id/const_table_main_1"
     style="@style/AppThemeWithBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,7 @@
     tools:context=".MainActivity" >
 
     <TableRow
-        android:id="@+id/tableRow1"
+        android:id="@+id/const_table_row_main_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp" >
@@ -31,6 +31,7 @@
             android:paddingTop="15dp"
             android:text="@string/str_players" />
 
+
         <Button
             android:id="@+id/btn_main_console"
             android:layout_width="0dp"
@@ -49,7 +50,7 @@
     </TableRow>
 
     <TableRow
-        android:id="@+id/tableRow2"
+        android:id="@+id/const_table_row_main_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp" >
@@ -88,17 +89,31 @@
     </TableRow>
 
     <TableRow
-        android:id="@+id/tablerow_main_dynmap"
+        android:id="@+id/const_table_row_main_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:visibility="gone" >
+        android:layout_marginBottom="5dp" >
+
+        <Button
+            android:id="@+id/btn_main_plugin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_plugin"
+            android:gravity="right|center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:text="@string/str_plugin" />
 
         <Button
             android:id="@+id/btn_main_dynmap"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/button_bg"
             android:drawableLeft="@drawable/ic_earth"
@@ -107,23 +122,9 @@
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:paddingTop="15dp"
-            android:text="@string/str_dynmap" />
-
-        <Button
-            android:id="@+id/btn_main_config"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_bg"
-            android:drawableLeft="@drawable/ic_settings"
-            android:gravity="right|center_vertical"
-            android:paddingBottom="15dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="15dp"
-            android:text="@string/str_config"
+            android:text="@string/str_dynmap"
             android:visibility="invisible" />
+
     </TableRow>
 
     <RelativeLayout
@@ -170,7 +171,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ScrollView
-            android:id="@+id/ScrollView1"
+            android:id="@+id/const_scroll_main_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

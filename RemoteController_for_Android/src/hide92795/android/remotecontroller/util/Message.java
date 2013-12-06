@@ -13,6 +13,9 @@ public class Message {
 		messages.put("NOT_AUTH", R.string.str_not_auth);
 		messages.put("NO_PLAYER", R.string.str_no_player);
 		messages.put("NO_ITEM", R.string.str_no_item);
+		messages.put("NO_PLUGIN", R.string.str_no_plugin);
+		messages.put("PLUGIN_ALREADY_ENABLED", R.string.str_plugin_already_enabled);
+		messages.put("PLUGIN_ALREADY_DISABLED", R.string.str_plugin_already_disabled);
 	}
 
 	public static final int getMessageID(String str_id) {

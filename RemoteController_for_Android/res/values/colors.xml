@@ -19,5 +19,6 @@
     <color name="button_normal">#EEEEEE</color>
     <color name="button_pressed">#B3B3B3</color>
     <color name="item_background">#8B8B8B</color>
+    <color name="color_enabled">#33CC33</color>
 
 </resources>

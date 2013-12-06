@@ -15,9 +15,7 @@
         android:childDivider="@null"
         android:divider="@null"
         android:dividerHeight="5dp"
-        android:groupIndicator="@null" >
-
-    </ExpandableListView>
+        android:groupIndicator="@null" />
 
     <TextView
         android:id="@+id/text_players_infomation"

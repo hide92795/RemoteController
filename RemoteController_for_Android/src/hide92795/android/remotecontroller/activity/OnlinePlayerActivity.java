@@ -78,9 +78,8 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 				String url = pref.getString(ConfigKeys.PLAYER_FACE_IMAGE_URL, ConfigDefaults.PLAYER_FACE_IMAGE_URL);
 				PlayerFaceUpdator updator = new PlayerFaceUpdator(this, ((Session) getApplication()).getFaceManager(), url);
 				updator.execute(users);
-				for (String username : users) {
-					adapter.add(username);
-				}
+				adapter.addAll(users);
+				adapter.notifyDataSetChanged();
 			}
 		} else if (sended_cmd.equals("KICK") || sended_cmd.equals("BAN") || sended_cmd.equals("GIVE") || sended_cmd.equals("GAMEMODE")) {
 			((Session) getApplication()).dismissProgressDialog();

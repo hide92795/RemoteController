@@ -10,12 +10,19 @@ public class CommandDynmap implements Command {
 	public void doCommand(RemoteController plugin, ClientConnection connection, int pid, String arg) {
 		try {
 			if (connection.isAuthorized()) {
-				boolean b = plugin.getServer().getPluginManager().isPluginEnabled("dynmap");
-				int port = 0;
-				if (b) {
-					port = RemoteControllerDynmap.getPort(plugin);
+				if (plugin.config.enable_dynmap_feature) {
+					if (plugin.config.dynmap_address == null || plugin.config.dynmap_address.equals("")) {
+						int port = 0;
+						if (plugin.getServer().getPluginManager().isPluginEnabled("dynmap")) {
+							port = RemoteControllerDynmap.getPort(plugin);
+						}
+						connection.send("DYNMAP", pid, String.valueOf(port));
+					} else {
+						connection.send("DYNMAP", pid, plugin.config.dynmap_address);
+					}
+				} else {
+					connection.send("DYNMAP", pid, String.valueOf(0));
 				}
-				connection.send("DYNMAP", pid, String.valueOf(port));
 			} else {
 				connection.send("ERROR", pid, "NOT_AUTH");
 			}

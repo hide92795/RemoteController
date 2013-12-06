@@ -150,5 +150,27 @@
     <string name="str_copy_log_dir">保存フォルダのパスをコピー</string>
     <string name="str_copied">コピーしました</string>
     <string name="str_cant_copy">コピー出来ませんでした</string>
+    <string name="str_refresh">更新</string>
+    <string name="str_status">状態:</string>
+    <string name="str_enabled">有効</string>
+    <string name="str_disabled">無効</string>
+    <string name="str_view">表示</string>
+    <string name="str_enable">有効化</string>
+    <string name="str_disable">無効化</string>
+    <string name="str_no_plugin">プラグインが見つかりません。</string>
+    <string name="str_plugin_already_enabled">既に有効化されています。</string>
+    <string name="str_plugin_already_disabled">既に無効化されています。</string>
+    <string name="str_name">名前:</string>
+    <string name="str_version">バージョン:</string>
+    <string name="str_author">作者:</string>
+    <string name="str_commands">コマンド</string>
+    <string name="str_permissions">パーミッション</string>
+    <string name="str_alias">エイリアス:</string>
+    <string name="str_permission">パーミッション:</string>
+    <string name="str_usage">使用法:</string>
+    <string name="str_description">説明:</string>
+    <string name="str_default">デフォルト:</string>
+    <string name="str_children">子要素:</string>
+    <string name="str_inherits">継承:</string>
 
 </resources>

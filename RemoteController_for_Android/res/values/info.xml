@@ -15,6 +15,8 @@
     <string name="info_The_Android_Open_Source_Project">The Android Open Source Project</string>
     <string name="info_Java_WebSocket">Java-WebSocket</string>
     <string name="info_Java_WebSocket_url">http://java-websocket.org/</string>
+    <string name="info_JSONIC">JSONIC</string>
+    <string name="info_JSONIC_url">http://jsonic.sourceforge.jp/</string>
     <string name="info_Crisp_Icon_Set">Crisp Icon Set</string>
     <string name="info_Crisp_Icon_Set_author">by Matt Gentile</string>
     <string name="info_Crisp_Icon_Set_url">http://www.icondeposit.com/theicondeposit:108</string>

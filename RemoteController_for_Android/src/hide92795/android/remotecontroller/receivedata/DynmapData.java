@@ -1,15 +1,15 @@
 package hide92795.android.remotecontroller.receivedata;
 
 public class DynmapData extends ReceiveData {
-	private int port;
+	private String address;
 	private boolean enable;
 
-	public int getPort() {
-		return port;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setPort(int port) {
-		this.port = port;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public boolean isEnable() {
