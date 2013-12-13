@@ -130,32 +130,34 @@
             android:layout_below="@+id/const_text_plugin_info_5" >
         </TableLayout>
 
-        <TextView
-            android:id="@+id/const_text_plugin_info_6"
+        <LinearLayout
+            android:id="@+id/const_linear_plugin_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/text_plugin_info_name"
-            android:text="@string/str_description"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_below="@+id/text_plugin_info_name" >
 
-        <TextView
-            android:id="@+id/text_plugin_info_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/const_text_plugin_info_6"
-            android:layout_alignBottom="@+id/const_text_plugin_info_6"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/const_text_plugin_info_6"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/const_text_plugin_info_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/str_description"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/text_plugin_info_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/const_text_plugin_info_7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/text_plugin_info_description"
+            android:layout_below="@id/const_linear_plugin_info_1"
             android:layout_marginTop="2dp"
             android:text="@string/str_status"
             android:textAppearance="?android:attr/textAppearanceSmall" />

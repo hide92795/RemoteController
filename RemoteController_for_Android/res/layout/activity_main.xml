@@ -31,7 +31,6 @@
             android:paddingTop="15dp"
             android:text="@string/str_players" />
 
-
         <Button
             android:id="@+id/btn_main_console"
             android:layout_width="0dp"
@@ -124,7 +123,6 @@
             android:paddingTop="15dp"
             android:text="@string/str_dynmap"
             android:visibility="invisible" />
-
     </TableRow>
 
     <RelativeLayout
@@ -132,7 +130,7 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/text_main_server_infomation"
+            android:id="@+id/const_text_main_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -141,22 +139,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/text_main_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/text_main_logo_str"
-            android:layout_alignBottom="@+id/text_main_logo_str"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/text_main_logo_str"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="false" />
-
-        <TextView
             android:id="@+id/text_main_peoples_str"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/text_main_logo_str"
+            android:layout_below="@+id/const_linear_main_2"
             android:text="@string/str_peoples"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -187,23 +174,50 @@
                 android:textIsSelectable="false" />
         </ScrollView>
 
-        <TextView
-            android:id="@+id/text_main_server_name_str"
+        <LinearLayout
+            android:id="@+id/const_linear_main_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/text_main_server_infomation"
-            android:text="@string/str_server_name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_below="@+id/const_text_main_2" >
 
-        <TextView
-            android:id="@+id/text_main_logo_str"
+            <TextView
+                android:id="@+id/const_text_main_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/str_server_name"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_main_server_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/const_linear_main_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/text_main_server_name_str"
-            android:text="@string/str_address"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_below="@+id/const_linear_main_1" >
+
+            <TextView
+                android:id="@+id/const_text_main_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/str_address"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_main_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_main_peoples"
@@ -213,17 +227,6 @@
             android:layout_alignBaseline="@id/text_main_peoples_str"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/text_main_peoples_str"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="false" />
-
-        <TextView
-            android:id="@+id/text_main_server_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/text_main_server_name_str"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/text_main_server_infomation"
-            android:layout_toRightOf="@+id/text_main_server_name_str"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
     </RelativeLayout>
