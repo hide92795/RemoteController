@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class MainActivity extends FragmentActivity implements OnClickListener, ReceiveListener {
 	private boolean first_show = true;
@@ -34,6 +35,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 		setListener();
 		initial_receive = new InitialReceive();
 		initRequest();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	private void initRequest() {
@@ -174,20 +187,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 	@Override
 	public void onReceiveData(String sended_cmd, int pid, ReceiveData data) {
 		if (sended_cmd.equals("SERVER_INFO")) {
+			initial_receive.server_info = true;
 			if (data.isSuccessed()) {
 				setServerInfo((ServerData) data);
-				initial_receive.server_info = true;
-				if (initial_receive.isAllReceived()) {
-					((Session) getApplication()).dismissProgressDialog();
-				}
+			}
+			if (initial_receive.isAllReceived()) {
+				((Session) getApplication()).dismissProgressDialog();
 			}
 		} else if (sended_cmd.equals("DYNMAP")) {
+			initial_receive.dynmap = true;
 			if (data.isSuccessed()) {
-				initial_receive.dynmap = true;
 				checkDynmapState((DynmapData) data);
-				if (initial_receive.isAllReceived()) {
-					((Session) getApplication()).dismissProgressDialog();
-				}
+			}
+			if (initial_receive.isAllReceived()) {
+				((Session) getApplication()).dismissProgressDialog();
 			}
 		}
 	}

@@ -30,6 +30,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class EditFileActivity extends FragmentActivity implements ReceiveListener, OnItemLongClickListener, OnItemClickListener, FileHandleDialogFragment.Callback, CharsetDialogFragment.Callback,
 		FileRenameDialogFragment.Callback, FileDeleteDialogFragment.Callback, MkDialogFragment.Callback {
@@ -58,6 +59,18 @@ public class EditFileActivity extends FragmentActivity implements ReceiveListene
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.d("EditFileActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class ChatActivity extends FragmentActivity implements OnClickListener, OnAddChatListener, OnKeyListener {
 	private ScaleGestureDetector gesture_detector;
@@ -80,6 +81,18 @@ public class ChatActivity extends FragmentActivity implements OnClickListener, O
 		super.onPause();
 		LogUtil.d("ChatActivity#onPause()");
 		((Session) getApplication()).getChatAdapter().setOnAddChatListener(null);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class ConsoleActivity extends FragmentActivity implements OnClickListener, OnAddConsoleListener, OnKeyListener {
 	private ScaleGestureDetector gesture_detector;
@@ -80,6 +81,18 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 		super.onPause();
 		LogUtil.d("ConsoleActivity#onPause()");
 		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(null);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import hide92795.bukkit.plugin.remotecontroller.util.Util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.logging.Filter;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
@@ -15,6 +16,12 @@ public class LogHandler extends Handler {
 	public LogHandler(RemoteController remotecontroller) {
 		this.plugin = remotecontroller;
 		this.date = new SimpleDateFormat("HH:mm:ss");
+		setFilter(new Filter() {
+			@Override
+			public boolean isLoggable(LogRecord record) {
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -33,7 +40,7 @@ public class LogHandler extends Handler {
 
 			builder.append(date.format(record.getMillis()));
 			builder.append("-[");
-			builder.append(record.getLevel().getLocalizedName().toUpperCase());
+			builder.append(record.getLevel().getName());
 			builder.append("]-");
 			builder.append(Util.convertColorCode(record.getMessage()));
 

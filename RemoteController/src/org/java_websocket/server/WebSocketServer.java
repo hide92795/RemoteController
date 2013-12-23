@@ -277,6 +277,8 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 			server = ServerSocketChannel.open();
 			server.configureBlocking(false);
 			ServerSocket socket = server.socket();
+			socket.setReuseAddress(true);
+			socket.setSoTimeout(0);
 			socket.setReceiveBufferSize(WebSocketImpl.RCVBUF);
 			socket.bind(address);
 			selector = Selector.open();
@@ -393,6 +395,7 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 			}
 			if (server != null) {
 				try {
+					selector.close();
 					server.close();
 				} catch (IOException e) {
 					onError(null, e);

@@ -13,6 +13,7 @@ import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class DynmapActivity extends FragmentActivity implements OnCancelListener {
 
@@ -67,6 +68,18 @@ public class DynmapActivity extends FragmentActivity implements OnCancelListener
 		WebView webview = (WebView) findViewById(R.id.web_dynmap_web);
 		webview.stopLoading();
 		LogUtil.d("DynmapActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

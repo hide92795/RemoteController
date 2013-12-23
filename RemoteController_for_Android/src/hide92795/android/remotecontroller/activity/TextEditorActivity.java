@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class TextEditorActivity extends FragmentActivity implements Callback, hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment.Callback {
 	private FileData old_data;
@@ -61,6 +62,18 @@ public class TextEditorActivity extends FragmentActivity implements Callback, hi
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.d("TextEditorActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

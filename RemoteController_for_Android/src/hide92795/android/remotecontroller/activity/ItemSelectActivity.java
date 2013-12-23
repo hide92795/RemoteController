@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class ItemSelectActivity extends Activity implements OnItemClickListener {
 	private ItemSelectListAdapter adapter;
@@ -84,6 +85,18 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.d("ItemSelectActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

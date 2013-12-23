@@ -22,6 +22,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class PluginInfoActivity extends FragmentActivity implements ReceiveListener {
 	@Override
@@ -45,6 +46,18 @@ public class PluginInfoActivity extends FragmentActivity implements ReceiveListe
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.d("PluginActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ViewSwitcher;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class LoginServerActivity extends FragmentActivity implements OnClickListener, TextWatcher, OnCancelListener, ReceiveListener, Callback {
 	@Override
@@ -46,10 +47,22 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 		LogUtil.d("LoginServerActivity#onResume()");
 		checkSavedConnection();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

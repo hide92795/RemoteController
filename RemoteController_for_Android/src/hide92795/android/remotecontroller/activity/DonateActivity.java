@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class DonateActivity extends FragmentActivity implements OnClickListener {
 	private static final String SKU_DONATE_100 = "donate_100";
@@ -48,6 +49,18 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 		super.onDestroy();
 		LogUtil.d("DonateActivity#onDestroy()");
 		shutdownBilling();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	private void setupBilling() {

@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class PluginActivity extends FragmentActivity implements ReceiveListener, OnPluginHandleClickListener {
 	private PluginExpandableListAdapter adapter;
@@ -36,6 +37,18 @@ public class PluginActivity extends FragmentActivity implements ReceiveListener,
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.d("PluginActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	@Override

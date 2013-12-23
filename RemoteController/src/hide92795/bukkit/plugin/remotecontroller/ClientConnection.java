@@ -66,14 +66,14 @@ public class ClientConnection {
 	}
 
 	public void closed() {
-		if (user == null) {
+		if (auth.get()) {
+			plugin.getLogger().info("User \"" + user + "\" has logged off.");
+		} else {
 			StringBuilder sb = new StringBuilder();
 			sb.append("The connection has been attempted from \"");
 			sb.append(address.toString());
 			sb.append("\"");
 			plugin.getLogger().info(sb.toString());
-		} else {
-			plugin.getLogger().info("User \"" + user + "\" has logged off.");
 		}
 	}
 

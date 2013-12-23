@@ -1,6 +1,5 @@
 package hide92795.bukkit.plugin.remotecontroller;
 
-import java.net.BindException;
 import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,15 +56,15 @@ public class RemoteServer extends WebSocketServer {
 			plugin.getLogger().warning("An error has occured in the connection. : " + client_socket);
 		} else {
 			plugin.getLogger().severe("An internal error has occurred.");
-			if (ex instanceof BindException) {
-				plugin.getLogger().severe("If you use /reload command, the remote server couldn\'t restart successfully.");
-				plugin.getLogger().severe("Please RESTART your server.");
-				plugin.getServer().getPluginManager().disablePlugin(plugin);
-				return;
-			}
+			// if (ex instanceof BindException) {
+			// plugin.getLogger().severe("If you use /reload command, the remote server couldn\'t restart successfully.");
+			// plugin.getLogger().severe("Please RESTART your server.");
+			// plugin.getServer().getPluginManager().disablePlugin(plugin);
+			// return;
+			// }
 		}
 		ex.printStackTrace();
-		plugin.getLogger().warning(ex.toString());
+		// plugin.getLogger().warning(ex.toString());
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import hide92795.bukkit.plugin.corelib.Usage;
 import hide92795.bukkit.plugin.remotecontroller.api.AdditionalInfo;
 import hide92795.bukkit.plugin.remotecontroller.api.AdditionalInfoCreator;
 import hide92795.bukkit.plugin.remotecontroller.api.RemoteControllerAPI;
+import hide92795.bukkit.plugin.remotecontroller.compatibility.LogRedirectWithLog4j;
 import hide92795.bukkit.plugin.remotecontroller.listener.BroadcastListener;
 import hide92795.bukkit.plugin.remotecontroller.listener.ChatListenerWithAsyncPlayerChatEvent;
 import hide92795.bukkit.plugin.remotecontroller.listener.ChatListenerWithPlayerChatEvent;
@@ -41,7 +42,7 @@ public class RemoteController extends JavaPlugin {
 	private ConcurrentLinkedQueue<String> chat;
 	private ArrayList<AdditionalInfoCreator> additional_info_creators;
 	private RemoteControllerAPI api;
-	private Usage usage_user;
+	private Usage usage;
 	private boolean chat_event_type_is_broadcast;
 
 	@Override
@@ -58,6 +59,7 @@ public class RemoteController extends JavaPlugin {
 		api = new RemoteControllerAPI(this);
 		try {
 			reload();
+			logger.severe("Loaded config successfully.");
 		} catch (Exception e1) {
 			logger.severe("Error has occurred on loading config.");
 		}
@@ -65,7 +67,6 @@ public class RemoteController extends JavaPlugin {
 		startServer();
 
 		startRedirectConsoleLog();
-		logger.info("Start redirect console log.");
 
 		startRedirectChatLog();
 
@@ -73,9 +74,16 @@ public class RemoteController extends JavaPlugin {
 	}
 
 	private void startRedirectConsoleLog() {
-		LogHandler handler = new LogHandler(this);
-		handler.setLevel(Level.ALL);
-		getServer().getLogger().addHandler(handler);
+		try {
+			Class.forName("org.apache.logging.log4j.LogManager");
+			LogRedirectWithLog4j.regist(this);
+			logger.info("Start redirect console log with log4j.");
+		} catch (NoClassDefFoundError | Exception e) {
+			LogHandler handler = new LogHandler(this);
+			handler.setLevel(Level.ALL);
+			getServer().getLogger().addHandler(handler);
+			logger.info("Start redirect console log with Java Logging API.");
+		}
 	}
 
 	private void startRedirectChatLog() {
@@ -84,13 +92,13 @@ public class RemoteController extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new BroadcastListener(this), this);
 			chat_event_type_is_broadcast = true;
 			logger.info("Start redirect chat log with ServerBroadcastEvent.");
-		} catch (Exception e) {
+		} catch (NoClassDefFoundError | Exception e) {
 			try {
 				Class.forName("org.bukkit.event.player.AsyncPlayerChatEvent");
 				getServer().getPluginManager().registerEvents(new ChatListenerWithAsyncPlayerChatEvent(this), this);
 				chat_event_type_is_broadcast = false;
 				logger.info("Start redirect chat log with AsyncPlayerChatEvent.");
-			} catch (Exception e2) {
+			} catch (NoClassDefFoundError | Exception e2) {
 				getServer().getPluginManager().registerEvents(new ChatListenerWithPlayerChatEvent(this), this);
 				chat_event_type_is_broadcast = false;
 				logger.info("Start redirect chat log with PlayerChatEvent.");
@@ -99,10 +107,11 @@ public class RemoteController extends JavaPlugin {
 	}
 
 	private void createUsage() {
-		usage_user = new Usage(this);
-		usage_user.addCommand("/remotecontroller-user add <" + localize.getString(Type.USERNAME) + "> <" + localize.getString(Type.PASSWORD) + ">", localize.getString(Type.USAGE_USER_ADD));
-		usage_user.addCommand("/remotecontroller-user remove <" + localize.getString(Type.USERNAME) + ">", localize.getString(Type.USAGE_USER_REMOVE));
-		usage_user.addCommand("/remotecontroller-user list", localize.getString(Type.USAGE_USER_LIST));
+		usage = new Usage(this);
+		usage.addCommand("/remotecontroller-user add <" + localize.getString(Type.USERNAME) + "> <" + localize.getString(Type.PASSWORD) + ">", localize.getString(Type.USAGE_USER_ADD));
+		usage.addCommand("/remotecontroller-user remove <" + localize.getString(Type.USERNAME) + ">", localize.getString(Type.USAGE_USER_REMOVE));
+		usage.addCommand("/remotecontroller-user list", localize.getString(Type.USAGE_USER_LIST));
+		usage.addCommand("/remotecontroller-reload", localize.getString(Type.USAGE_RELOAD_SETTING));
 	}
 
 	@Override
@@ -114,11 +123,11 @@ public class RemoteController extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		switch (command.getName().toLowerCase()) {
 		case "remotecontroller":
-			sender.sendMessage(usage_user.toString());
+			sender.sendMessage(usage.toString());
 			break;
 		case "remotecontroller-user":
 			if (args.length == 0) {
-				sender.sendMessage(usage_user.toString());
+				sender.sendMessage(usage.toString());
 				break;
 			}
 			String sub_cmd = args[0];
@@ -133,7 +142,7 @@ public class RemoteController extends JavaPlugin {
 						saveUserData();
 					}
 				} else {
-					sender.sendMessage(usage_user.toString());
+					sender.sendMessage(usage.toString());
 				}
 				break;
 			case "remove":
@@ -146,7 +155,7 @@ public class RemoteController extends JavaPlugin {
 						sender.sendMessage(localize.getString(Type.USER_NOT_FOUND));
 					}
 				} else {
-					sender.sendMessage(usage_user.toString());
+					sender.sendMessage(usage.toString());
 				}
 				break;
 			case "list":
@@ -227,6 +236,9 @@ public class RemoteController extends JavaPlugin {
 				users = (ConcurrentHashMap<String, String>) ois.readObject();
 			} catch (Exception e) {
 				logger.severe("An error has occurred loading userdata!");
+				users = new ConcurrentHashMap<>();
+				saveUserData();
+				logger.severe("Created new file.");
 			}
 		} else {
 			users = new ConcurrentHashMap<>();
@@ -246,15 +258,18 @@ public class RemoteController extends JavaPlugin {
 
 	private void startServer() {
 		getLogger().info("Starting remote server...");
-		getLogger().info("The server is powered by Java-WebSocket.");
+		getLogger().info("This server is powered by Java-WebSocket.");
 		getLogger().info("http://java-websocket.org/");
 		server = new RemoteServer(this);
 		server.start();
+		getLogger().info("Started remote server successfully.");
+		getLogger().info("Remote server port: " + this.config.port);
 	}
 
 	private void stopServer() {
 		getLogger().info("Stopping remote server...");
 		server.stopServer();
+		getLogger().info("Stopped remote server successfully.");
 	}
 
 	public boolean checkUser(String username, String password) {

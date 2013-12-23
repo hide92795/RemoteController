@@ -24,6 +24,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class OnlinePlayerActivity extends FragmentActivity implements ReceiveListener, PlayerFaceUpdator.Callback, OnPlayerHandleClickListener, PlayerDialogFragment.Callback {
 	private PlayersExpandableListAdapter adapter;
@@ -48,6 +49,18 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 	protected void onDestroy() {
 		super.onDestroy();
 		LogUtil.d("OnlinePlayerActivity#onDestroy()");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
 	}
 
 	private void updateOnlinePlayers() {
