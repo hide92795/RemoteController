@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller.activity;
 
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
@@ -28,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class ConsoleActivity extends FragmentActivity implements OnClickListener, OnAddConsoleListener, OnKeyListener {
 	private ScaleGestureDetector gesture_detector;
@@ -86,13 +86,13 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override
@@ -189,6 +189,7 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 			String cmd = edittext.getText().toString();
 			((Session) getApplication()).getConnection().requests.sendConsoleCommand(cmd);
 			edittext.setText("");
+			GoogleAnalyticsUtil.dispatchConsoleCommand(this);
 			break;
 		}
 		default:

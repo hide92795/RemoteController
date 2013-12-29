@@ -59,7 +59,7 @@ public class RemoteController extends JavaPlugin {
 		api = new RemoteControllerAPI(this);
 		try {
 			reload();
-			logger.severe("Loaded config successfully.");
+			logger.info("Loaded config successfully.");
 		} catch (Exception e1) {
 			logger.severe("Error has occurred on loading config.");
 		}
@@ -134,12 +134,16 @@ public class RemoteController extends JavaPlugin {
 			switch (sub_cmd) {
 			case "add":
 				if (args.length == 3) {
-					if (users.containsKey(args[1])) {
-						sender.sendMessage(localize.getString(Type.USER_ALREADY_EXIST));
+					if (canAccessUserModifyCommand(sender)) {
+						if (users.containsKey(args[1])) {
+							sender.sendMessage(localize.getString(Type.USER_ALREADY_EXIST));
+						} else {
+							users.put(args[1], args[2]);
+							sender.sendMessage(localize.getString(Type.USER_ADD_SUCCESS));
+							saveUserData();
+						}
 					} else {
-						users.put(args[1], args[2]);
-						sender.sendMessage(localize.getString(Type.USER_ADD_SUCCESS));
-						saveUserData();
+						sender.sendMessage("This command can only be accessed from console.");
 					}
 				} else {
 					sender.sendMessage(usage.toString());
@@ -147,12 +151,16 @@ public class RemoteController extends JavaPlugin {
 				break;
 			case "remove":
 				if (args.length == 2) {
-					if (users.containsKey(args[1])) {
-						users.remove(args[1]);
-						sender.sendMessage(localize.getString(Type.USER_REMOVE_SUCCESS));
-						saveUserData();
+					if (canAccessUserModifyCommand(sender)) {
+						if (users.containsKey(args[1])) {
+							users.remove(args[1]);
+							sender.sendMessage(localize.getString(Type.USER_REMOVE_SUCCESS));
+							saveUserData();
+						} else {
+							sender.sendMessage(localize.getString(Type.USER_NOT_FOUND));
+						}
 					} else {
-						sender.sendMessage(localize.getString(Type.USER_NOT_FOUND));
+						sender.sendMessage("This command can only be accessed from console.");
 					}
 				} else {
 					sender.sendMessage(usage.toString());
@@ -178,6 +186,16 @@ public class RemoteController extends JavaPlugin {
 			break;
 		default:
 			break;
+		}
+		return true;
+	}
+
+	private boolean canAccessUserModifyCommand(CommandSender sender) {
+		if (config.console_only) {
+			if (sender.getName().equals(getServer().getConsoleSender().getName())) {
+				return true;
+			}
+			return false;
 		}
 		return true;
 	}
@@ -224,7 +242,7 @@ public class RemoteController extends JavaPlugin {
 			}
 		}
 		loadUserData();
-		config = new Config(getConfig());
+		config = new Config(this, getConfig());
 		createUsage();
 	}
 

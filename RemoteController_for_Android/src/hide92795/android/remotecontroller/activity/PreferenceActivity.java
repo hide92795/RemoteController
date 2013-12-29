@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller.activity;
 
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.ui.PreferenceFragment;
@@ -15,7 +16,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
-import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class PreferenceActivity extends android.preference.PreferenceActivity {
@@ -31,13 +31,13 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@SuppressWarnings("deprecation")

@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller.activity;
 
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.Items;
 import hide92795.android.remotecontroller.Items.ItemData;
 import hide92795.android.remotecontroller.R;
@@ -17,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class ItemSelectActivity extends Activity implements OnItemClickListener {
 	private ItemSelectListAdapter adapter;
@@ -90,13 +90,13 @@ public class ItemSelectActivity extends Activity implements OnItemClickListener 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override

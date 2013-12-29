@@ -37,7 +37,7 @@ public class CommandServerInfo implements Command {
 
 		ServerData data = new ServerData();
 		data.setServername(servername);
-		data.setPort(port);
+		data.setAddress(connection.getServerAddress() + ":" + port);
 		data.setMax(max);
 		data.setCurrent(current);
 		data.setAddInfo(StringUtils.join("\n", add_info_al));

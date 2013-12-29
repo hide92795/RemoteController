@@ -43,17 +43,10 @@ public class PluginInfoData extends ReceiveData {
 		this.web = web;
 	}
 
-	/**
-	 * @return description
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description
-	 *            セットする description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}

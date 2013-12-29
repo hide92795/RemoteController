@@ -1,6 +1,7 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.PlayerFaceUpdator;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
@@ -24,7 +25,6 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class OnlinePlayerActivity extends FragmentActivity implements ReceiveListener, PlayerFaceUpdator.Callback, OnPlayerHandleClickListener, PlayerDialogFragment.Callback {
 	private PlayersExpandableListAdapter adapter;
@@ -54,13 +54,13 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	private void updateOnlinePlayers() {
@@ -143,6 +143,7 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			Connection connection = ((Session) getApplication()).getConnection();
 			int pid = connection.requests.requestKick(username, data.getString("REASON"));
 			connection.addListener(pid, this);
+			GoogleAnalyticsUtil.performKick(this);
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			break;
 		}
@@ -150,6 +151,7 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			Connection connection = ((Session) getApplication()).getConnection();
 			int pid = connection.requests.requestBan(username, data.getString("REASON"));
 			connection.addListener(pid, this);
+			GoogleAnalyticsUtil.performBan(this);
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			break;
 		}
@@ -165,6 +167,7 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			}
 			int pid = connection.requests.requestGive(username, item, num);
 			connection.addListener(pid, this);
+			GoogleAnalyticsUtil.performGive(this);
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			break;
 		}
@@ -172,6 +175,7 @@ public class OnlinePlayerActivity extends FragmentActivity implements ReceiveLis
 			Connection connection = ((Session) getApplication()).getConnection();
 			int pid = connection.requests.requestGamemode(username, data.getInt("GAMEMODE"));
 			connection.addListener(pid, this);
+			GoogleAnalyticsUtil.performGamemode(this);
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			break;
 		}

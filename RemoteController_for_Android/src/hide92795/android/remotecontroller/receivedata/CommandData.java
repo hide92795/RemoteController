@@ -1,6 +1,6 @@
 package hide92795.android.remotecontroller.receivedata;
 
-public class CommandData extends ReceiveData {
+public class CommandData extends ReceiveData implements PluginInfoBase {
 	private String command;
 	private String description;
 	private String alias;

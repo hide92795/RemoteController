@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller.activity;
 
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.billing.IabHelper;
 import hide92795.android.remotecontroller.billing.IabHelper.OnConsumeFinishedListener;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class DonateActivity extends FragmentActivity implements OnClickListener {
 	private static final String SKU_DONATE_100 = "donate_100";
@@ -54,13 +54,13 @@ public class DonateActivity extends FragmentActivity implements OnClickListener 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	private void setupBilling() {

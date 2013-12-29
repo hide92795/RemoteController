@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:paddingLeft="5dp" >
 
     <TextView
-        android:id="@+id/text_plugin_info_permission_permission"
+        android:id="@+id/const_text_plugin_info_command_detail_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
-        android:text="@string/str_permissions"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black" />
+        android:text="@string/str_permission"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/text_plugin_info_command_detail_permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@+id/const_text_plugin_info_command_detail_1"
+        android:ellipsize="end"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
-        android:id="@+id/const_linear_plugin_info_permission_1"
+        android:id="@+id/const_linear_plugin_info_command_detail_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/text_plugin_info_permission_permission"
-        android:layout_marginRight="3dp" >
+        android:layout_below="@+id/const_text_plugin_info_command_detail_1" >
 
         <TextView
-            android:id="@+id/const_text_plugin_info_permission_1"
+            android:id="@+id/const_text_plugin_info_command_detail_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_description"
+            android:text="@string/str_usage"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/text_plugin_info_permission_description"
+            android:id="@+id/text_plugin_info_command_detail_usage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
     </LinearLayout>
 
 </RelativeLayout>

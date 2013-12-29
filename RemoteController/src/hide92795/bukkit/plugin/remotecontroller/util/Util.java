@@ -1,10 +1,13 @@
 package hide92795.bukkit.plugin.remotecontroller.util;
 
+import hide92795.bukkit.plugin.remotecontroller.Modifiable;
 import hide92795.bukkit.plugin.remotecontroller.org.apache.commons.lang3.StringUtils;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
@@ -113,5 +116,38 @@ public class Util {
 			}
 		}
 		return datas;
+	}
+
+	public static File createFile(File root, String path) {
+		String[] dirs = path.split(File.pathSeparator);
+		File file = root;
+		for (String dir : dirs) {
+			file = new File(file, dir);
+		}
+		return file;
+	}
+
+	public static boolean canRead(LinkedHashMap<String, Modifiable> exclude_files, File file) throws IOException {
+		boolean read = true;
+		String target = file.getCanonicalPath();
+		Set<String> s = exclude_files.keySet();
+		for (String path : s) {
+			if (target.contains(path)) {
+				read = exclude_files.get(path).canRead();
+			}
+		}
+		return read;
+	}
+
+	public static boolean canWrite(LinkedHashMap<String, Modifiable> exclude_files, File file) throws IOException {
+		boolean read = true;
+		String target = file.getCanonicalPath();
+		Set<String> s = exclude_files.keySet();
+		for (String path : s) {
+			if (target.contains(path)) {
+				read = exclude_files.get(path).canWrite();
+			}
+		}
+		return read;
 	}
 }

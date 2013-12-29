@@ -16,6 +16,7 @@ public class Message {
 		messages.put("NO_PLUGIN", R.string.str_no_plugin);
 		messages.put("PLUGIN_ALREADY_ENABLED", R.string.str_plugin_already_enabled);
 		messages.put("PLUGIN_ALREADY_DISABLED", R.string.str_plugin_already_disabled);
+		messages.put("ACCESS_DENIED", R.string.str_access_denied);
 	}
 
 	public static final int getMessageID(String str_id) {

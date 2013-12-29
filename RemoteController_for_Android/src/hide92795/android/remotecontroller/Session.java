@@ -12,12 +12,16 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import android.app.Application;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 public class Session extends Application {
 	private ArrayList<ConnectionData> saved_connection;
@@ -28,14 +32,28 @@ public class Session extends Application {
 	private ChatListAdapter chat_adapter;
 	private PlayerFaceManager face_manager;
 	private ServerInfo server_info;
+	public static AtomicBoolean debug;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		checkDebugPackageInstalled();
 		LogUtil.d("Session#onCreate()");
 		this.handler = new Handler();
 		this.face_manager = new PlayerFaceManager(this);
 		loadSavedConnection();
+	}
+
+	private void checkDebugPackageInstalled() {
+		PackageManager pm = getPackageManager();
+		try {
+			pm.getPackageInfo("hide92795.android.debug", PackageManager.GET_ACTIVITIES);
+			debug = new AtomicBoolean(true);
+			Log.d("RemoteController", "Debug mode enabled!");
+		} catch (NameNotFoundException e) {
+			debug = new AtomicBoolean(false);
+			Log.d("RemoteController", "Debug mode disabled!");
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -155,5 +173,13 @@ public class Session extends Application {
 
 	public ServerInfo getServerInfo() {
 		return server_info;
+	}
+
+	public static boolean isDebug() {
+		if (debug == null) {
+			return false;
+		} else {
+			return debug.get();
+		}
 	}
 }

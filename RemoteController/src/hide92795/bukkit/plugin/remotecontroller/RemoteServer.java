@@ -2,6 +2,7 @@ package hide92795.bukkit.plugin.remotecontroller;
 
 import java.net.InetSocketAddress;
 import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.java_websocket.WebSocket;
 import org.java_websocket.drafts.Draft;
@@ -78,6 +79,12 @@ public class RemoteServer extends WebSocketServer {
 	}
 
 	public void stopServer() {
+		Set<Integer> s = clients.keySet();
+		for (Integer id : s) {
+			ClientConnection c = clients.get(id);
+			c.close();
+		}
+
 		try {
 			stop();
 		} catch (Exception e) {

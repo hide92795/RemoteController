@@ -172,5 +172,6 @@
     <string name="str_default">デフォルト:</string>
     <string name="str_children">子要素:</string>
     <string name="str_inherits">継承:</string>
+    <string name="str_access_denied">アクセスが拒否されました</string>
 
 </resources>

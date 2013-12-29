@@ -22,22 +22,26 @@ public class CommandDirectory implements Command {
 				} else {
 					dir = new File(plugin.getRoot(), dir_s);
 				}
-				File[] files = dir.listFiles(new FileFilter() {
-					@Override
-					public boolean accept(File file) {
-						if (file.isDirectory()) {
-							return true;
+				if (Util.canRead(plugin.config.file_access, dir)) {
+					File[] files = dir.listFiles(new FileFilter() {
+						@Override
+						public boolean accept(File file) {
+							if (file.isDirectory()) {
+								return true;
+							}
+							String extension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+							if (plugin.config.editable_extension.contains(extension)) {
+								return true;
+							}
+							return false;
 						}
-						String extension = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-						if (plugin.config.editable_extension.contains(extension)) {
-							return true;
-						}
-						return false;
-					}
-				});
-				Arrays.sort(files, new FileComparator());
-				String[] files_s = Util.toFileStringArray(files);
-				connection.send("DIRECTORY", pid, arg + ":" + StringUtils.join(files_s, ":"));
+					});
+					Arrays.sort(files, new FileComparator());
+					String[] files_s = Util.toFileStringArray(files);
+					connection.send("DIRECTORY", pid, arg + ":" + StringUtils.join(files_s, ":"));
+				} else {
+					connection.send("ERROR", pid, "ACCESS_DENIED");
+				}
 			} else {
 				connection.send("ERROR", pid, "NOT_AUTH");
 			}

@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller.activity;
 
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.receivedata.FileData;
 import hide92795.android.remotecontroller.ui.dialog.CharsetDialogFragment;
@@ -16,7 +17,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class TextEditorActivity extends FragmentActivity implements Callback, hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment.Callback {
 	private FileData old_data;
@@ -67,13 +67,13 @@ public class TextEditorActivity extends FragmentActivity implements Callback, hi
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override

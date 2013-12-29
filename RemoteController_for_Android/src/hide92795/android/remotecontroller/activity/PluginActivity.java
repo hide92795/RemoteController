@@ -1,6 +1,7 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
 import hide92795.android.remotecontroller.Session;
@@ -18,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class PluginActivity extends FragmentActivity implements ReceiveListener, OnPluginHandleClickListener {
 	private PluginExpandableListAdapter adapter;
@@ -42,13 +42,13 @@ public class PluginActivity extends FragmentActivity implements ReceiveListener,
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override

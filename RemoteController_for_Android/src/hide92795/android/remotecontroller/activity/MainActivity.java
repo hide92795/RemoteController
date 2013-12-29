@@ -1,6 +1,7 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.InitialReceive;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
@@ -21,7 +22,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class MainActivity extends FragmentActivity implements OnClickListener, ReceiveListener {
 	private boolean first_show = true;
@@ -40,13 +40,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	private void initRequest() {
@@ -220,8 +220,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, R
 			TextView text_server_name = (TextView) findViewById(R.id.text_main_server_name);
 			text_server_name.setText(data.getServername());
 			TextView text_address = (TextView) findViewById(R.id.text_main_address);
-			String address = ((Session) getApplication()).getConnection().getServerAddress() + ":" + data.getPort();
-			text_address.setText(address);
+			text_address.setText(data.getAddress());
 			TextView text_peoples = (TextView) findViewById(R.id.text_main_peoples);
 			text_peoples.setText(data.getCurrent() + "/" + data.getMax());
 			TextView text_add_info = (TextView) findViewById(R.id.text_main_add_infomation);

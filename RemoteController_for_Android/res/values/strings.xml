@@ -172,5 +172,6 @@
     <string name="str_default">Default:</string>
     <string name="str_children">Children:</string>
     <string name="str_inherits">Inherits:</string>
+    <string name="str_access_denied">Access denied</string>
 
 </resources>

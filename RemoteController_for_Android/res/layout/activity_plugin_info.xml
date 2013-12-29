@@ -1,167 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/const_scroll_plugin_info_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background" >
 
-    <RelativeLayout
-        android:id="@+id/const_relative_plugin_info_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp" >
+   <ExpandableListView
+       android:id="@+id/list_plugin_info_datas"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_marginRight="3dp"
+       android:childDivider="@null"
+       android:divider="@null"
+       android:dividerHeight="0dp"
+       android:groupIndicator="@null" />
 
-        <TextView
-            android:id="@+id/text_plugin_info_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/const_text_plugin_info_4"
-            android:layout_alignBottom="@+id/const_text_plugin_info_4"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/const_text_plugin_info_4"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/const_text_plugin_info_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/const_text_plugin_info_4"
-            android:layout_below="@+id/const_text_plugin_info_4"
-            android:layout_marginTop="3dp"
-            android:text="@string/str_author"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/text_plugin_info_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/const_text_plugin_info_1"
-            android:layout_alignBottom="@+id/const_text_plugin_info_1"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/const_text_plugin_info_1"
-            android:ellipsize="end"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/const_text_plugin_info_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/const_text_plugin_info_1"
-            android:layout_below="@+id/const_text_plugin_info_1"
-            android:layout_marginTop="3dp"
-            android:text="@string/str_web"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/text_plugin_info_web"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/const_text_plugin_info_2"
-            android:layout_alignBottom="@+id/const_text_plugin_info_2"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/const_text_plugin_info_2"
-            android:autoLink="web"
-            android:ellipsize="end"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/const_text_plugin_info_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/const_text_plugin_info_2"
-            android:layout_below="@+id/const_text_plugin_info_2"
-            android:layout_marginTop="5dp"
-            android:text="@string/str_commands"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/const_text_plugin_info_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/const_text_plugin_info_7"
-            android:layout_below="@+id/const_text_plugin_info_7"
-            android:layout_marginTop="3dp"
-            android:text="@string/str_version"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/text_plugin_info_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/const_text_plugin_info_7"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@+id/const_text_plugin_info_7"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/text_plugin_info_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TableLayout
-            android:id="@+id/table_plugin_info_commands"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/const_text_plugin_info_3"
-            android:layout_below="@+id/const_text_plugin_info_3"
-            android:stretchColumns="0" >
-        </TableLayout>
-
-        <TextView
-            android:id="@+id/const_text_plugin_info_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/table_plugin_info_commands"
-            android:layout_marginTop="5dp"
-            android:text="@string/str_permissions"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TableLayout
-            android:id="@+id/table_plugin_info_permissions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/const_text_plugin_info_5"
-            android:layout_below="@+id/const_text_plugin_info_5" >
-        </TableLayout>
-
-        <LinearLayout
-            android:id="@+id/const_linear_plugin_info_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/text_plugin_info_name" >
-
-            <TextView
-                android:id="@+id/const_text_plugin_info_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/str_description"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/text_plugin_info_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/const_text_plugin_info_7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/const_linear_plugin_info_1"
-            android:layout_marginTop="2dp"
-            android:text="@string/str_status"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

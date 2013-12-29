@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller.activity;
 
+import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.ui.adapter.AccountManagerListAdapter;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import com.google.analytics.tracking.android.EasyTracker;
 
 public class AccountManagerActivity extends FragmentActivity implements OnItemLongClickListener, AccountHandleDialogFragment.Callback, AccountDeleteDialogFragment.Callback {
 	private AccountManagerListAdapter adapter;
@@ -36,13 +36,13 @@ public class AccountManagerActivity extends FragmentActivity implements OnItemLo
 	@Override
 	protected void onStart() {
 		super.onStart();
-		EasyTracker.getInstance(getApplicationContext()).activityStart(this);
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(getApplicationContext()).activityStop(this);
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	private void setAdapter() {

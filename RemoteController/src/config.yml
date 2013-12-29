@@ -7,3 +7,5 @@ EditableExtension:
  - txt
 EnableDynmap: true
 DynmapAddress: ""
+ConsoleOnly: true
+FileAccess:

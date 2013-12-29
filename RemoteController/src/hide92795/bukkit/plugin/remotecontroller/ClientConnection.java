@@ -24,6 +24,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.java_websocket.WebSocket;
+import org.java_websocket.framing.CloseFrame;
 import org.java_websocket.util.Base64;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
@@ -40,6 +41,7 @@ public class ClientConnection {
 	private RSAPrivateKey privateKey;
 	private RSAPublicKey publicKey;
 	private AtomicReference<byte[]> key;
+	private RemoteControllerCommandSender sender;
 
 	private static final CommandDispatcher COMMAND_DISPATCHER;
 	static {
@@ -79,7 +81,7 @@ public class ClientConnection {
 
 	public void close() {
 		if (!socket.isClosed()) {
-			socket.close();
+			socket.close(CloseFrame.GOING_AWAY);
 		}
 	}
 
@@ -140,6 +142,11 @@ public class ClientConnection {
 
 	public void authorize(String user) {
 		this.user = user;
+		try {
+			this.sender = new RemoteControllerCommandSender(this, user, socket.getID());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.auth.set(true);
 	}
 
@@ -149,6 +156,10 @@ public class ClientConnection {
 
 	public String getUser() {
 		return user;
+	}
+
+	public RemoteControllerCommandSender getSender() {
+		return sender;
 	}
 
 	public void send(String cmd, int pid, String text) {
