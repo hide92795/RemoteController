@@ -10,8 +10,14 @@ public class CommandConsoleCommand implements Command {
 	public void doCommand(RemoteController plugin, ClientConnection connection, int pid, String arg) {
 		try {
 			if (connection.isAuthorized()) {
-				Bukkit.dispatchCommand(connection.getSender(), arg);
-				Bukkit.getLogger().info(connection.getSender().getName() + " issued server command: " + arg);
+				if (arg.startsWith("rcu") || arg.startsWith("remotecontroller-user")) {
+					if (plugin.config.console_only) {
+						plugin.getLogger().info("This command can only be accessed from console.");
+						return;
+					}
+				}
+				Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), arg);
+				plugin.getLogger().info(connection.getUser() + " issued server command: " + arg);
 				connection.send("SUCCESS", pid, "");
 			} else {
 				connection.send("ERROR", pid, "NOT_AUTH");

@@ -41,7 +41,6 @@ public class ClientConnection {
 	private RSAPrivateKey privateKey;
 	private RSAPublicKey publicKey;
 	private AtomicReference<byte[]> key;
-	private RemoteControllerCommandSender sender;
 
 	private static final CommandDispatcher COMMAND_DISPATCHER;
 	static {
@@ -142,11 +141,6 @@ public class ClientConnection {
 
 	public void authorize(String user) {
 		this.user = user;
-		try {
-			this.sender = new RemoteControllerCommandSender(this, user, socket.getID());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.auth.set(true);
 	}
 
@@ -156,10 +150,6 @@ public class ClientConnection {
 
 	public String getUser() {
 		return user;
-	}
-
-	public RemoteControllerCommandSender getSender() {
-		return sender;
 	}
 
 	public void send(String cmd, int pid, String text) {
