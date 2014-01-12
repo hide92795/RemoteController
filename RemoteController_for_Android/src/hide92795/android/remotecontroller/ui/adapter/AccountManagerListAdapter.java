@@ -27,12 +27,13 @@ public class AccountManagerListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return session.getSavedConnection().size();
+		return session.getSavedConnection().getIds().size();
 	}
 
 	@Override
 	public ConnectionData getItem(int position) {
-		return session.getSavedConnection().get(position);
+		String uuid = session.getSavedConnection().getIds().get(position);
+		return session.getSavedConnection().getDatas().get(uuid);
 	}
 
 	@Override
@@ -73,19 +74,19 @@ public class AccountManagerListAdapter extends BaseAdapter {
 		if (position == 0) {
 			return;
 		}
-		ConnectionData data = getItem(position);
-		session.getSavedConnection().remove(position);
-		session.getSavedConnection().add(position - 1, data);
+		String uuid = session.getSavedConnection().getIds().get(position);
+		session.getSavedConnection().getIds().remove(position);
+		session.getSavedConnection().getIds().add(position - 1, uuid);
 		notifyDataSetChanged();
 	}
 
 	public void moveDown(int position) {
-		if (position == session.getSavedConnection().size() - 1) {
+		if (position == session.getSavedConnection().getIds().size() - 1) {
 			return;
 		}
-		ConnectionData data = getItem(position);
-		session.getSavedConnection().remove(position);
-		session.getSavedConnection().add(position + 1, data);
+		String uuid = session.getSavedConnection().getIds().get(position);
+		session.getSavedConnection().getIds().remove(position);
+		session.getSavedConnection().getIds().add(position + 1, uuid);
 		notifyDataSetChanged();
 	}
 }

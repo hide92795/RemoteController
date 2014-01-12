@@ -1,7 +1,9 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
+import hide92795.android.remotecontroller.ConnectionConfig;
 import hide92795.android.remotecontroller.ConnectionData;
+import hide92795.android.remotecontroller.ConnectionDataPair;
 import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
@@ -14,6 +16,7 @@ import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerD
 import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerDialogFragment.Callback;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -97,17 +100,20 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 	}
 
 	private void checkSavedConnection() {
-		ArrayList<ConnectionData> saved_connection = ((Session) getApplication()).getSavedConnection();
+		ConnectionConfig saved_connection = ((Session) getApplication()).getSavedConnection();
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
-		ArrayAdapter<ConnectionData> adapter = new ArrayAdapter<ConnectionData>(this, android.R.layout.simple_spinner_item);
+		ArrayAdapter<ConnectionDataPair> adapter = new ArrayAdapter<ConnectionDataPair>(this, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		for (ConnectionData connection_data : saved_connection) {
-			adapter.add(connection_data);
+		ArrayList<String> ids = saved_connection.getIds();
+		LinkedHashMap<String, ConnectionData> datas = saved_connection.getDatas();
+		for (String uuid : ids) {
+			ConnectionDataPair pair = new ConnectionDataPair(uuid, datas.get(uuid));
+			adapter.add(pair);
 		}
 		spinner.setAdapter(adapter);
 		Button move_exist_connection = (Button) findViewById(R.id.btn_login_move_exist_connection);
-		if (saved_connection.size() > 0) {
+		if (ids.size() > 0) {
 			changeDisplayToExistConnection();
 			move_exist_connection.setEnabled(true);
 		} else {
@@ -139,9 +145,9 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 			Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
 
-			ConnectionData connection_data = (ConnectionData) spinner.getSelectedItem();
+			ConnectionDataPair pair = (ConnectionDataPair) spinner.getSelectedItem();
 
-			login(connection_data);
+			login(pair.data);
 			break;
 		}
 		case R.id.btn_login_login_as_new_connection: {

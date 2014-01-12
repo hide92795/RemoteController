@@ -8,10 +8,13 @@ import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment
 import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.io.OptionalDataException;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import android.app.Application;
 import android.content.Intent;
@@ -24,7 +27,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 public class Session extends Application {
-	private ArrayList<ConnectionData> saved_connection;
+	private ConnectionConfig saved_connection;
 	private Connection connection;
 	private CircleProgressDialogFragment dialog;
 	private Handler handler;
@@ -56,22 +59,37 @@ public class Session extends Application {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void loadSavedConnection() {
 		try {
-			FileInputStream fis = openFileInput("connection.dat");
+			FileInputStream fis = openFileInput("connection.v2.dat");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.saved_connection = (ArrayList<ConnectionData>) ois.readObject();
-			ois.close();
-		} catch (Exception e) {
-			this.saved_connection = new ArrayList<ConnectionData>();
-			saveConnection();
+			this.saved_connection = (ConnectionConfig) ois.readObject();
+		} catch (FileNotFoundException e) {
+			try {
+				FileInputStream fis = openFileInput("connection.dat");
+				this.saved_connection = ConnectionDataMigration.v1Tov2(fis);
+				saveConnection();
+				fis.close();
+			} catch (Exception e1) {
+				createNewConnection();
+			}
+		} catch (OptionalDataException e) {
+			createNewConnection();
+		} catch (ClassNotFoundException e) {
+			createNewConnection();
+		} catch (IOException e) {
+			createNewConnection();
 		}
+	}
+
+	private void createNewConnection() {
+		this.saved_connection = new ConnectionConfig();
+		saveConnection();
 	}
 
 	private void saveConnection() {
 		try {
-			FileOutputStream fos = openFileOutput("connection.dat", MODE_PRIVATE);
+			FileOutputStream fos = openFileOutput("connection.v2.dat", MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(saved_connection);
 			oos.flush();
@@ -82,12 +100,15 @@ public class Session extends Application {
 	}
 
 	public void addSavedConnection(ConnectionData connection_data) {
-		saved_connection.add(connection_data);
+		String uuid = UUID.randomUUID().toString();
+		saved_connection.getIds().add(uuid);
+		saved_connection.getDatas().put(uuid, connection_data);
 		saveConnection();
 	}
 
 	public void removeSavedConnection(int position) {
-		saved_connection.remove(position);
+		String uuid = saved_connection.getIds().remove(position);
+		saved_connection.getDatas().remove(uuid);
 		saveConnection();
 	}
 
@@ -139,7 +160,7 @@ public class Session extends Application {
 		return handler;
 	}
 
-	public ArrayList<ConnectionData> getSavedConnection() {
+	public ConnectionConfig getSavedConnection() {
 		return saved_connection;
 	}
 

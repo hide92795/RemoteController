@@ -22,7 +22,8 @@ public class AccountHandleDialogFragment extends DialogFragment {
 			callback = (Callback) getActivity();
 		}
 		final int position = getArguments().getInt("POSITION");
-		ConnectionData data = ((Session) getActivity().getApplication()).getSavedConnection().get(position);
+		String uuid = ((Session) getActivity().getApplication()).getSavedConnection().getIds().get(position);
+		ConnectionData data = ((Session) getActivity().getApplication()).getSavedConnection().getDatas().get(uuid);
 
 		Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(data.getAddress() + ":" + data.getPort());
