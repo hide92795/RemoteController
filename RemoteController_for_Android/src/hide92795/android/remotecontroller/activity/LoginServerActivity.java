@@ -1,13 +1,13 @@
 package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.Connection;
-import hide92795.android.remotecontroller.ConnectionConfig;
 import hide92795.android.remotecontroller.ConnectionData;
 import hide92795.android.remotecontroller.ConnectionDataPair;
 import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.ReceiveListener;
 import hide92795.android.remotecontroller.Session;
+import hide92795.android.remotecontroller.config.ConnectionConfig;
 import hide92795.android.remotecontroller.receivedata.AuthorizedData;
 import hide92795.android.remotecontroller.receivedata.ReceiveData;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment.OnCancelListener;

@@ -173,5 +173,11 @@
     <string name="str_children">Children:</string>
     <string name="str_inherits">Inherits:</string>
     <string name="str_access_denied">Access denied</string>
+    <string name="str_auto_update">Auto update</string>
+    <string name="str_auto_update_desc">Connect to server automatically and check for any errors that may have occurred.\nRequired for wiget feature.</string>
+    <string name="str_update_interval">Update interval:</string>
+    <string name="str_minute">min</string>
+    <string name="str_edit">Edit</string>
+    <string name="str_save">Save</string>
 
 </resources>

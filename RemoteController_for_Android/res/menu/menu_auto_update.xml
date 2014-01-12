@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_auto_update_update_interval"
+        android:title="@string/str_update_interval">
+    </item>
+
+</menu>

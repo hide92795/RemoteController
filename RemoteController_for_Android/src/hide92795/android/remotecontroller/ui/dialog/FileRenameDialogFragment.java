@@ -2,6 +2,7 @@ package hide92795.android.remotecontroller.ui.dialog;
 
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.receivedata.DirectoryData.File;
+import hide92795.android.remotecontroller.ui.dialog.AutoUpdateIntervalDialogFragment.Callback;
 import hide92795.android.remotecontroller.util.FileNameFilter;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -15,7 +16,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.widget.EditText;
 
-public class FileRenameDialogFragment extends DialogFragment {
+public class FileRenameDialogFragment extends DialogFragment implements Callback {
 	private Callback callback;
 
 	@Override
@@ -50,5 +51,11 @@ public class FileRenameDialogFragment extends DialogFragment {
 
 	public interface Callback {
 		void onFileRenameSelected(File file, String new_name);
+	}
+
+	@Override
+	public void onAccountDelete(int position) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 }

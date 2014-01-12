@@ -97,6 +97,11 @@
             android:label="@string/str_plugin"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.AutoUpdateManagerActivity"
+            android:label="@string/str_auto_update"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

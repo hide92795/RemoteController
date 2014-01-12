@@ -1,5 +1,6 @@
-package hide92795.android.remotecontroller;
+package hide92795.android.remotecontroller.config;
 
+import hide92795.android.remotecontroller.ConnectionData;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

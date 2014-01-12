@@ -17,4 +17,5 @@ public class ConfigDefaults {
 	public static final int CHAT_BACKGOUND_COLOR = Color.WHITE;
 	public static final int CHAT_FONT_COLOR = Color.BLACK;
 	public static final boolean SAVE_LOG = false;
+	public static final int AUTO_UPDATE_INTERVAL = 30;
 }

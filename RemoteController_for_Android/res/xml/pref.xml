@@ -11,6 +11,15 @@
                 android:targetClass="hide92795.android.remotecontroller.activity.AccountManagerActivity"
                 android:targetPackage="hide92795.android.remotecontroller" />
         </PreferenceScreen>
+        <PreferenceScreen
+            android:key="auto_update"
+            android:title="@string/str_auto_update"
+            android:summary="@string/str_auto_update_desc">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="hide92795.android.remotecontroller.activity.AutoUpdateManagerActivity"
+                android:targetPackage="hide92795.android.remotecontroller" />
+        </PreferenceScreen>
 
         <EditTextPreference
             android:defaultValue="http://s3.amazonaws.com/MinecraftSkins/%player%.png"
@@ -96,9 +105,16 @@
             hide92795:alphaSlider="false"
             hide92795:hexValue="true" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/str_log">
-        <CheckBoxPreference android:title="@string/str_save_log" android:key="save_log" android:summary="@string/str_save_log_desc"/>
-        <PreferenceScreen android:key="open_log_dir" android:title="@string/str_copy_log_dir"></PreferenceScreen>
+    <PreferenceCategory android:title="@string/str_log" >
+        <CheckBoxPreference
+            android:key="save_log"
+            android:summary="@string/str_save_log_desc"
+            android:title="@string/str_save_log" />
+
+        <PreferenceScreen
+            android:key="open_log_dir"
+            android:title="@string/str_copy_log_dir" >
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/str_other" >
         <PreferenceScreen

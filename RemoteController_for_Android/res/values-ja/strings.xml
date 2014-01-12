@@ -173,5 +173,11 @@
     <string name="str_children">子要素:</string>
     <string name="str_inherits">継承:</string>
     <string name="str_access_denied">アクセスが拒否されました</string>
+    <string name="str_auto_update">自動更新</string>
+    <string name="str_auto_update_desc">自動的にサーバーへ接続し、エラーなどが起きていないかを確認します。\nウィジェットを使う際に必要になります。</string>
+    <string name="str_update_interval">更新間隔:</string>
+    <string name="str_minute">分</string>
+    <string name="str_edit">編集</string>
+    <string name="str_save">保存</string>
 
 </resources>

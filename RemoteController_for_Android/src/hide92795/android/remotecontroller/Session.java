@@ -1,6 +1,8 @@
 package hide92795.android.remotecontroller;
 
 import hide92795.android.remotecontroller.activity.LoginServerActivity;
+import hide92795.android.remotecontroller.config.AutoUpdateConfig;
+import hide92795.android.remotecontroller.config.ConnectionConfig;
 import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment;
@@ -28,6 +30,7 @@ import android.util.Log;
 
 public class Session extends Application {
 	private ConnectionConfig saved_connection;
+	private AutoUpdateConfig auto_update;
 	private Connection connection;
 	private CircleProgressDialogFragment dialog;
 	private Handler handler;
@@ -45,6 +48,7 @@ public class Session extends Application {
 		this.handler = new Handler();
 		this.face_manager = new PlayerFaceManager(this);
 		loadSavedConnection();
+		loadAutoUpdate();
 	}
 
 	private void checkDebugPackageInstalled() {
@@ -56,6 +60,43 @@ public class Session extends Application {
 		} catch (NameNotFoundException e) {
 			debug = new AtomicBoolean(false);
 			Log.d("RemoteController", "Debug mode disabled!");
+		}
+	}
+
+	private void loadAutoUpdate() {
+		try {
+			FileInputStream fis = openFileInput("auto_update.v1.dat");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			this.auto_update = (AutoUpdateConfig) ois.readObject();
+		} catch (Exception e) {
+			createNewAutoUpdate();
+		}
+	}
+
+	private void createNewAutoUpdate() {
+		this.auto_update = new AutoUpdateConfig();
+		saveAutoUpdate();
+	}
+
+	public void addAutoUpdate(String uuid) {
+		this.auto_update.getAutoUpdateList().add(uuid);
+		saveAutoUpdate();
+	}
+
+	public void removeAutoUpdate(String uuid) {
+		this.auto_update.getAutoUpdateList().remove(uuid);
+		saveAutoUpdate();
+	}
+
+	private void saveAutoUpdate() {
+		try {
+			FileOutputStream fos = openFileOutput("auto_update.v1.dat", MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(auto_update);
+			oos.flush();
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -162,6 +203,10 @@ public class Session extends Application {
 
 	public ConnectionConfig getSavedConnection() {
 		return saved_connection;
+	}
+
+	public AutoUpdateConfig getAutoUpdate() {
+		return auto_update;
 	}
 
 	public void showProgressDialog(FragmentActivity activity, boolean cancelable, OnCancelListener listener) {

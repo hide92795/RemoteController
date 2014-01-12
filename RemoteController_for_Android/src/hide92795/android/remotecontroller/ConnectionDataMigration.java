@@ -1,5 +1,6 @@
 package hide92795.android.remotecontroller;
 
+import hide92795.android.remotecontroller.config.ConnectionConfig;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
