@@ -1,13 +1,17 @@
 package hide92795.android.remotecontroller;
 
 import hide92795.android.remotecontroller.activity.LoginServerActivity;
+import hide92795.android.remotecontroller.autoupdate.AutoUpdateService;
 import hide92795.android.remotecontroller.config.AutoUpdateConfig;
 import hide92795.android.remotecontroller.config.ConnectionConfig;
 import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
+import hide92795.android.remotecontroller.ui.adapter.NotificationListAdapter;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment;
 import hide92795.android.remotecontroller.ui.dialog.CircleProgressDialogFragment.OnCancelListener;
 import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
+import hide92795.android.remotecontroller.util.ConfigDefaults;
+import hide92795.android.remotecontroller.util.ConfigKeys;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,12 +22,16 @@ import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -36,6 +44,7 @@ public class Session extends Application {
 	private Handler handler;
 	private ConsoleListAdapter console_adapter;
 	private ChatListAdapter chat_adapter;
+	private NotificationListAdapter notification_adapter;
 	private PlayerFaceManager face_manager;
 	private ServerInfo server_info;
 	public static AtomicBoolean debug;
@@ -180,6 +189,7 @@ public class Session extends Application {
 		close(false, null);
 		this.console_adapter = new ConsoleListAdapter(this);
 		this.chat_adapter = new ChatListAdapter(this);
+		this.notification_adapter = new NotificationListAdapter(this);
 		this.server_info = new ServerInfo();
 		this.connection = connection;
 	}
@@ -196,6 +206,9 @@ public class Session extends Application {
 		return chat_adapter;
 	}
 
+	public NotificationListAdapter getNotificationAdapter() {
+		return notification_adapter;
+	}
 
 	public Handler getHandler() {
 		return handler;
@@ -246,6 +259,24 @@ public class Session extends Application {
 			return false;
 		} else {
 			return debug.get();
+		}
+	}
+
+	public void checkAutoUpdate() {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		long interval_min = pref.getInt(ConfigKeys.AUTO_UPDATE_INTERVAL, ConfigDefaults.AUTO_UPDATE_INTERVAL);
+		long interval = interval_min * 60L * 1000L;
+
+		Intent intent = new Intent(this, AutoUpdateService.class);
+		intent.setAction("RemoteController AutoUpdate");
+		PendingIntent pendingIntent = PendingIntent.getService(this, 92795, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		AlarmManager am = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+
+		if (auto_update.getAutoUpdateList().size() == 0) {
+			stopService(intent);
+			am.cancel(pendingIntent);
+		} else {
+			am.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), interval, pendingIntent);
 		}
 	}
 }

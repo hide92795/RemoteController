@@ -8,12 +8,12 @@ public class CommandChat implements Command {
 
 	@Override
 	public ReceiveData doCommand(final Connection connection, int pid, final String arg) {
-		connection.getSession().getHandler().post(new Runnable() {
+		connection.session.getHandler().post(new Runnable() {
 			@Override
 			public void run() {
 				ChatData data = new ChatData();
 				data.setMessage(arg);
-				connection.getSession().getChatAdapter().add(data);
+				connection.session.getChatAdapter().add(data);
 			}
 		});
 		// pid is 0

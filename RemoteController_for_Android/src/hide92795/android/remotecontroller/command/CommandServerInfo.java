@@ -10,7 +10,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 public class CommandServerInfo implements Command {
-
 	@Override
 	public ReceiveData doCommand(Connection connection, int pid, String arg) {
 		String[] datas = arg.split(":");
@@ -22,7 +21,7 @@ public class CommandServerInfo implements Command {
 		ArrayList<String> add_info_al = new ArrayList<String>();
 		if (datas.length == 4) {
 			// NO ADD INFO
-			add_info_al.add(connection.getSession().getString(R.string.str_no_add_info));
+			add_info_al.add(connection.session.getString(R.string.str_no_add_info));
 		} else {
 			for (int i = 4; i < datas.length; i++) {
 				String add_info_s = new String(Base64Coder.decode(datas[i]), Charset.forName("UTF-8"));
@@ -33,7 +32,6 @@ public class CommandServerInfo implements Command {
 			}
 			add_info_al.remove(add_info_al.size() - 1);
 		}
-
 
 		ServerData data = new ServerData();
 		data.setServername(servername);

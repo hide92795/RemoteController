@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_mkdir"
+        android:id="@+id/menu_edit_file_mkdir"
         android:title="@string/str_mkdir">
     </item>
     <item
-        android:id="@+id/menu_mkfile"
+        android:id="@+id/menu_edit_file_mkfile"
         android:title="@string/str_mkfile">
     </item>
 

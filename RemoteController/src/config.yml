@@ -9,3 +9,6 @@ EnableDynmap: true
 DynmapAddress: ""
 ConsoleOnly: true
 FileAccess:
+SummonCommandAlias: ""
+NotificationMax: 100
+NotificationIncludeWarnLogLevel: false

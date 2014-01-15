@@ -9,6 +9,8 @@ import hide92795.bukkit.plugin.remotecontroller.compatibility.LogRedirectWithLog
 import hide92795.bukkit.plugin.remotecontroller.listener.BroadcastListener;
 import hide92795.bukkit.plugin.remotecontroller.listener.ChatListenerWithAsyncPlayerChatEvent;
 import hide92795.bukkit.plugin.remotecontroller.listener.ChatListenerWithPlayerChatEvent;
+import hide92795.bukkit.plugin.remotecontroller.notification.Notification;
+import hide92795.bukkit.plugin.remotecontroller.notification.SummonRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
@@ -40,6 +43,7 @@ public class RemoteController extends JavaPlugin {
 	private RemoteServer server;
 	private ConcurrentLinkedQueue<String> log;
 	private ConcurrentLinkedQueue<String> chat;
+	private NotificationManager notification;
 	private ArrayList<AdditionalInfoCreator> additional_info_creators;
 	private RemoteControllerAPI api;
 	private Usage usage;
@@ -55,6 +59,7 @@ public class RemoteController extends JavaPlugin {
 		users = new ConcurrentHashMap<>();
 		log = new ConcurrentLinkedQueue<>();
 		chat = new ConcurrentLinkedQueue<>();
+		notification = new NotificationManager(this);
 		additional_info_creators = new ArrayList<>();
 		api = new RemoteControllerAPI(this);
 		try {
@@ -184,6 +189,25 @@ public class RemoteController extends JavaPlugin {
 				sender.sendMessage(localize.getString(Type.ERROR_RELOAD_SETTING));
 			}
 			break;
+		case "remotecontroller-summon":
+			StringBuilder sb = new StringBuilder();
+			if (args.length == 1) {
+				String sender_name = sender.getName();
+				String message = args[0];
+				SummonRequest request = new SummonRequest(sender_name, message);
+				onNotificationUpdate(request);
+				sb.append(localize.getString(Type.SENDED_SUMMON_REQUEST));
+			} else {
+				sb.append(ChatColor.GREEN);
+				sb.append("/");
+				sb.append(label);
+				sb.append(" <");
+				sb.append(localize.getString(Type.MESSAGE));
+				sb.append(">\n");
+				sb.append(localize.getString(Type.USAGE_SUMMON));
+			}
+			sender.sendMessage(sb.toString());
+			break;
 		default:
 			break;
 		}
@@ -312,6 +336,13 @@ public class RemoteController extends JavaPlugin {
 		addChatLog(message);
 	}
 
+	public void onNotificationUpdate(Notification notification) {
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "_");
+		notification.setUUID(uuid);
+		server.sendNotificationLog(notification);
+		addNotification(uuid, notification);
+	}
+
 	private void addConsoleLog(String log_s) {
 		log.add(log_s);
 		if (log.size() > config.log_max) {
@@ -326,12 +357,20 @@ public class RemoteController extends JavaPlugin {
 		}
 	}
 
+	private void addNotification(String uuid, Notification notification) {
+		this.notification.addNotification(uuid, notification);
+	}
+
 	public String[] getOldConsoleLog() {
 		return log.toArray(new String[0]);
 	}
 
 	public String[] getOldChatLog() {
 		return chat.toArray(new String[0]);
+	}
+
+	public Notification[] getOldNotification() {
+		return notification.getAll();
 	}
 
 	public String[] getOnlinePlayerNames() {
@@ -374,5 +413,13 @@ public class RemoteController extends JavaPlugin {
 
 	public String getMinecraftVersion() {
 		return getServer().getBukkitVersion().split("-")[0];
+	}
+
+	public void setNotificationState(String uuid, boolean set_value) {
+		notification.setNotificationState(uuid, set_value);
+	}
+
+	public void markAsConsumedAllNotification() {
+		notification.markAsConsumedAll();
 	}
 }

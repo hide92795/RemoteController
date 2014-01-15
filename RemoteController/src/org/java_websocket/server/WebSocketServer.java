@@ -704,14 +704,17 @@ public abstract class WebSocketServer extends WebSocketAdapter implements Runnab
 			WebSocketImpl ws = null;
 			try {
 				while (true) {
-					ByteBuffer buf = null;
-					ws = iqueue.take();
-					buf = ws.inQueue.poll();
-					assert (buf != null);
 					try {
-						ws.decode(buf);
-					} finally {
-						pushBuffer(buf);
+						ByteBuffer buf = null;
+						ws = iqueue.take();
+						buf = ws.inQueue.poll();
+						assert (buf != null);
+						try {
+							ws.decode(buf);
+						} finally {
+							pushBuffer(buf);
+						}
+					} catch (NullPointerException e) {
 					}
 				}
 			} catch (InterruptedException e) {

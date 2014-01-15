@@ -61,7 +61,6 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 	@SuppressLint("NewApi")
 	private void onCreatePreferenceFragment() {
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment()).commit();
-
 	}
 
 	public void copyLogDir() {

@@ -3,6 +3,7 @@ package hide92795.bukkit.plugin.remotecontroller;
 import hide92795.bukkit.plugin.remotecontroller.command.Command;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandAuthentication;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandBan;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandCharSet;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandChat;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandChatLog;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandConsoleCommand;
@@ -17,6 +18,9 @@ import hide92795.bukkit.plugin.remotecontroller.command.CommandGamemode;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandGive;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandKick;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandMk;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationConsumeAll;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationLog;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationState;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPlayers;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginInfo;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginList;
@@ -49,5 +53,9 @@ public class Commands {
 		commands.put("PLUGIN_LIST", new CommandPluginList());
 		commands.put("PLUGIN_STATE", new CommandPluginState());
 		commands.put("PLUGIN_INFO", new CommandPluginInfo());
+		commands.put("CHARSET", new CommandCharSet());
+		commands.put("NOTIFICATION_LOG", new CommandNotificationLog());
+		commands.put("NOTIFICATION_STATE", new CommandNotificationState());
+		commands.put("NOTIFICATION_CONSUME_ALL", new CommandNotificationConsumeAll());
 	}
 }

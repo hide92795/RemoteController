@@ -5,7 +5,6 @@ import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.config.ConnectionConfig;
 import hide92795.android.remotecontroller.ui.adapter.AutoUpdateManagerArrayAdapter;
-import hide92795.android.remotecontroller.ui.dialog.AutoUpdateIntervalDialogFragment;
 import hide92795.android.remotecontroller.util.ConfigDefaults;
 import hide92795.android.remotecontroller.util.ConfigKeys;
 import hide92795.android.remotecontroller.util.LogUtil;
@@ -14,8 +13,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -68,28 +65,15 @@ public class AutoUpdateManagerActivity extends FragmentActivity implements OnCli
 	}
 
 	@Override
+	protected void onPause() {
+		super.onPause();
+		((Session) getApplication()).checkAutoUpdate();
+	}
+
+	@Override
 	protected void onStop() {
 		super.onStop();
 		GoogleAnalyticsUtil.stopActivity(this);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_auto_update, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_auto_update_update_interval: {
-			AutoUpdateIntervalDialogFragment dialog = new AutoUpdateIntervalDialogFragment();
-			dialog.show(getSupportFragmentManager(), "auto_update_interval");
-			return true;
-		}
-		default:
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

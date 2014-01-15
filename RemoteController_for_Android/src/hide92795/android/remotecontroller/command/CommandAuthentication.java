@@ -14,7 +14,7 @@ public class CommandAuthentication implements Command {
 			String bukkit_version = args[1];
 			String server_minecraft_version_s = args[2];
 			MinecraftVersion server_minecraft_version = MinecraftVersion.getByVersion(server_minecraft_version_s);
-			connection.getSession().getServerInfo().setServerMinecraftVersion(server_minecraft_version);
+			connection.session.getServerInfo().setServerMinecraftVersion(server_minecraft_version);
 
 			connection.authorize();
 			LogUtil.d("Auth success.");

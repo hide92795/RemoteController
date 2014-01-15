@@ -8,7 +8,7 @@ public class CommandConsole implements Command {
 
 	@Override
 	public ReceiveData doCommand(final Connection connection, int pid, final String arg) {
-		connection.getSession().getHandler().post(new Runnable() {
+		connection.session.getHandler().post(new Runnable() {
 			@Override
 			public void run() {
 				ConsoleData data = new ConsoleData();
@@ -16,7 +16,7 @@ public class CommandConsole implements Command {
 				data.setDate(datas[0]);
 				data.setLogLevel(datas[1]);
 				data.setText(datas[2]);
-				connection.getSession().getConsoleAdapter().add(data);
+				connection.session.getConsoleAdapter().add(data);
 			}
 		});
 		// pid is 0

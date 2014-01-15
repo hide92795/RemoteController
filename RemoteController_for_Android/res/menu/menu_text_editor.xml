@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menu_save_and_close" android:title="@string/str_save_and_close"></item>
-    <item android:id="@+id/menu_close_without_save" android:title="@string/str_close_without_save"></item>
-    <item android:id="@+id/menu_change_encoding" android:title="@string/str_change_save_encoding"></item>
+
+    <item
+        android:id="@+id/menu_editor_save_and_close"
+        android:title="@string/str_save_and_close">
+    </item>
+    <item
+        android:id="@+id/menu_editor_close_without_save"
+        android:title="@string/str_close_without_save">
+    </item>
+    <item
+        android:id="@+id/menu_editor_change_encoding"
+        android:title="@string/str_change_save_encoding">
+    </item>
 
 </menu>

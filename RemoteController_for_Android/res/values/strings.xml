@@ -179,5 +179,11 @@
     <string name="str_minute">min</string>
     <string name="str_edit">Edit</string>
     <string name="str_save">Save</string>
+    <string name="str_notification">Notification</string>
+    <string name="str_summons">Summons</string>
+    <string name="str_console_error">Console Error</string>
+    <string name="str_unknown">Unknown</string>
+    <string name="str_exception">Exception</string>
+    <string name="str_mark_as_read_all">Mark as read all</string>
 
 </resources>

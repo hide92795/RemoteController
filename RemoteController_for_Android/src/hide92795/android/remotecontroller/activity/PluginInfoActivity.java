@@ -13,11 +13,11 @@ import hide92795.android.remotecontroller.ui.adapter.PluginInfoExpandableListAda
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-public class PluginInfoActivity extends FragmentActivity implements ReceiveListener {
+public class PluginInfoActivity extends ActionBarActivity implements ReceiveListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

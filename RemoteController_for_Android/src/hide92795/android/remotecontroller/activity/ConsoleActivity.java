@@ -10,10 +10,9 @@ import hide92795.android.remotecontroller.util.ConfigKeys;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +29,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ConsoleActivity extends FragmentActivity implements OnClickListener, OnAddConsoleListener, OnKeyListener {
+public class ConsoleActivity extends ActionBarActivity implements OnClickListener, OnAddConsoleListener, OnKeyListener {
 	private ScaleGestureDetector gesture_detector;
 
 	@Override
@@ -110,30 +109,6 @@ public class ConsoleActivity extends FragmentActivity implements OnClickListener
 		level.setChecked(b_show_log_level);
 		ellipsize.setChecked(b_ellipsize);
 		move_bottom.setChecked(b_move_bottom);
-
-		// HONEYCOMB以下だとチェックボックスがつかないので自前で追加
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			if (b_show_date) {
-				date.setIcon(R.drawable.ic_checked);
-			} else {
-				date.setIcon(R.drawable.ic_not_checked);
-			}
-			if (b_show_log_level) {
-				level.setIcon(R.drawable.ic_checked);
-			} else {
-				level.setIcon(R.drawable.ic_not_checked);
-			}
-			if (b_ellipsize) {
-				ellipsize.setIcon(R.drawable.ic_checked);
-			} else {
-				ellipsize.setIcon(R.drawable.ic_not_checked);
-			}
-			if (b_move_bottom) {
-				move_bottom.setIcon(R.drawable.ic_checked);
-			} else {
-				move_bottom.setIcon(R.drawable.ic_not_checked);
-			}
-		}
 		return true;
 	}
 

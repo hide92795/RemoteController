@@ -3,6 +3,7 @@ package hide92795.bukkit.plugin.remotecontroller;
 import hide92795.bukkit.plugin.remotecontroller.command.Command;
 import hide92795.bukkit.plugin.remotecontroller.compatibility.CommandDispatcher;
 import hide92795.bukkit.plugin.remotecontroller.compatibility.CommandDispatcherWithBukkitRunnable;
+import hide92795.bukkit.plugin.remotecontroller.notification.Notification;
 import hide92795.bukkit.plugin.remotecontroller.org.apache.commons.lang3.StringUtils;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
@@ -32,12 +33,14 @@ public class ClientConnection {
 	private final RemoteController plugin;
 	private final InetSocketAddress address;
 	private final WebSocket socket;
-	private AtomicBoolean send_old_log = new AtomicBoolean(false);
-	private AtomicBoolean send_old_chat = new AtomicBoolean(false);
+	private AtomicBoolean sended_old_log = new AtomicBoolean(false);
+	private AtomicBoolean sended_old_chat = new AtomicBoolean(false);
+	private AtomicBoolean sended_old_notification = new AtomicBoolean(false);
 	private String user;
 	private AtomicBoolean auth = new AtomicBoolean(false);
 	private AtomicBoolean sendConsoleLog = new AtomicBoolean(false);
 	private AtomicBoolean sendChatLog = new AtomicBoolean(false);
+	private AtomicBoolean sendNotificationLog = new AtomicBoolean(false);
 	private RSAPrivateKey privateKey;
 	private RSAPublicKey publicKey;
 	private AtomicReference<byte[]> key;
@@ -79,8 +82,11 @@ public class ClientConnection {
 	}
 
 	public void close() {
-		if (!socket.isClosed()) {
-			socket.close(CloseFrame.GOING_AWAY);
+		try {
+			if (!socket.isClosed()) {
+				socket.close(CloseFrame.GOING_AWAY);
+			}
+		} catch (Error e) {
 		}
 	}
 
@@ -100,15 +106,22 @@ public class ClientConnection {
 
 	public void setConsoleLogSendState(boolean send) {
 		sendConsoleLog.set(send);
-		if (!send_old_log.get() && send) {
+		if (!sended_old_log.get() && send) {
 			sendOldLog();
 		}
 	}
 
-	private void sendOldLog() {
-		String[] old_log = plugin.getOldConsoleLog();
-		for (String str : old_log) {
-			send("CONSOLE", 0, str);
+	public void setChatLogSendState(boolean send) {
+		sendChatLog.set(send);
+		if (!sended_old_chat.get() && send) {
+			sendOldChat();
+		}
+	}
+
+	public void setNotificationLogSendState(boolean send) {
+		sendNotificationLog.set(send);
+		if (!sended_old_notification.get() && send) {
+			sendOldNotification();
 		}
 	}
 
@@ -116,10 +129,18 @@ public class ClientConnection {
 		return sendConsoleLog.get();
 	}
 
-	public void setChatLogSendState(boolean send) {
-		sendChatLog.set(send);
-		if (!send_old_chat.get() && send) {
-			sendOldChat();
+	public boolean isSendChatLog() {
+		return sendChatLog.get();
+	}
+
+	public boolean isSendNotificationLog() {
+		return sendNotificationLog.get();
+	}
+
+	private void sendOldLog() {
+		String[] old_log = plugin.getOldConsoleLog();
+		for (String str : old_log) {
+			send("CONSOLE", 0, str);
 		}
 	}
 
@@ -130,8 +151,11 @@ public class ClientConnection {
 		}
 	}
 
-	public boolean isSendChatLog() {
-		return sendChatLog.get();
+	private void sendOldNotification() {
+		Notification[] old_notification = plugin.getOldNotification();
+		for (Notification notification : old_notification) {
+			send("NOTIFICATION", 0, notification.toString());
+		}
 	}
 
 	public void sendCharset() {

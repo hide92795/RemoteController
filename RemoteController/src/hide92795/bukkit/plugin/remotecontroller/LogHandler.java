@@ -1,11 +1,14 @@
 package hide92795.bukkit.plugin.remotecontroller;
 
+import hide92795.bukkit.plugin.remotecontroller.notification.ConsoleError;
+import hide92795.bukkit.plugin.remotecontroller.notification.ConsoleException;
 import hide92795.bukkit.plugin.remotecontroller.util.Util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.logging.Filter;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 public class LogHandler extends Handler {
@@ -34,23 +37,38 @@ public class LogHandler extends Handler {
 
 	@Override
 	public void publish(LogRecord record) {
-		if (isLoggable(record)) {
-			StringBuilder builder = new StringBuilder();
-			Throwable ex = record.getThrown();
+		StringBuilder builder = new StringBuilder();
+		Throwable ex = record.getThrown();
 
-			builder.append(date.format(record.getMillis()));
-			builder.append("-[");
-			builder.append(record.getLevel().getName());
-			builder.append("]-");
-			builder.append(Util.convertColorCode(record.getMessage()));
+		String message = Util.convertColorCode(record.getMessage());
 
-			if (ex != null) {
-				StringWriter writer = new StringWriter();
-				ex.printStackTrace(new PrintWriter(writer));
-				builder.append(writer);
-			}
+		builder.append(date.format(record.getMillis()));
+		builder.append("-[");
+		builder.append(record.getLevel().getName());
+		builder.append("]-");
+		builder.append(message);
 
-			plugin.onConsoleLogUpdate(builder.toString());
+		if (ex != null) {
+			StringWriter writer = new StringWriter();
+			ex.printStackTrace(new PrintWriter(writer));
+			builder.append(writer);
+			ConsoleException exception = new ConsoleException(ex.toString());
+			plugin.onNotificationUpdate(exception);
 		}
+
+		if (record.getLevel().equals(Level.WARNING)) {
+			if (plugin.config.notification_include_warn_log) {
+				sendNotificationError(message);
+			}
+		} else if (record.getLevel().equals(Level.SEVERE)) {
+			sendNotificationError(message);
+		}
+
+		plugin.onConsoleLogUpdate(builder.toString());
+	}
+
+	private void sendNotificationError(String message) {
+		ConsoleError error = new ConsoleError(message);
+		plugin.onNotificationUpdate(error);
 	}
 }

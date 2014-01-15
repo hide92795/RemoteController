@@ -14,13 +14,13 @@ import hide92795.android.remotecontroller.ui.adapter.PluginExpandableListAdapter
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-public class PluginActivity extends FragmentActivity implements ReceiveListener, OnPluginHandleClickListener {
+public class PluginActivity extends ActionBarActivity implements ReceiveListener, OnPluginHandleClickListener {
 	private PluginExpandableListAdapter adapter;
 
 	@Override

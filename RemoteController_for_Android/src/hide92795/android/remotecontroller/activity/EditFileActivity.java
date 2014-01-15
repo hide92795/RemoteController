@@ -19,8 +19,8 @@ import hide92795.android.remotecontroller.ui.dialog.MkDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +32,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EditFileActivity extends FragmentActivity implements ReceiveListener, OnItemLongClickListener, OnItemClickListener, FileHandleDialogFragment.Callback, CharsetDialogFragment.Callback,
+public class EditFileActivity extends ActionBarActivity implements ReceiveListener, OnItemLongClickListener, OnItemClickListener, FileHandleDialogFragment.Callback, CharsetDialogFragment.Callback,
 		FileRenameDialogFragment.Callback, FileDeleteDialogFragment.Callback, MkDialogFragment.Callback {
 	private static final int REQUEST_CODE = 22;
 	private FileListAdapter adapter;
@@ -155,13 +155,13 @@ public class EditFileActivity extends FragmentActivity implements ReceiveListene
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_mkdir:
-		case R.id.menu_mkfile: {
+		case R.id.menu_edit_file_mkdir:
+		case R.id.menu_edit_file_mkfile: {
 			FragmentManager manager = getSupportFragmentManager();
 			MkDialogFragment fragment = new MkDialogFragment();
 			Bundle b = new Bundle();
 			b.putString("CURRENT", current_directory);
-			b.putBoolean("DIRECTORY", (item.getItemId() == R.id.menu_mkdir));
+			b.putBoolean("DIRECTORY", (item.getItemId() == R.id.menu_edit_file_mkdir));
 			fragment.setArguments(b);
 			fragment.show(manager, "mk_dialog");
 			return true;

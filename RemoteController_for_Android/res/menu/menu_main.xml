@@ -1,11 +1,21 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:remotecontroller="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/menu_config"
-        android:title="@string/str_config"/>
+        android:id="@+id/menu_main_notification"
+        android:icon="@drawable/ic_no_notification"
+        android:showAsAction="always"
+        android:title="@string/str_notification"
+        remotecontroller:showAsAction="always"/>
     <item
-        android:id="@+id/menu_donate"
-        android:title="@string/str_donate">
-    </item>
+        android:id="@+id/menu_main_config"
+        android:showAsAction="never"
+        android:title="@string/str_config"
+        remotecontroller:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_main_donate"
+        android:showAsAction="never"
+        android:title="@string/str_donate"
+        remotecontroller:showAsAction="never"/>
 
 </menu>

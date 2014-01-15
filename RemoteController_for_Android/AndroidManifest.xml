@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hide92795.android.remotecontroller"
+    android:installLocation="internalOnly"
     android:versionCode="14"
     android:versionName="1.7.2_3" >
 
@@ -12,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name="hide92795.android.remotecontroller.Session"
@@ -51,7 +53,8 @@
         <activity
             android:name=".activity.PreferenceActivity"
             android:label="@string/str_config"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/PreferenceTheme" >
         </activity>
         <activity
             android:name=".activity.ItemSelectActivity"
@@ -102,6 +105,20 @@
             android:label="@string/str_auto_update"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:label="@string/str_notification"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <service android:name=".autoupdate.AutoUpdateService" >
+        </service>
+
+        <receiver android:name=".autoupdate.AutoUpdateServiceLaunchReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

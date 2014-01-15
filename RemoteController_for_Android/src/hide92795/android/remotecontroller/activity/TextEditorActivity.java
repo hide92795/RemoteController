@@ -9,8 +9,8 @@ import hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogF
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-public class TextEditorActivity extends FragmentActivity implements Callback, hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment.Callback {
+public class TextEditorActivity extends ActionBarActivity implements Callback, hide92795.android.remotecontroller.ui.dialog.FileCloseConfirmationDialogFragment.Callback {
 	private FileData old_data;
 	private FileData new_data;
 
@@ -98,7 +98,7 @@ public class TextEditorActivity extends FragmentActivity implements Callback, hi
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		MenuItem save_and_close = (MenuItem) menu.findItem(R.id.menu_save_and_close);
+		MenuItem save_and_close = (MenuItem) menu.findItem(R.id.menu_editor_save_and_close);
 		if (old_data.equals(new_data)) {
 			save_and_close.setEnabled(false);
 		} else {
@@ -111,19 +111,19 @@ public class TextEditorActivity extends FragmentActivity implements Callback, hi
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean ret = super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
-		case R.id.menu_save_and_close: {
+		case R.id.menu_editor_save_and_close: {
 			Intent i = new Intent();
 			i.putExtra("FILE", new_data);
 			setResult(RESULT_OK, i);
 			finish();
 			return true;
 		}
-		case R.id.menu_close_without_save: {
+		case R.id.menu_editor_close_without_save: {
 			setResult(RESULT_CANCELED);
 			finish();
 			return true;
 		}
-		case R.id.menu_change_encoding: {
+		case R.id.menu_editor_change_encoding: {
 			FragmentManager manager = getSupportFragmentManager();
 			CharsetDialogFragment fragment = new CharsetDialogFragment();
 			fragment.show(manager, "charset_dialog");

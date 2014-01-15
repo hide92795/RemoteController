@@ -9,13 +9,13 @@ import hide92795.android.remotecontroller.util.LogUtil;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class DynmapActivity extends FragmentActivity implements OnCancelListener {
+public class DynmapActivity extends ActionBarActivity implements OnCancelListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

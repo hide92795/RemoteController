@@ -14,7 +14,6 @@ public class CommandAuthentication implements Command {
 				plugin.getLogger().info("User \"" + datas[0] + "\" has logged in.");
 				connection.authorize(datas[0]);
 				connection.send("AUTH", -1, "OK:" + plugin.getVersion() + ":" + plugin.getMinecraftVersion());
-				connection.sendCharset();
 			} else {
 				connection.send("AUTH", -1, "ERROR");
 				connection.close();

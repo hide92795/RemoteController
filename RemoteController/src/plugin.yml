@@ -1,6 +1,6 @@
 name: RemoteController
 main: hide92795.bukkit.plugin.remotecontroller.RemoteController
-version: 1.7.2_2
+version: 1.7.2_3
 description: RemoteController
 author: hide92795
 softdepend: [dynmap]
@@ -15,3 +15,6 @@ commands:
   remotecontroller-reload:
     permission: remotecontroller.reload
     aliases: [rcr]
+  remotecontroller-summon:
+    permission: remotecontroller.summon
+    aliases: [rcs]

@@ -11,13 +11,13 @@ import hide92795.android.remotecontroller.util.Base64Coder;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class DonateActivity extends FragmentActivity implements OnClickListener {
+public class DonateActivity extends ActionBarActivity implements OnClickListener {
 	private static final String SKU_DONATE_100 = "donate_100";
 	private static final String SKU_DONATE_500 = "donate_500";
 	private static final String BILLING_PUBLIC_KEY = "TUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUEyT2p1Rkk0bm92VFVlT3NpQU15Z3dwckhUTzJKb1M5Q1dzdm1yY1pYWlRLQzZ0eU9LOTh6cHJPSlVzdmVnQTZxTmRmMlV3K1V5UHQ3UUpSL2JSTDNuQmg2ZVU3TXlNYVFlRWM1VHFZVmtTN1g2VWk2SGh4VDZ6U1JuV256cGlxN2QydTI4eFQ2L2NaUk1laUtOeElLWkd6YXc5MC9jdVhyVnkxWVNSSVh4UGUzNUk2aEpsMGx1VVRXb0ZWL2o4U08yQUtsZlVQMHUySzN1MXlqLy9ESGxFOFZCZ3Y3Wk8yYTU5akFmNnFOVWo2c25yTDZTSDF5SGdTeW9xMHpWZUhyazI3blZ3TmtxNmlTRnVKdXJmbS9ScmlaOUtvamxUUGRKRDRBNXptbVM0bDdVNkk0VHV6aUtEbEppckNDakVCb3grMWVsUisyNCtPaS9GdmdLSmtaeVFJREFRQUI=";

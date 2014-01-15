@@ -1,5 +1,6 @@
 package hide92795.bukkit.plugin.remotecontroller;
 
+import hide92795.bukkit.plugin.remotecontroller.notification.Notification;
 import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.Set;
@@ -65,16 +66,22 @@ public class RemoteServer extends WebSocketServer {
 			// }
 		}
 		ex.printStackTrace();
+		client_socket.close();
 		// plugin.getLogger().warning(ex.toString());
 	}
 
 	@Override
 	public void onMessage(WebSocket client_socket, String message) {
-		int id = client_socket.getID();
-		if (clients.containsKey(id)) {
-			clients.get(id).receive(message);
-		} else {
-			plugin.getLogger().severe("Client not found. ID:" + id);
+		try {
+			int id = client_socket.getID();
+			if (clients.containsKey(id)) {
+				clients.get(id).receive(message);
+			} else {
+				plugin.getLogger().severe("Client not found. ID:" + id);
+				client_socket.close();
+			}
+		} catch (Exception e) {
+			client_socket.close();
 		}
 	}
 
@@ -82,15 +89,23 @@ public class RemoteServer extends WebSocketServer {
 		Set<Integer> s = clients.keySet();
 		for (Integer id : s) {
 			ClientConnection c = clients.get(id);
-			c.close();
+			try {
+				c.close();
+			} catch (Exception | Error e) {
+				e.printStackTrace();
+			}
 		}
 
 		try {
 			stop();
-		} catch (Exception e) {
+		} catch (Exception | Error e) {
 			plugin.getLogger().severe("An error has occured closing server!");
 			e.printStackTrace();
 		}
+	}
+
+	public void removeConnection(InetSocketAddress address) {
+		clients.remove(address);
 	}
 
 	public void sendConsoleLog(String message) {
@@ -102,15 +117,20 @@ public class RemoteServer extends WebSocketServer {
 		}
 	}
 
-	public void removeConnection(InetSocketAddress address) {
-		clients.remove(address);
-	}
-
 	public void sendChatLog(String message) {
 		for (Integer id : clients.keySet()) {
 			ClientConnection connection = clients.get(id);
 			if (connection.isSendChatLog()) {
 				connection.send("CHAT", 0, message);
+			}
+		}
+	}
+
+	public void sendNotificationLog(Notification notification) {
+		for (Integer id : clients.keySet()) {
+			ClientConnection connection = clients.get(id);
+			if (connection.isSendNotificationLog()) {
+				connection.send("NOTIFICATION", 0, notification.toString());
 			}
 		}
 	}

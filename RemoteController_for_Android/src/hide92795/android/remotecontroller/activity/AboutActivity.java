@@ -4,13 +4,13 @@ import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.io.InputStream;
-import android.app.Activity;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

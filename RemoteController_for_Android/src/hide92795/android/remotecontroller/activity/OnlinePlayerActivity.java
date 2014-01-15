@@ -18,15 +18,15 @@ import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OnlinePlayerActivity extends FragmentActivity implements ReceiveListener, PlayerFaceUpdator.Callback, OnPlayerHandleClickListener, PlayerDialogFragment.Callback {
+public class OnlinePlayerActivity extends ActionBarActivity implements ReceiveListener, PlayerFaceUpdator.Callback, OnPlayerHandleClickListener, PlayerDialogFragment.Callback {
 	private PlayersExpandableListAdapter adapter;
 
 	@Override

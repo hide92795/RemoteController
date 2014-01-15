@@ -179,5 +179,11 @@
     <string name="str_minute">分</string>
     <string name="str_edit">編集</string>
     <string name="str_save">保存</string>
+    <string name="str_notification">通知</string>
+    <string name="str_summons">呼び出し</string>
+    <string name="str_console_error">コンソールエラー</string>
+    <string name="str_unknown">不明</string>
+    <string name="str_exception">例外</string>
+    <string name="str_mark_as_read_all">すべて既読にする</string>
 
 </resources>

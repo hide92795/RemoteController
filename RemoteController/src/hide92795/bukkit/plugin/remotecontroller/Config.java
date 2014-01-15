@@ -17,6 +17,8 @@ public class Config {
 	public final String dynmap_address;
 	public final boolean console_only;
 	public final LinkedHashMap<String, Modifiable> file_access;
+	public final int notification_max;
+	public final boolean notification_include_warn_log;
 
 	public Config(RemoteController plugin, FileConfiguration config) throws IOException {
 		this.port = config.getInt("Port");
@@ -27,6 +29,8 @@ public class Config {
 		this.dynmap_address = config.getString("DynmapAddress");
 		this.console_only = config.getBoolean("ConsoleOnly");
 		this.file_access = createFileAccess(plugin, config.getMapList("FileAccess"));
+		this.notification_max = config.getInt("NotificationMax");
+		this.notification_include_warn_log = config.getBoolean("NotificationIncludeWarnLogLevel");
 	}
 
 	private LinkedHashMap<String, Modifiable> createFileAccess(RemoteController plugin, List<Map<?, ?>> mapList) throws IOException {

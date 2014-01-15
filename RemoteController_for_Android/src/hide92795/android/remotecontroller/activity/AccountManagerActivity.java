@@ -8,14 +8,14 @@ import hide92795.android.remotecontroller.ui.dialog.AccountDeleteDialogFragment;
 import hide92795.android.remotecontroller.ui.dialog.AccountHandleDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-public class AccountManagerActivity extends FragmentActivity implements OnItemLongClickListener, AccountHandleDialogFragment.Callback, AccountDeleteDialogFragment.Callback {
+public class AccountManagerActivity extends ActionBarActivity implements OnItemLongClickListener, AccountHandleDialogFragment.Callback, AccountDeleteDialogFragment.Callback {
 	private AccountManagerListAdapter adapter;
 
 	@Override

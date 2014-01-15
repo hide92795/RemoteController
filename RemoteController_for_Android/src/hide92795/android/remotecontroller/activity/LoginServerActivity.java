@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -35,7 +35,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.ViewSwitcher;
 
-public class LoginServerActivity extends FragmentActivity implements OnClickListener, TextWatcher, OnCancelListener, ReceiveListener, Callback {
+public class LoginServerActivity extends ActionBarActivity implements OnClickListener, TextWatcher, OnCancelListener, ReceiveListener, Callback {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,20 +70,20 @@ public class LoginServerActivity extends FragmentActivity implements OnClickList
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
+		getMenuInflater().inflate(R.menu.menu_login_server, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean ret = super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
-		case R.id.menu_config: {
+		case R.id.menu_login_server_config: {
 			Intent i = new Intent(this, PreferenceActivity.class);
 			startActivity(i);
 			return true;
 		}
-		case R.id.menu_donate: {
+		case R.id.menu_login_server_donate: {
 			Intent i = new Intent(this, DonateActivity.class);
 			startActivity(i);
 			return true;
