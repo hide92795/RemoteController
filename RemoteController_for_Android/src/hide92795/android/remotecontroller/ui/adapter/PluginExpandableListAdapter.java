@@ -81,7 +81,7 @@ public class PluginExpandableListAdapter extends BaseExpandableListAdapter imple
 			holder.enable.setOnClickListener(this);
 			holder.disable.setOnClickListener(this);
 
-			if (plugindata.enable) {
+			if (plugindata.isEnable()) {
 				holder.enable.setVisibility(View.INVISIBLE);
 				holder.disable.setVisibility(View.VISIBLE);
 			} else {
@@ -140,8 +140,8 @@ public class PluginExpandableListAdapter extends BaseExpandableListAdapter imple
 				holder.indicator.setImageResource(R.drawable.collapsed);
 			}
 
-			holder.name.setText(data.name);
-			if (data.enable) {
+			holder.name.setText(data.getName());
+			if (data.isEnable()) {
 				holder.status.setText(R.string.str_enabled);
 				holder.status.setTextColor(context.getResources().getColor(R.color.color_enabled));
 			} else {

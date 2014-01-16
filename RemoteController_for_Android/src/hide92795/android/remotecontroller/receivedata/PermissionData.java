@@ -2,6 +2,7 @@ package hide92795.android.remotecontroller.receivedata;
 
 
 public class PermissionData extends ReceiveData implements PluginInfoBase {
+	private static final long serialVersionUID = -8710519756480125523L;
 	private String permission;
 	private String description;
 

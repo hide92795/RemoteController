@@ -21,10 +21,12 @@ import hide92795.bukkit.plugin.remotecontroller.command.CommandMk;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationConsumeAll;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationLog;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationState;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandNotificationUnreadCount;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPlayers;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginInfo;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginList;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandPluginState;
+import hide92795.bukkit.plugin.remotecontroller.command.CommandServerIcon;
 import hide92795.bukkit.plugin.remotecontroller.command.CommandServerInfo;
 import java.util.HashMap;
 
@@ -57,5 +59,7 @@ public class Commands {
 		commands.put("NOTIFICATION_LOG", new CommandNotificationLog());
 		commands.put("NOTIFICATION_STATE", new CommandNotificationState());
 		commands.put("NOTIFICATION_CONSUME_ALL", new CommandNotificationConsumeAll());
+		commands.put("NOTIFICATION_UNREAD_COUNT", new CommandNotificationUnreadCount());
+		commands.put("SERVER_ICON", new CommandServerIcon());
 	}
 }

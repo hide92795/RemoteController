@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DirectoryData extends ReceiveData {
+	private static final long serialVersionUID = -824373569232920383L;
 	private File[] files;
 	private String dir;
 	private boolean root;

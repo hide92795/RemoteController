@@ -1,6 +1,9 @@
 package hide92795.android.remotecontroller.receivedata;
 
-public abstract class ReceiveData {
+import java.io.Serializable;
+
+public abstract class ReceiveData implements Serializable {
+	private static final long serialVersionUID = 7973247561909131841L;
 	private boolean success;
 
 	public ReceiveData() {

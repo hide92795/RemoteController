@@ -1,6 +1,7 @@
 package hide92795.android.remotecontroller.receivedata;
 
 public class AuthorizedData extends ReceiveData {
+	private static final long serialVersionUID = -4656532145776728654L;
 	private String server_bukkit_version;
 	private String server_minecraft_version;
 
@@ -19,5 +20,4 @@ public class AuthorizedData extends ReceiveData {
 	public void setServerMinecraftVersion(String server_minecraft_version) {
 		this.server_minecraft_version = server_minecraft_version;
 	}
-
 }

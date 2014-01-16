@@ -1,10 +1,10 @@
 package hide92795.android.remotecontroller.receivedata;
 
 import hide92795.android.remotecontroller.util.StringUtils;
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-public class FileData extends ReceiveData implements Parcelable, Cloneable {
+public class FileData extends ReceiveData implements Serializable, Cloneable {
+	private static final long serialVersionUID = 676087657447518156L;
 	private String file;
 	private String encoding;
 	private String data;
@@ -31,18 +31,6 @@ public class FileData extends ReceiveData implements Parcelable, Cloneable {
 
 	public void setData(String data) {
 		this.data = data;
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(file);
-		dest.writeString(encoding);
-		dest.writeString(data);
 	}
 
 	@Override
@@ -73,18 +61,4 @@ public class FileData extends ReceiveData implements Parcelable, Cloneable {
 	public String toString() {
 		return StringUtils.join(":", file, encoding, data);
 	}
-
-	public static final Parcelable.Creator<FileData> CREATOR = new Parcelable.Creator<FileData>() {
-		public FileData createFromParcel(Parcel in) {
-			FileData data = new FileData();
-			data.setFile(in.readString());
-			data.setEncoding(in.readString());
-			data.setData(in.readString());
-			return data;
-		}
-
-		public FileData[] newArray(int size) {
-			return new FileData[size];
-		}
-	};
 }

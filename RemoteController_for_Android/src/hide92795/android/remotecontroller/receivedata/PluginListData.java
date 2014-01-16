@@ -1,9 +1,9 @@
 package hide92795.android.remotecontroller.receivedata;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 public class PluginListData extends ReceiveData {
+	private static final long serialVersionUID = -6211219175028311896L;
 	private PluginData[] plugins;
 
 	public PluginData[] getPlugins() {
@@ -14,40 +14,22 @@ public class PluginListData extends ReceiveData {
 		this.plugins = plugins;
 	}
 
-	public static class PluginData implements Parcelable {
-		public final String name;
-		public final boolean enable;
+	public static class PluginData implements Serializable {
+		private static final long serialVersionUID = 2733183211197066370L;
+		private String name;
+		private boolean enable;
 
 		public PluginData(String name, boolean enable) {
 			this.name = name;
 			this.enable = enable;
 		}
 
-		public PluginData(Parcel in) {
-			this.name = in.readString();
-			this.enable = (in.readInt() == 0) ? false : true;
+		public String getName() {
+			return name;
 		}
 
-		@Override
-		public int describeContents() {
-			return 0;
+		public boolean isEnable() {
+			return enable;
 		}
-
-		@Override
-		public void writeToParcel(Parcel dest, int flags) {
-			dest.writeString(name);
-			dest.writeInt(enable ? 1 : 0);
-		}
-
-		public static final Parcelable.Creator<PluginData> CREATOR = new Parcelable.Creator<PluginData>() {
-			public PluginData createFromParcel(Parcel in) {
-				return new PluginData(in);
-			}
-
-			public PluginData[] newArray(int size) {
-				return new PluginData[size];
-			}
-		};
-
 	}
 }

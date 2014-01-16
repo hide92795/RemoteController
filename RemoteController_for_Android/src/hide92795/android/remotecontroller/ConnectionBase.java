@@ -45,6 +45,11 @@ public abstract class ConnectionBase {
 		return pid;
 	}
 
+	@Override
+	public String toString() {
+		return getServerAddress() + ":" + getServerPort();
+	}
+
 	public class Requests {
 		public void sendAuthorizeData() {
 			send("AUTH", 0, StringUtils.join(":", connection_data.getUsername(), connection_data.getPassword()));
@@ -178,6 +183,18 @@ public abstract class ConnectionBase {
 
 		public void requestConsumeAllNotifications() {
 			send("NOTIFICATION_CONSUME_ALL", 0, "START");
+		}
+
+		public int requestNotificationUnreadCount() {
+			int pid = nextPid();
+			send("NOTIFICATION_UNREAD_COUNT", pid, "");
+			return pid;
+		}
+
+		public int requestServerIcon() {
+			int pid = nextPid();
+			send("SERVER_ICON", pid, "");
+			return pid;
 		}
 	}
 }

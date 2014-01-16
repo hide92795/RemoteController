@@ -32,6 +32,14 @@ public class LogUtil {
 		}
 	}
 
+	public static final void d(String msg, String secret) {
+		if (Session.isDebug()) {
+			d(msg + secret);
+		} else {
+			d(msg);
+		}
+	}
+
 	public static final void exception(Exception e) {
 		if (logger != null) {
 			logger.print(LOG_NAME.format(new Date()));

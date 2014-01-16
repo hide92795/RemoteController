@@ -3,7 +3,7 @@ package hide92795.android.remotecontroller;
 import java.io.Serializable;
 import java.net.URI;
 
-public class ConnectionData implements Serializable {
+public class ConnectionData implements Serializable, Cloneable {
 	private static final long serialVersionUID = -2002235175255239898L;
 	private String address;
 	private int port;
@@ -61,5 +61,15 @@ public class ConnectionData implements Serializable {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public ConnectionData clone() {
+		ConnectionData clone = new ConnectionData();
+		clone.address = address.toString();
+		clone.port = port;
+		clone.username = username.toString();
+		clone.password = password.toString();
+		return clone;
 	}
 }

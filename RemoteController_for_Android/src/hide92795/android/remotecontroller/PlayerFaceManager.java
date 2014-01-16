@@ -1,6 +1,6 @@
 package hide92795.android.remotecontroller;
 
-import hide92795.android.remotecontroller.R;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -33,5 +33,14 @@ public class PlayerFaceManager {
 
 	public void addFaceDefault(String username) {
 		faces.put(username, steve);
+	}
+
+	public void dispose() {
+		Set<String> s = faces.keySet();
+		for (String name : s) {
+			Bitmap img = faces.get(name);
+			img.recycle();
+		}
+		steve.recycle();
 	}
 }

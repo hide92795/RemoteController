@@ -11,21 +11,39 @@
                 android:targetClass="hide92795.android.remotecontroller.activity.AccountManagerActivity"
                 android:targetPackage="hide92795.android.remotecontroller" />
         </PreferenceScreen>
-        <PreferenceScreen
-            android:key="auto_update"
-            android:title="@string/str_auto_update"
-            android:summary="@string/str_auto_update_desc">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetClass="hide92795.android.remotecontroller.activity.AutoUpdateManagerActivity"
-                android:targetPackage="hide92795.android.remotecontroller" />
-        </PreferenceScreen>
 
         <EditTextPreference
             android:defaultValue="http://s3.amazonaws.com/MinecraftSkins/%player%.png"
             android:key="player_face_image_url"
             android:summary="@string/str_player_image_url_desc"
             android:title="@string/str_player_image_url" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/str_auto_update" >
+        <PreferenceScreen
+            android:key="auto_update"
+            android:summary="@string/str_auto_update_desc"
+            android:title="@string/str_select_account" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="hide92795.android.remotecontroller.activity.AutoUpdateManagerActivity"
+                android:targetPackage="hide92795.android.remotecontroller" />
+        </PreferenceScreen>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="auto_update_notification_sound"
+            android:summary="@string/str_sound_desc"
+            android:title="@string/str_sound" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="auto_update_notification_vibrate"
+            android:summary="@string/str_vibrate_desc"
+            android:title="@string/str_vibrate" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="auto_update_notification_light"
+            android:summary="@string/str_light_desc"
+            android:title="@string/str_light" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/str_console" >
         <CheckBoxPreference

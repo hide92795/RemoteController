@@ -4,6 +4,7 @@ import android.text.Html;
 import android.text.Spanned;
 
 public class ConsoleData extends ReceiveData {
+	private static final long serialVersionUID = -4861947434012112651L;
 	private String date;
 	private String log_level;
 	private Spanned text;

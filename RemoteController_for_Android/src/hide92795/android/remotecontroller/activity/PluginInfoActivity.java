@@ -28,10 +28,10 @@ public class PluginInfoActivity extends ActionBarActivity implements ReceiveList
 
 	private void requestPluginInfo() {
 		Intent arg = getIntent();
-		PluginData data = arg.getParcelableExtra("PLUGIN");
+		PluginData data = (PluginData) arg.getSerializableExtra("PLUGIN");
 		((Session) getApplication()).showProgressDialog(this, false, null);
 		Connection connection = ((Session) getApplication()).getConnection();
-		int pid = connection.requests.requestPluginInfo(data.name);
+		int pid = connection.requests.requestPluginInfo(data.getName());
 		connection.addListener(pid, this);
 	}
 

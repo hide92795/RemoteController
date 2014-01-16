@@ -118,14 +118,14 @@ public class PluginActivity extends ActionBarActivity implements ReceiveListener
 		}
 		case R.id.btn_plugin_handle_enable: {
 			Connection connection = ((Session) getApplication()).getConnection();
-			int pid = connection.requests.requestChangePluginState(pluginData.name, true);
+			int pid = connection.requests.requestChangePluginState(pluginData.getName(), true);
 			connection.addListener(pid, this);
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			break;
 		}
 		case R.id.btn_plugin_handle_disable: {
 			Connection connection = ((Session) getApplication()).getConnection();
-			int pid = connection.requests.requestChangePluginState(pluginData.name, false);
+			int pid = connection.requests.requestChangePluginState(pluginData.getName(), false);
 			connection.addListener(pid, this);
 			((Session) getApplication()).showProgressDialog(this, false, null);
 			break;

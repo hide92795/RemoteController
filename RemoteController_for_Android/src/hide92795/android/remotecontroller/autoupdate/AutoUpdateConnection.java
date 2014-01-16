@@ -1,24 +1,34 @@
 package hide92795.android.remotecontroller.autoupdate;
 
 import hide92795.android.remotecontroller.ConnectionBase;
-import hide92795.android.remotecontroller.ConnectionData;
+import hide92795.android.remotecontroller.ConnectionDataPair;
+import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.autoupdate.command.AutoUpdateCommand;
 import hide92795.android.remotecontroller.util.CryptUtil;
 import hide92795.android.remotecontroller.util.CryptUtil.RSAKeyExchangePair;
 import hide92795.android.remotecontroller.util.LogUtil;
+import hide92795.android.remotecontroller.util.StringUtils;
 import java.net.URI;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
 
 public class AutoUpdateConnection extends ConnectionBase {
+	private final AutoUpdateDataReceiver receiver;
 	private AutoUpdateClientSocket socket;
 	private AtomicBoolean key_excanged = new AtomicBoolean(false);
+	private AtomicBoolean published = new AtomicBoolean(false);
 
-	public AutoUpdateConnection(ConnectionData connection_data) {
-		super(connection_data);
+	public AutoUpdateConnection(Session session, ConnectionDataPair pair) {
+		super(pair.data);
+		this.receiver = new AutoUpdateDataReceiver(session, this, pair.uuid);
 	}
 
 	@Override
@@ -35,12 +45,29 @@ public class AutoUpdateConnection extends ConnectionBase {
 
 	@Override
 	protected void send(String cmd, int pid, String text) {
-
+		try {
+			sendData(CryptUtil.encrypt(StringUtils.join(":", cmd, pid, text), key));
+			LogUtil.d("[AutoUpdate] Send request : " + cmd + ", pid : " + pid, ", data : " + text);
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected void sendData(String data) {
-
+		try {
+			socket.send(data);
+		} catch (Exception e) {
+			close();
+		}
 	}
 
 	@Override
@@ -59,7 +86,7 @@ public class AutoUpdateConnection extends ConnectionBase {
 		} else {
 			try {
 				if (data == null) {
-					// session.close(true, "Disconnected by server.");
+					close();
 					return;
 				}
 				String[] command_s = CryptUtil.decrypt(data, key).split(":", 3);
@@ -67,47 +94,36 @@ public class AutoUpdateConnection extends ConnectionBase {
 				if (command_s != null) {
 					AutoUpdateCommand command = AutoUpdateCommands.commands.get(command_s[0]);
 					int pid = Integer.parseInt(command_s[1]);
-					LogUtil.d("[AutoUpdate] Receive command : " + command_s[0] + ", pid : " + pid);
+					LogUtil.d("[AutoUpdate] Receive command : " + command_s[0] + ", pid : " + pid, ", data : " + command_s[2]);
 					if (command == null) {
+						// Error
 					} else {
 						doCommand(command, pid, command_s[2]);
 					}
 				}
 			} catch (Exception e) {
-				// session.close(true, e.getMessage());
+				close();
 			}
 		}
 	}
 
 	private void doCommand(AutoUpdateCommand command, final int pid, String raw_data) {
-		// if (pid == 0) {
-		// command.doCommand(Connection.this, pid, raw_data);
-		// } else {
-		// final ReceiveData data = command.doCommand(Connection.this, pid, raw_data);
-		// final ReceiveListener listener = listeners.get(pid);
-		// if (listener != null) {
-		// final String sended_cmd = sendedrequests.get(pid);
-		// listeners.remove(pid);
-		// sendedrequests.remove(pid);
-		// session.getHandler().post(new Runnable() {
-		// @Override
-		// public void run() {
-		// listener.onReceiveData(sended_cmd, pid, data);
-		// }
-		// });
-		// }
-		// }
+		receiver.onReceive(command, pid, raw_data);
 	}
 
 	@Override
 	public void close() {
 		if (socket != null) {
-			LogUtil.d("Close socket.");
+			LogUtil.d("[AutoUpdate] Close socket.");
 			try {
 				socket.close();
 			} catch (Exception e) {
 			}
 			socket = null;
+		}
+		if (!published.get()) {
+			published.set(true);
+			receiver.publish();
 		}
 	}
 
@@ -118,13 +134,13 @@ public class AutoUpdateConnection extends ConnectionBase {
 
 		@Override
 		public void onClose(int arg0, String arg1, boolean remote) {
+			LogUtil.d("[AutoUpdate] Connection close.");
 			AutoUpdateConnection.this.close();
 		}
 
 		@Override
 		public void onError(Exception arg0) {
 			LogUtil.d("[AutoUpdate] An error has occurred at AutoUpdateClientSocket#onError().");
-			LogUtil.exception(arg0);
 			AutoUpdateConnection.this.close();
 		}
 

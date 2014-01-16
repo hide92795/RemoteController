@@ -1,6 +1,7 @@
 package hide92795.android.remotecontroller.receivedata;
 
 public class DynmapData extends ReceiveData {
+	private static final long serialVersionUID = -2785594714568800316L;
 	private String address;
 	private boolean enable;
 

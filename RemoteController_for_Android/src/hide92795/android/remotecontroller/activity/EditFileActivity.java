@@ -143,7 +143,7 @@ public class EditFileActivity extends ActionBarActivity implements ReceiveListen
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
-				FileData new_data = intent.getParcelableExtra("FILE");
+				FileData new_data = (FileData) intent.getSerializableExtra("FILE");
 				Connection connection = ((Session) getApplication()).getConnection();
 				int pid = connection.requests.requestFileEdit(new_data);
 				connection.addListener(pid, this);

@@ -18,4 +18,7 @@ public class ConfigDefaults {
 	public static final int CHAT_FONT_COLOR = Color.BLACK;
 	public static final boolean SAVE_LOG = false;
 	public static final int AUTO_UPDATE_INTERVAL = 30;
+	public static final boolean AUTO_UPDATE_NOTIFICATION_SOUND = true;
+	public static final boolean AUTO_UPDATE_NOTIFICATION_VIBRATE = true;
+	public static final boolean AUTO_UPDATE_NOTIFICATION_LIGHT = true;
 }

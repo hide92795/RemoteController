@@ -422,4 +422,8 @@ public class RemoteController extends JavaPlugin {
 	public void markAsConsumedAllNotification() {
 		notification.markAsConsumedAll();
 	}
+
+	public int getNotificationUnreadCount() {
+		return notification.getNotificationUnreadCount();
+	}
 }

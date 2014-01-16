@@ -26,7 +26,7 @@
     <string name="str_disconnect_by_network_reason">Has been disconnected.\n%1$s</string>
     <string name="str_disconnect_by_own">Disconnected.</string>
     <string name="str_send">Send</string>
-    <string name="str_error_on_server_data">Failed to get the data.</string>
+    <string name="str_error_on_server_data">Can\'t get the data.</string>
     <string name="str_date">Date</string>
     <string name="str_log_level">Log level</string>
     <string name="str_general">General</string>
@@ -185,5 +185,19 @@
     <string name="str_unknown">Unknown</string>
     <string name="str_exception">Exception</string>
     <string name="str_mark_as_read_all">Mark as read all</string>
+    <string name="str_no_notification_unread">There is no unread notification</string>
+
+    <plurals name="str_plurals_notification_unread">
+        <item quantity="one">%1$d unread notification</item>
+        <item quantity="other">%1$d unread notifications</item>
+    </plurals>
+
+    <string name="str_sound">Sound</string>
+    <string name="str_sound_desc">Choose whether to notify with sound.</string>
+    <string name="str_vibrate">Vibration</string>
+    <string name="str_vibrate_desc">Choose whether to notify with vibration.</string>
+    <string name="str_light">Light</string>
+    <string name="str_light_desc">Choose whether to notify with light.</string>
+    <string name="str_select_account">Select account</string>
 
 </resources>

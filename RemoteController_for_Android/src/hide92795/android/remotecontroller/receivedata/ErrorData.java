@@ -3,6 +3,7 @@ package hide92795.android.remotecontroller.receivedata;
 import hide92795.android.remotecontroller.util.Message;
 
 public class ErrorData extends ReceiveData {
+	private static final long serialVersionUID = -3431516189243849380L;
 	private final int message_id;
 	private final String addtional_info;
 

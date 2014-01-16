@@ -47,6 +47,7 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 			getIntent().removeExtra("DISCONNECT");
 			showDisconnectDialog(data);
 		}
+		((Session) getApplication()).startAutoUpdateAlarmManagerOnlyNotStarted();
 	}
 
 	@Override

@@ -185,5 +185,18 @@
     <string name="str_unknown">不明</string>
     <string name="str_exception">例外</string>
     <string name="str_mark_as_read_all">すべて既読にする</string>
+    <string name="str_no_notification_unread">未読の通知はありません</string>
+
+    <plurals name="str_plurals_notification_unread">
+        <item quantity="other">%1$d件の未読の通知があります</item>
+    </plurals>
+
+    <string name="str_sound">音</string>
+    <string name="str_sound_desc">音での通知を行うかを選択します。</string>
+    <string name="str_vibrate">バイブレーション</string>
+    <string name="str_vibrate_desc">バイブレーションでの通知を行うかを選択します。</string>
+    <string name="str_light">ライト</string>
+    <string name="str_light_desc">ライトでの通知を行うかを選択します。</string>
+    <string name="str_select_account">アカウント選択</string>
 
 </resources>

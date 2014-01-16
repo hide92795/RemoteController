@@ -2,6 +2,7 @@ package hide92795.android.remotecontroller.receivedata;
 
 
 public class PluginInfoData extends ReceiveData {
+	private static final long serialVersionUID = 6940273775415684290L;
 	private String name;
 	private String version;
 	private String author;

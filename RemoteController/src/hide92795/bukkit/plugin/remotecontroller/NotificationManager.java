@@ -47,4 +47,15 @@ public class NotificationManager {
 			setNotificationState(uuid, true);
 		}
 	}
+
+	public int getNotificationUnreadCount() {
+		int count = 0;
+		for (String uuid : keys) {
+			Notification notification = datas.get(uuid);
+			if (!notification.isConsumed()) {
+				count++;
+			}
+		}
+		return count;
+	}
 }

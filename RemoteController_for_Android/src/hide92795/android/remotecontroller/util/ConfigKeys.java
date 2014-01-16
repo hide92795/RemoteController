@@ -16,4 +16,7 @@ public class ConfigKeys {
 	public static final String CHAT_FONT_COLOR = "chat_font_color";
 	public static final String SAVE_LOG = "save_log";
 	public static final String AUTO_UPDATE_INTERVAL = "auto_update_interval";
+	public static final String AUTO_UPDATE_NOTIFICATION_SOUND = "auto_update_notification_sound";
+	public static final String AUTO_UPDATE_NOTIFICATION_VIBRATE = "auto_update_notification_vibrate";
+	public static final String AUTO_UPDATE_NOTIFICATION_LIGHT = "auto_update_notification_light";
 }

@@ -14,7 +14,7 @@ public class NotificationData extends ReceiveData {
 			this.string_id = string_id;
 		}
 	}
-
+	private static final long serialVersionUID = -4746511118019005214L;
 	private String uuid;
 	private int string_id;
 	private String date;

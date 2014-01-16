@@ -50,7 +50,7 @@ public class TextEditorActivity extends ActionBarActivity implements Callback, h
 	}
 
 	private void setData() {
-		FileData data = getIntent().getParcelableExtra("FILE");
+		FileData data = (FileData) getIntent().getSerializableExtra("FILE");
 		old_data = data;
 		new_data = data.clone();
 		EditText editor = (EditText) findViewById(R.id.edittext_text_editor_editor);

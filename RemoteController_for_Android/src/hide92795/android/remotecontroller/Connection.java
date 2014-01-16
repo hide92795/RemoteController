@@ -69,8 +69,7 @@ public class Connection extends ConnectionBase {
 		try {
 			sendedrequests.put(pid, cmd);
 			sendData(CryptUtil.encrypt(StringUtils.join(":", cmd, pid, text), key));
-			LogUtil.d("Send request : " + cmd + ", pid : " + pid);
-			// LogUtil.d("Send request : " + cmd + ", pid : " + pid + ", data : " + text);
+			LogUtil.d("Send request : " + cmd + ", pid : " + pid, ", data : " + text);
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -118,7 +117,7 @@ public class Connection extends ConnectionBase {
 				if (command_s != null) {
 					Command command = Commands.commands.get(command_s[0]);
 					int pid = Integer.parseInt(command_s[1]);
-					LogUtil.d("Receive command : " + command_s[0] + ", pid : " + pid);
+					LogUtil.d("Receive command : " + command_s[0] + ", pid : " + pid, ", data : " + command_s[2]);
 					if (command == null) {
 					} else {
 						doCommand(command, pid, command_s[2]);

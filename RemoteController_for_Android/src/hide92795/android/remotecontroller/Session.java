@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -37,17 +40,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 public class Session extends Application {
+	public static AtomicBoolean debug;
+	// Config
 	private ConnectionConfig saved_connection;
 	private AutoUpdateConfig auto_update;
-	private Connection connection;
-	private CircleProgressDialogFragment dialog;
-	private Handler handler;
+	// Manager
+	private PlayerFaceManager face_manager;
+	private ServerIconManager server_icon_manager;
+	// Adapter
 	private ConsoleListAdapter console_adapter;
 	private ChatListAdapter chat_adapter;
 	private NotificationListAdapter notification_adapter;
-	private PlayerFaceManager face_manager;
+	// Others
+	private Connection connection;
 	private ServerInfo server_info;
-	public static AtomicBoolean debug;
+	private CircleProgressDialogFragment dialog;
+	private Handler handler;
 
 	@Override
 	public void onCreate() {
@@ -56,11 +64,21 @@ public class Session extends Application {
 		LogUtil.d("Session#onCreate()");
 		this.handler = new Handler();
 		this.face_manager = new PlayerFaceManager(this);
+		this.server_icon_manager = new ServerIconManager(this);
 		loadSavedConnection();
 		loadAutoUpdate();
 	}
 
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		LogUtil.d("Session#onTerminate()");
+		this.face_manager.dispose();
+		this.server_icon_manager.dispose();
+	}
+
 	private void checkDebugPackageInstalled() {
+		Log.d("RemoteController", "----------------------------------------------------");
 		PackageManager pm = getPackageManager();
 		try {
 			pm.getPackageInfo("hide92795.android.debug", PackageManager.GET_ACTIVITIES);
@@ -246,6 +264,10 @@ public class Session extends Application {
 		return face_manager;
 	}
 
+	public ServerIconManager getServerIconManager() {
+		return server_icon_manager;
+	}
+
 	public String getRecommendServerVersion() {
 		return getString(R.string.info_recommend_server_version);
 	}
@@ -276,7 +298,24 @@ public class Session extends Application {
 			stopService(intent);
 			am.cancel(pendingIntent);
 		} else {
-			am.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), interval, pendingIntent);
+			am.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 10, interval, pendingIntent);
 		}
+	}
+
+	public void startAutoUpdateAlarmManagerOnlyNotStarted() {
+		if (!isServiceRunning()) {
+			checkAutoUpdate();
+		}
+	}
+
+	private boolean isServiceRunning() {
+		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		List<RunningServiceInfo> runningService = am.getRunningServices(Integer.MAX_VALUE);
+		for (RunningServiceInfo i : runningService) {
+			if (i.service.getClassName().equals(AutoUpdateService.class.getName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
