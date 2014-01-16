@@ -69,20 +69,37 @@ public class AboutActivity extends ActionBarActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("AboutActivity#onDestroy()");
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("AboutActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("AboutActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("AboutActivity#onPause()");
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("AboutActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("AboutActivity#onDestroy()");
+	}
+
+
+
 }

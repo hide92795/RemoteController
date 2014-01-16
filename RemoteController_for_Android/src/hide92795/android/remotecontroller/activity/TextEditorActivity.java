@@ -23,12 +23,44 @@ public class TextEditorActivity extends ActionBarActivity implements Callback, h
 	private FileData new_data;
 
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		LogUtil.d("TextEditorActivity#onCreate()");
 		setContentView(R.layout.activity_text_editor);
 		setListener();
 		setData();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("TextEditorActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("TextEditorActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("TextEditorActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("TextEditorActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("TextEditorActivity#onDestroy()");
 	}
 
 	private void setListener() {
@@ -58,23 +90,6 @@ public class TextEditorActivity extends ActionBarActivity implements Callback, h
 		setTitle(getString(R.string.str_editfile) + ":" + data.getEncoding() + ":" + data.getFile());
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("TextEditorActivity#onDestroy()");
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

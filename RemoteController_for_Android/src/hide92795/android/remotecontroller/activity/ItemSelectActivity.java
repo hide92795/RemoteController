@@ -25,9 +25,41 @@ public class ItemSelectActivity extends ActionBarActivity implements OnItemClick
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_select);
 		LogUtil.d("ItemSelectActivity#onCreate()");
+		setContentView(R.layout.activity_item_select);
 		setListener();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("ItemSelectActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("ItemSelectActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("ItemSelectActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("ItemSelectActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("ItemSelectActivity#onDestroy()");
 	}
 
 	private void setListener() {
@@ -79,24 +111,6 @@ public class ItemSelectActivity extends ActionBarActivity implements OnItemClick
 		} else {
 			findViewById(R.id.text_item_select_empty).setVisibility(View.VISIBLE);
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("ItemSelectActivity#onDestroy()");
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override

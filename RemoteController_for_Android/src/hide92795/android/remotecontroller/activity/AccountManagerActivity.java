@@ -28,21 +28,35 @@ public class AccountManagerActivity extends ActionBarActivity implements OnItemL
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("AccountManagerActivity#onDestroy()");
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("AccountManagerActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("AccountManagerActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("AccountManagerActivity#onPause()");
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("AccountManagerActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("AccountManagerActivity#onDestroy()");
 	}
 
 	private void setAdapter() {

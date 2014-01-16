@@ -2,6 +2,7 @@ package hide92795.android.remotecontroller.activity;
 
 import hide92795.android.remotecontroller.GoogleAnalyticsUtil;
 import hide92795.android.remotecontroller.R;
+import hide92795.android.remotecontroller.Session;
 import hide92795.android.remotecontroller.billing.IabHelper;
 import hide92795.android.remotecontroller.billing.IabHelper.OnConsumeFinishedListener;
 import hide92795.android.remotecontroller.billing.IabResult;
@@ -29,7 +30,7 @@ public class DonateActivity extends ActionBarActivity implements OnClickListener
 	private IabHelper mBillingHelper;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		LogUtil.d("DonateActivity#onCreate()");
 		setContentView(R.layout.activity_donate);
@@ -37,11 +38,30 @@ public class DonateActivity extends ActionBarActivity implements OnClickListener
 		setupBilling();
 	}
 
-	private void setListener() {
-		Button btn_donate_100 = (Button) findViewById(R.id.btn_donate_100);
-		btn_donate_100.setOnClickListener(this);
-		Button btn_donate_500 = (Button) findViewById(R.id.btn_donate_500);
-		btn_donate_500.setOnClickListener(this);
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("DonateActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("DonateActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("DonateActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("DonateActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override
@@ -51,21 +71,16 @@ public class DonateActivity extends ActionBarActivity implements OnClickListener
 		shutdownBilling();
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
+	private void setListener() {
+		Button btn_donate_100 = (Button) findViewById(R.id.btn_donate_100);
+		btn_donate_100.setOnClickListener(this);
+		Button btn_donate_500 = (Button) findViewById(R.id.btn_donate_500);
+		btn_donate_500.setOnClickListener(this);
 	}
 
 	private void setupBilling() {
 		mBillingHelper = new IabHelper(this, new String(Base64Coder.decode(BILLING_PUBLIC_KEY)));
-		// mBillingHelper.enableDebugLogging(true);
+		mBillingHelper.enableDebugLogging(Session.isDebug());
 		mBillingHelper.enableDebugLogging(false);
 		mBillingHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 			public void onIabSetupFinished(IabResult result) {
@@ -102,6 +117,29 @@ public class DonateActivity extends ActionBarActivity implements OnClickListener
 			btn_donate_100.setEnabled(true);
 			btn_donate_500.setEnabled(true);
 			text_infomation.setText("");
+		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (!mBillingHelper.handleActivityResult(requestCode, resultCode, data)) {
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.btn_donate_100: {
+			mBillingHelper.launchPurchaseFlow(this, SKU_DONATE_100, RC_REQUEST, mPurchaseFinishedListener, "");
+			break;
+		}
+		case R.id.btn_donate_500: {
+			mBillingHelper.launchPurchaseFlow(this, SKU_DONATE_500, RC_REQUEST, mPurchaseFinishedListener, "");
+			break;
+		}
+		default:
+			break;
 		}
 	}
 
@@ -170,27 +208,4 @@ public class DonateActivity extends ActionBarActivity implements OnClickListener
 			}
 		}
 	};
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (!mBillingHelper.handleActivityResult(requestCode, resultCode, data)) {
-			super.onActivityResult(requestCode, resultCode, data);
-		}
-	}
-
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.btn_donate_100: {
-			mBillingHelper.launchPurchaseFlow(this, SKU_DONATE_100, RC_REQUEST, mPurchaseFinishedListener, "");
-			break;
-		}
-		case R.id.btn_donate_500: {
-			mBillingHelper.launchPurchaseFlow(this, SKU_DONATE_500, RC_REQUEST, mPurchaseFinishedListener, "");
-			break;
-		}
-		default:
-			break;
-		}
-	}
 }

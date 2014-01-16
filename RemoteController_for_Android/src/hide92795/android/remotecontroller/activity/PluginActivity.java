@@ -34,21 +34,48 @@ public class PluginActivity extends ActionBarActivity implements ReceiveListener
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("PluginActivity#onDestroy()");
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("PluginActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("PluginActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("PluginActivity#onPause()");
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("PluginActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("PluginActivity#onDestroy()");
+	}
+
+	private void setListener() {
+		ExpandableListView list = (ExpandableListView) findViewById(R.id.list_plugin_list);
+		adapter = new PluginExpandableListAdapter(this);
+		adapter.setOnPluginHandleClickListener(this);
+		list.setAdapter(adapter);
+	}
+
+	private void requestPluginList() {
+		Connection connection = ((Session) getApplication()).getConnection();
+		int pid = connection.requests.requestPluginList();
+		connection.addListener(pid, this);
 	}
 
 	@Override
@@ -68,19 +95,6 @@ public class PluginActivity extends ActionBarActivity implements ReceiveListener
 		default:
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void setListener() {
-		ExpandableListView list = (ExpandableListView) findViewById(R.id.list_plugin_list);
-		adapter = new PluginExpandableListAdapter(this);
-		adapter.setOnPluginHandleClickListener(this);
-		list.setAdapter(adapter);
-	}
-
-	private void requestPluginList() {
-		Connection connection = ((Session) getApplication()).getConnection();
-		int pid = connection.requests.requestPluginList();
-		connection.addListener(pid, this);
 	}
 
 	@Override

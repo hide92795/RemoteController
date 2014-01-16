@@ -32,17 +32,37 @@ public class OnlinePlayerActivity extends ActionBarActivity implements ReceiveLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_online_players);
 		LogUtil.d("OnlinePlayerActivity#onCreate()");
+		setContentView(R.layout.activity_online_players);
 		this.adapter = new PlayersExpandableListAdapter(getApplication());
 		initPlayersList();
 		updateOnlinePlayers();
 	}
 
-	private void initPlayersList() {
-		ExpandableListView list = (ExpandableListView) findViewById(R.id.list_players_players);
-		list.setAdapter(adapter);
-		adapter.setOnPlayerHandleClickListener(this);
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("OnlinePlayerActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("OnlinePlayerActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("OnlinePlayerActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("OnlinePlayerActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override
@@ -51,16 +71,10 @@ public class OnlinePlayerActivity extends ActionBarActivity implements ReceiveLi
 		LogUtil.d("OnlinePlayerActivity#onDestroy()");
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
+	private void initPlayersList() {
+		ExpandableListView list = (ExpandableListView) findViewById(R.id.list_players_players);
+		list.setAdapter(adapter);
+		adapter.setOnPlayerHandleClickListener(this);
 	}
 
 	private void updateOnlinePlayers() {

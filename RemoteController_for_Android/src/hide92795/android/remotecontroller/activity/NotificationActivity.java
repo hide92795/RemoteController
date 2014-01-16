@@ -15,7 +15,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 public class NotificationActivity extends ActionBarActivity implements OnItemLongClickListener {
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,13 +26,33 @@ public class NotificationActivity extends ActionBarActivity implements OnItemLon
 	@Override
 	protected void onStart() {
 		super.onStart();
+		LogUtil.d("NotificationActivity#onStart()");
 		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("NotificationActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("NotificationActivity#onPause()");
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("NotificationActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("NotificationActivity#onDestroy()");
 	}
 
 	private void setListener() {

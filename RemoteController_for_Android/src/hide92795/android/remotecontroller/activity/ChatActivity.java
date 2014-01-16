@@ -42,6 +42,41 @@ public class ChatActivity extends ActionBarActivity implements OnClickListener, 
 		setColor();
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("ChatActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("ChatActivity#onResume()");
+		((Session) getApplication()).getChatAdapter().setOnAddChatListener(this);
+		((Session) getApplication()).getChatAdapter().notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("ChatActivity#onPause()");
+		((Session) getApplication()).getChatAdapter().setOnAddChatListener(null);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("ChatActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("ChatActivity#onDestroy()");
+	}
+
 	private void setListener() {
 		ListView list = (ListView) findViewById(R.id.list_chat_chat);
 		list.setAdapter(((Session) getApplication()).getChatAdapter());
@@ -67,31 +102,10 @@ public class ChatActivity extends ActionBarActivity implements OnClickListener, 
 		list.setBackgroundColor(pref.getInt(ConfigKeys.CHAT_BACKGOUND_COLOR, ConfigDefaults.CHAT_BACKGOUND_COLOR));
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		LogUtil.d("ChatActivity#onResume()");
-		((Session) getApplication()).getChatAdapter().setOnAddChatListener(this);
-		((Session) getApplication()).getChatAdapter().notifyDataSetChanged();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		LogUtil.d("ChatActivity#onPause()");
-		((Session) getApplication()).getChatAdapter().setOnAddChatListener(null);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
+	private void updateConsoleAdapter() {
+		ListView list = (ListView) findViewById(R.id.list_chat_chat);
+		ChatListAdapter adapter = (ChatListAdapter) list.getAdapter();
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -130,12 +144,6 @@ public class ChatActivity extends ActionBarActivity implements OnClickListener, 
 		default:
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void updateConsoleAdapter() {
-		ListView list = (ListView) findViewById(R.id.list_chat_chat);
-		ChatListAdapter adapter = (ChatListAdapter) list.getAdapter();
-		adapter.notifyDataSetChanged();
 	}
 
 	@Override

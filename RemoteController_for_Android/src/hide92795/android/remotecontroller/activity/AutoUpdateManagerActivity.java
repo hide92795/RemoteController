@@ -28,10 +28,42 @@ public class AutoUpdateManagerActivity extends FragmentActivity implements OnCli
 		super.onCreate(savedInstanceState);
 		LogUtil.d("AutoUpdateManagerActivity#onCreate()");
 		setContentView(R.layout.activity_auto_update_manager);
-
 		setAdapeter();
 		setListener();
 		setData();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("AutoUpdateManagerActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("AutoUpdateManagerActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("AutoUpdateManagerActivity#onPause()");
+		((Session) getApplication()).checkAutoUpdate();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("AutoUpdateManagerActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("AutoUpdateManagerActivity#onDestroy()");
 	}
 
 	private void setAdapeter() {
@@ -56,24 +88,6 @@ public class AutoUpdateManagerActivity extends FragmentActivity implements OnCli
 		int interval_min = pref.getInt(ConfigKeys.AUTO_UPDATE_INTERVAL, ConfigDefaults.AUTO_UPDATE_INTERVAL);
 		text.setText(String.valueOf(interval_min));
 		edit.setText(String.valueOf(interval_min));
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		((Session) getApplication()).checkAutoUpdate();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override

@@ -17,10 +17,10 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
-
 public class PreferenceActivity extends android.preference.PreferenceActivity {
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		LogUtil.d("PreferenceActivity#onCreate()");
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			onCreatePreferenceActivity();
 		} else {
@@ -31,13 +31,33 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		LogUtil.d("PreferenceActivity#onStart()");
 		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("PreferenceActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("PreferenceActivity#onPause()");
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("PreferenceActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("PreferenceActivity#onDestroy()");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -63,6 +83,21 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment()).commit();
 	}
 
+	@SuppressWarnings("deprecation")
+	private void copyToClipUnderHONEYCOMB() throws IOException {
+		android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		clipboardManager.setText(LogUtil.getLogDir((Session) getApplication()).getCanonicalPath());
+	}
+
+	@SuppressLint("NewApi")
+	private void copyToClip() throws IOException {
+		android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		ClipData.Item item = new ClipData.Item(LogUtil.getLogDir((Session) getApplication()).getCanonicalPath());
+		String[] mimeTypes = new String[] { ClipDescription.MIMETYPE_TEXT_PLAIN };
+		ClipData clip = new ClipData("data", mimeTypes, item);
+		clipboardManager.setPrimaryClip(clip);
+	}
+
 	public void copyLogDir() {
 		try {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -74,20 +109,5 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 		} catch (Exception e) {
 			Toast.makeText(this, R.string.str_copied, Toast.LENGTH_SHORT).show();
 		}
-	}
-
-	@SuppressWarnings("deprecation")
-	protected void copyToClipUnderHONEYCOMB() throws IOException {
-		android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		clipboardManager.setText(LogUtil.getLogDir((Session) getApplication()).getCanonicalPath());
-	}
-
-	@SuppressLint("NewApi")
-	protected void copyToClip() throws IOException {
-		android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		ClipData.Item item = new ClipData.Item(LogUtil.getLogDir((Session) getApplication()).getCanonicalPath());
-		String[] mimeTypes = new String[] { ClipDescription.MIMETYPE_TEXT_PLAIN };
-		ClipData clip = new ClipData("data", mimeTypes, item);
-		clipboardManager.setPrimaryClip(clip);
 	}
 }

@@ -53,6 +53,7 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 	@Override
 	protected void onStart() {
 		super.onStart();
+		LogUtil.d("LoginServerActivity#onStart()");
 		GoogleAnalyticsUtil.startActivity(this);
 	}
 
@@ -64,9 +65,22 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 	}
 
 	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("LoginServerActivity#onPause()");
+	}
+
+	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("LoginServerActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("LoginServerActivity#onDestroy()");
 	}
 
 	@Override
@@ -92,12 +106,6 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 		default:
 		}
 		return ret;
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("LoginServerActivity#onDestroy()");
 	}
 
 	private void checkSavedConnection() {
@@ -134,53 +142,10 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 		((EditText) findViewById(R.id.edittext_login_password)).addTextChangedListener(this);
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_login_move_new_connection:
-		case R.id.btn_login_move_exist_connection:
-			ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.switcher_login_panel);
-			switcher.showNext();
-			break;
-		case R.id.btn_login_login_as_exist_connection: {
-			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-			Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
-
-			ConnectionDataPair pair = (ConnectionDataPair) spinner.getSelectedItem();
-
-			login(pair.data);
-			break;
-		}
-		case R.id.btn_login_login_as_new_connection: {
-			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-			CheckBox save = (CheckBox) findViewById(R.id.checkbox_login_save_connection);
-
-			EditText v_address = (EditText) findViewById(R.id.edittext_login_address);
-			EditText v_port = (EditText) findViewById(R.id.edittext_login_port);
-			EditText v_username = (EditText) findViewById(R.id.edittext_login_username);
-			EditText v_password = (EditText) findViewById(R.id.edittext_login_password);
-
-			String address = v_address.getText().toString();
-			int port = Integer.parseInt(v_port.getText().toString());
-			String username = v_username.getText().toString();
-			String password = v_password.getText().toString();
-
-			ConnectionData connection_data = new ConnectionData();
-			connection_data.setAddress(address);
-			connection_data.setPort(port);
-			connection_data.setUsername(username);
-			connection_data.setPassword(password);
-
-			if (save.isChecked()) {
-				((Session) getApplication()).addSavedConnection(connection_data);
-			}
-
-			login(connection_data);
-			break;
-		}
-		default:
-			break;
-		}
+	private void startMainActivity() {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		((Session) getApplication()).startActivity(intent);
 	}
 
 	private void login(ConnectionData data) {
@@ -257,6 +222,69 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 		}
 	}
 
+	private void showDisconnectDialog(int mode, String reason) {
+		LogUtil.stopSaveLog();
+		Bundle b = new Bundle();
+		b.putInt("MODE", mode);
+		b.putString("REASON", reason);
+		showDisconnectDialog(b);
+	}
+
+	private void showDisconnectDialog(Bundle data) {
+		DisconnectDialogFragment dialog = new DisconnectDialogFragment();
+		dialog.setArguments(data);
+		dialog.show(getSupportFragmentManager(), "disconnect_dialog");
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_login_move_new_connection:
+		case R.id.btn_login_move_exist_connection:
+			ViewSwitcher switcher = (ViewSwitcher) findViewById(R.id.switcher_login_panel);
+			switcher.showNext();
+			break;
+		case R.id.btn_login_login_as_exist_connection: {
+			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+			Spinner spinner = (Spinner) findViewById(R.id.spinner_login_exist_connection);
+
+			ConnectionDataPair pair = (ConnectionDataPair) spinner.getSelectedItem();
+
+			login(pair.data);
+			break;
+		}
+		case R.id.btn_login_login_as_new_connection: {
+			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+			CheckBox save = (CheckBox) findViewById(R.id.checkbox_login_save_connection);
+
+			EditText v_address = (EditText) findViewById(R.id.edittext_login_address);
+			EditText v_port = (EditText) findViewById(R.id.edittext_login_port);
+			EditText v_username = (EditText) findViewById(R.id.edittext_login_username);
+			EditText v_password = (EditText) findViewById(R.id.edittext_login_password);
+
+			String address = v_address.getText().toString();
+			int port = Integer.parseInt(v_port.getText().toString());
+			String username = v_username.getText().toString();
+			String password = v_password.getText().toString();
+
+			ConnectionData connection_data = new ConnectionData();
+			connection_data.setAddress(address);
+			connection_data.setPort(port);
+			connection_data.setUsername(username);
+			connection_data.setPassword(password);
+
+			if (save.isChecked()) {
+				((Session) getApplication()).addSavedConnection(connection_data);
+			}
+
+			login(connection_data);
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
 	@Override
 	public void afterTextChanged(Editable s) {
 		checkTextInput();
@@ -301,12 +329,6 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 		}
 	}
 
-	private void startMainActivity() {
-		Intent intent = new Intent(this, MainActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		((Session) getApplication()).startActivity(intent);
-	}
-
 	@Override
 	public void onDialogClicked(boolean select_continue) {
 		if (select_continue) {
@@ -315,19 +337,5 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 			((Session) getApplication()).close(false, "");
 			showDisconnectDialog(DisconnectDialogFragment.DISCONNECT_BY_OWN, "");
 		}
-	}
-
-	private void showDisconnectDialog(int mode, String reason) {
-		LogUtil.stopSaveLog();
-		Bundle b = new Bundle();
-		b.putInt("MODE", mode);
-		b.putString("REASON", reason);
-		showDisconnectDialog(b);
-	}
-
-	private void showDisconnectDialog(Bundle data) {
-		DisconnectDialogFragment dialog = new DisconnectDialogFragment();
-		dialog.setArguments(data);
-		dialog.show(getSupportFragmentManager(), "disconnect_dialog");
 	}
 }

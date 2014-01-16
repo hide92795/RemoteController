@@ -21,9 +21,41 @@ public class PluginInfoActivity extends ActionBarActivity implements ReceiveList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LogUtil.d("PluginActivity#onCreate()");
+		LogUtil.d("PluginInfoActivity#onCreate()");
 		setContentView(R.layout.activity_plugin_info);
 		requestPluginInfo();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("PluginInfoActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("PluginInfoActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("PluginInfoActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("PluginInfoActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("PluginInfoActivity#onDestroy()");
 	}
 
 	private void requestPluginInfo() {
@@ -35,22 +67,10 @@ public class PluginInfoActivity extends ActionBarActivity implements ReceiveList
 		connection.addListener(pid, this);
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		LogUtil.d("PluginActivity#onDestroy()");
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
+	private void setData(PluginInfoData data) {
+		PluginInfoExpandableListAdapter adapter = new PluginInfoExpandableListAdapter(this, data);
+		ExpandableListView list = (ExpandableListView) findViewById(R.id.list_plugin_info_datas);
+		list.setAdapter(adapter);
 	}
 
 	@Override
@@ -64,11 +84,5 @@ public class PluginInfoActivity extends ActionBarActivity implements ReceiveList
 				Toast.makeText(this, getString(errordata.getMessageId(), errordata.getAddtionalInfo()), Toast.LENGTH_SHORT).show();
 			}
 		}
-	}
-
-	private void setData(PluginInfoData data) {
-		PluginInfoExpandableListAdapter adapter = new PluginInfoExpandableListAdapter(this, data);
-		ExpandableListView list = (ExpandableListView) findViewById(R.id.list_plugin_info_datas);
-		list.setAdapter(adapter);
 	}
 }

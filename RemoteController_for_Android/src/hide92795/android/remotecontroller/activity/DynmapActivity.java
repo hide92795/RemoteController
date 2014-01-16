@@ -16,7 +16,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class DynmapActivity extends ActionBarActivity implements OnCancelListener {
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,9 +25,42 @@ public class DynmapActivity extends ActionBarActivity implements OnCancelListene
 		startLoad();
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("DynmapActivity#onCreate()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("DynmapActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("DynmapActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("DynmapActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("DynmapActivity#onDestroy()");
+		WebView webview = (WebView) findViewById(R.id.web_dynmap_web);
+		webview.stopLoading();
+	}
+
 	@SuppressLint("SetJavaScriptEnabled")
 	private void startLoad() {
-		LogUtil.d("DynmapActivity#onResume()");
 		DynmapData data = ((Session) getApplication()).getServerInfo().getDynmapData();
 		if (data != null) {
 			final String dynmap_address = data.getAddress();
@@ -60,26 +92,6 @@ public class DynmapActivity extends ActionBarActivity implements OnCancelListene
 			});
 			webview.loadUrl(dynmap_address);
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		WebView webview = (WebView) findViewById(R.id.web_dynmap_web);
-		webview.stopLoading();
-		LogUtil.d("DynmapActivity#onDestroy()");
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override

@@ -45,6 +45,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 	@Override
 	protected void onStart() {
 		super.onStart();
+		LogUtil.d("MainActivity#onStart()");
 		GoogleAnalyticsUtil.startActivity(this);
 	}
 
@@ -52,8 +53,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 	protected void onResume() {
 		super.onResume();
 		LogUtil.d("MainActivity#onResume()");
-
-
 		Bitmap map = ((Session) getApplication()).getServerIconManager().getServerIcon(
 				(String) ((Session) getApplication()).getSavedConnection().getDatas().entrySet().toArray(new java.util.Map.Entry[0])[0].getKey());
 
@@ -82,6 +81,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		LogUtil.d("MainActivity#onStop()");
 		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
@@ -119,6 +119,41 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 			connection.addListener(pid_dynmap, this);
 		}
 		((Session) getApplication()).showProgressDialog(this, false, null);
+	}
+
+	private void setServerInfo(ServerData data) {
+		if (data.isSuccessed()) {
+			TextView text_server_name = (TextView) findViewById(R.id.text_main_server_name);
+			text_server_name.setText(data.getServername());
+			TextView text_address = (TextView) findViewById(R.id.text_main_address);
+			text_address.setText(data.getAddress());
+			TextView text_peoples = (TextView) findViewById(R.id.text_main_peoples);
+			text_peoples.setText(data.getCurrent() + "/" + data.getMax());
+			TextView text_add_info = (TextView) findViewById(R.id.text_main_add_infomation);
+			text_add_info.setText(data.getAddInfo());
+		} else {
+			Toast.makeText(this, getString(R.string.str_error_on_server_data), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void checkDynmapState(DynmapData data) {
+		((Session) getApplication()).getServerInfo().setDynmapData(data);
+		Button button = (Button) findViewById(R.id.btn_main_dynmap);
+		if (data.isEnable()) {
+			button.setVisibility(View.VISIBLE);
+		} else {
+			button.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	private void checkNotification() {
+		if (notification_menuitem != null) {
+			if (((Session) getApplication()).getNotificationAdapter().hasNotConsumedNotification()) {
+				notification_menuitem.setIcon(R.drawable.ic_notification);
+			} else {
+				notification_menuitem.setIcon(R.drawable.ic_no_notification);
+			}
+		}
 	}
 
 	@Override
@@ -237,40 +272,5 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 	@Override
 	public void onAddNotification() {
 		checkNotification();
-	}
-
-	private void setServerInfo(ServerData data) {
-		if (data.isSuccessed()) {
-			TextView text_server_name = (TextView) findViewById(R.id.text_main_server_name);
-			text_server_name.setText(data.getServername());
-			TextView text_address = (TextView) findViewById(R.id.text_main_address);
-			text_address.setText(data.getAddress());
-			TextView text_peoples = (TextView) findViewById(R.id.text_main_peoples);
-			text_peoples.setText(data.getCurrent() + "/" + data.getMax());
-			TextView text_add_info = (TextView) findViewById(R.id.text_main_add_infomation);
-			text_add_info.setText(data.getAddInfo());
-		} else {
-			Toast.makeText(this, getString(R.string.str_error_on_server_data), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void checkDynmapState(DynmapData data) {
-		((Session) getApplication()).getServerInfo().setDynmapData(data);
-		Button button = (Button) findViewById(R.id.btn_main_dynmap);
-		if (data.isEnable()) {
-			button.setVisibility(View.VISIBLE);
-		} else {
-			button.setVisibility(View.INVISIBLE);
-		}
-	}
-
-	private void checkNotification() {
-		if (notification_menuitem != null) {
-			if (((Session) getApplication()).getNotificationAdapter().hasNotConsumedNotification()) {
-				notification_menuitem.setIcon(R.drawable.ic_notification);
-			} else {
-				notification_menuitem.setIcon(R.drawable.ic_no_notification);
-			}
-		}
 	}
 }

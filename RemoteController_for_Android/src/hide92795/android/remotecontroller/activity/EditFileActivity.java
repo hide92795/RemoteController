@@ -47,12 +47,30 @@ public class EditFileActivity extends ActionBarActivity implements ReceiveListen
 		moveDirectory("");
 	}
 
-	private void setListener() {
-		ListView list = (ListView) findViewById(R.id.list_editfile_files);
-		adapter = new FileListAdapter(this);
-		list.setAdapter(adapter);
-		list.setOnItemClickListener(this);
-		list.setOnItemLongClickListener(this);
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("EditFileActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("EditFileActivity#onResume()");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("EditFileActivity#onPause()");
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("EditFileActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
 	}
 
 	@Override
@@ -61,22 +79,12 @@ public class EditFileActivity extends ActionBarActivity implements ReceiveListen
 		LogUtil.d("EditFileActivity#onDestroy()");
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_edit_file, menu);
-		return true;
+	private void setListener() {
+		ListView list = (ListView) findViewById(R.id.list_editfile_files);
+		adapter = new FileListAdapter(this);
+		list.setAdapter(adapter);
+		list.setOnItemClickListener(this);
+		list.setOnItemLongClickListener(this);
 	}
 
 	private void moveDirectory(String dir) {
@@ -89,6 +97,12 @@ public class EditFileActivity extends ActionBarActivity implements ReceiveListen
 
 	private void refresh() {
 		moveDirectory(current_directory);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_edit_file, menu);
+		return true;
 	}
 
 	@Override
@@ -140,7 +154,7 @@ public class EditFileActivity extends ActionBarActivity implements ReceiveListen
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				FileData new_data = (FileData) intent.getSerializableExtra("FILE");

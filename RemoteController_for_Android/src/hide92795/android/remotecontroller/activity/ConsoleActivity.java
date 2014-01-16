@@ -42,6 +42,41 @@ public class ConsoleActivity extends ActionBarActivity implements OnClickListene
 		setColor();
 	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		LogUtil.d("ConsoleActivity#onStart()");
+		GoogleAnalyticsUtil.startActivity(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogUtil.d("ConsoleActivity#onResume()");
+		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(this);
+		((Session) getApplication()).getConsoleAdapter().notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LogUtil.d("ConsoleActivity#onPause()");
+		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(null);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		LogUtil.d("ConsoleActivity#onStop()");
+		GoogleAnalyticsUtil.stopActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		LogUtil.d("ConsoleActivity#onDestroy()");
+	}
+
 	private void setListener() {
 		ListView list = (ListView) findViewById(R.id.list_console_console);
 		list.setAdapter(((Session) getApplication()).getConsoleAdapter());
@@ -67,31 +102,10 @@ public class ConsoleActivity extends ActionBarActivity implements OnClickListene
 		list.setBackgroundColor(pref.getInt(ConfigKeys.CONSOLE_BACKGOUND_COLOR, ConfigDefaults.CONSOLE_BACKGOUND_COLOR));
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		LogUtil.d("ConsoleActivity#onResume()");
-		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(this);
-		((Session) getApplication()).getConsoleAdapter().notifyDataSetChanged();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		LogUtil.d("ConsoleActivity#onPause()");
-		((Session) getApplication()).getConsoleAdapter().setOnAddConsoleListener(null);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-		GoogleAnalyticsUtil.startActivity(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		GoogleAnalyticsUtil.stopActivity(this);
+	private void updateConsoleAdapter() {
+		ListView list = (ListView) findViewById(R.id.list_console_console);
+		ConsoleListAdapter adapter = (ConsoleListAdapter) list.getAdapter();
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -148,12 +162,6 @@ public class ConsoleActivity extends ActionBarActivity implements OnClickListene
 		default:
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void updateConsoleAdapter() {
-		ListView list = (ListView) findViewById(R.id.list_console_console);
-		ConsoleListAdapter adapter = (ConsoleListAdapter) list.getAdapter();
-		adapter.notifyDataSetChanged();
 	}
 
 	@Override
