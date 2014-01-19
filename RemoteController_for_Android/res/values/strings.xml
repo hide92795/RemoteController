@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="str_players">Players</string>
@@ -9,7 +8,7 @@
     <string name="str_config">Config</string>
     <string name="str_server_information">Server Information</string>
     <string name="str_address">Address:</string>
-    <string name="str_peoples">Players：</string>
+    <string name="str_peoples">Players:</string>
     <string name="str_add_information">Additional Information</string>
     <string name="str_desc_launcher_icon">Icon</string>
     <string name="str_port">Port:</string>
@@ -199,5 +198,6 @@
     <string name="str_light">Light</string>
     <string name="str_light_desc">Choose whether to notify with light.</string>
     <string name="str_select_account">Select account</string>
+    <string name="str_notification_widget">Notification:</string>
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="info_copyright">&#169; 2013 hide92795 All rights reserved.</string>
+    <string name="info_copyright">&#169; 2013 hide92795</string>
     <string name="info_ccl">Creative Commons License BY-NC-SA 3.0</string>
     <string name="info_ccl_url">http://creativecommons.org/licenses/by-nc-sa/3.0/</string>
     <string name="info_Base64Coder">Base64Coder</string>

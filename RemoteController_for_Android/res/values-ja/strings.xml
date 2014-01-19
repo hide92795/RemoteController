@@ -9,12 +9,12 @@
     <string name="str_config">設定</string>
     <string name="str_server_information">サーバー情報</string>
     <string name="str_address">アドレス：</string>
-    <string name="str_peoples">人数：</string>
+    <string name="str_peoples">人数:</string>
     <string name="str_add_information">追加情報</string>
     <string name="str_desc_launcher_icon">アイコン</string>
-    <string name="str_port">ポート：</string>
-    <string name="str_username">ユーザー名：</string>
-    <string name="str_password">パスワード：</string>
+    <string name="str_port">ポート:</string>
+    <string name="str_username">ユーザー名:</string>
+    <string name="str_password">パスワード:</string>
     <string name="str_or">―もしくは―</string>
     <string name="str_login">ログイン</string>
     <string name="str_save_login">このログインを保存</string>
@@ -22,7 +22,7 @@
     <string name="str_exist_connection">既存の接続を使用</string>
     <string name="str_select_exist_connection">保存済みの接続</string>
     <string name="str_cancel">キャンセル</string>
-    <string name="str_server_name">サーバー名：</string>
+    <string name="str_server_name">サーバー名:</string>
     <string name="str_disconnect_by_network_reason">切断されました。\n%1$s</string>
     <string name="str_disconnect_by_own">切断しました。</string>
     <string name="str_send">送信</string>
@@ -198,5 +198,6 @@
     <string name="str_light">ライト</string>
     <string name="str_light_desc">ライトでの通知を行うかを選択します。</string>
     <string name="str_select_account">アカウント選択</string>
+    <string name="str_notification_widget">通知:</string>
 
 </resources>

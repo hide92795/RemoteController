@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="str_players">Jugadores</string>
+    <string name="str_console">Consola</string>
+    <string name="str_editfile">Editar Archivos</string>
+    <string name="str_chat">Chat</string>
+    <string name="str_plugin">Plugins</string>
+    <string name="str_config">Configuración</string>
+    <string name="str_server_information">Información del Servidor</string>
+    <string name="str_address">Dirección: </string>
+    <string name="str_peoples">Jugadores：</string>
+    <string name="str_add_information">Información Adicional</string>
+    <string name="str_desc_launcher_icon">Icono</string>
+    <string name="str_port">Puerto:</string>
+    <string name="str_username">Usuario:</string>
+    <string name="str_password">Contraseña：</string>
+    <string name="str_or">-ó-</string>
+    <string name="str_login">Conectar</string>
+    <string name="str_save_login">Recordar Usuario</string>
+    <string name="str_new_connection">Crear nueva conexión</string>
+    <string name="str_exist_connection">Usar una conexión existente</string>
+    <string name="str_select_exist_connection">Guardar conexión</string>
+    <string name="str_cancel">Cancelar</string>
+    <string name="str_server_name">Nombre del Servidor: </string>
+    <string name="str_disconnect_by_network_reason">Has sido desconectado.\n%1$s</string>
+    <string name="str_disconnect_by_own">Desconectado.</string>
+    <string name="str_send">Enviar</string>
+    <string name="str_error_on_server_data">No se obtienen datos.</string>
+    <string name="str_date">Fecha</string>
+    <string name="str_log_level">Tag del Log</string>
+    <string name="str_general">General</string>
+    <string name="str_donate">Donar</string>
+    <string name="str_console_show_date">Mostrar fecha</string>
+    <string name="str_console_show_log_level">Mostrar tags del log</string>
+    <string name="str_ellipsize">Ajustar líneas</string>
+    <string name="str_ellipsize_desc">Saltar las líneas para que se muestren completas.</string>
+    <string name="str_starting_service">Iniciando servicio&#8230;</string>
+    <string name="str_error_on_starting_service">Fallo al iniciar el servicio.</string>
+    <string name="str_error_on_handle">Ha ocurrido un error en el servicio.</string>
+    <string name="str_move_bottom">Scroll automático</string>
+    <string name="str_move_bottom_short">Scroll automático</string>
+    <string name="str_console_move_bottom_desc"></string>
+    <string name="str_chat_move_bottom_desc">Desplazar hacia abajo cuando se actualiza la consola.</string>
+    <string name="str_font_size">Tamaño de Fuente</string>
+    <string name="str_unit_dip">dip</string>
+    <string name="str_icon">Icono</string>
+    <string name="str_no_user_logged_in">Usuario no identificado.</string>
+    <string name="str_loading">Cargando&#8230;</string>
+    <string name="str_handle">Acciones disponibles</string>
+    <string name="str_kick">Kickear</string>
+    <string name="str_ban">Banear</string>
+    <string name="str_give">Dar</string>
+    <string name="str_gamemode_short">Modo</string>
+    <string name="str_gamemode">Modo de Juego</string>
+    <string name="str_confirm_kick">¿Quieres kikear al jugador \"%1$s\"?</string>
+    <string name="str_confirm_ban">¿Kieres banear al jugador \"%1$s\"?</string>
+
+    <string-array name="strarr_gamemode">
+        <item>Superviviente</item>
+        <item>Creativo</item>
+        <item>Aventurero</item>
+    </string-array>
+
+    <string name="str_yes">Si</string>
+    <string name="str_no">No</string>
+    <string name="str_reason">Razón</string>
+    <string name="str_item">Ítem</string>
+    <string name="str_num">Cantidad</string>
+    <string name="str_select_give_item">Especifica la ID del ítem y la cantidad a dar.</string>
+    <string name="str_select">Seleccionar</string>
+    <string name="str_select_item">Seleccionar Ítem</string>
+    <string name="str_ok">OK</string>
+    <string name="str_input_item_id_or_name">Introduce el ID o el nombre del ítem</string>
+    <string name="str_ID">ID:</string>
+    <string name="str_no_data_found">No corresponde con un ítem.</string>
+    <string name="str_not_auth">No estás identificado.</string>
+    <string name="str_no_player">Jugador no encontrado.</string>
+    <string name="str_no_item">Ítem no encontrado.</string>
+    <string name="str_unknown_message">Respuesta no enviada.</string>
+    <string name="str_success">Hecho!</string>
+    <string name="str_exception">Ha ocurrido una excepción.\n%1$s</string>
+    <string name="str_auth_error">Fallo al identificar.</string>
+    <string name="str_not_recommended_server_continue">Estás intentando conectar con un servidor que utiliza una versión no recomendada.\n¿Quieres continuar?</string>
+    <string name="str_continue">Continuar</string>
+    <string name="str_disconnect">Desconectar</string>
+    <string name="str_player_image_url">URL imagen jugador</string>
+    <string name="str_player_image_url_desc" formatted="false">La URL de la skin del jugador.\n\"%Player%\" es reemplazado por el alias del jugador.</string>
+    <string name="str_directory">Directorio:</string>
+    <string name="str_save_and_close">Cerrar y guardar</string>
+    <string name="str_close_without_save">Cerrar sin guardar</string>
+    <string name="str_change_save_encoding">Cambiar codificación</string>
+    <string name="str_charset">Codificación</string>
+    <string name="str_confirm">Confirmar</string>
+    <string name="str_file_close_confirm_message">¿Quieres guardar el archivo?</string>
+
+    <string-array name="strarr_file_handle_directory">
+        <item>Renombrar</item>
+        <item>Borrar</item>
+    </string-array>
+    <string-array name="strarr_file_handle_file">
+        <item>Abrir</item>
+        <item>Abrir con la codificación seleccionada</item>
+        <item>Renombrar</item>
+        <item>Borrar</item>
+    </string-array>
+
+    <string name="str_input_new_name">Por favor escribe un nuevo nombre.</string>
+    <string name="str_rename">Renombrar</string>
+    <string name="str_delete">Borrar</string>
+    <string name="str_confirm_delete_file">¿Quieres borrar este archivo?</string>
+    <string name="str_confirm_delete_directory">¿Quieres borrar este directorio?</string>
+    <string name="str_failed">Fallo</string>
+    <string name="str_mkdir">Crear un directorio</string>
+    <string name="str_mkfile">Crear un archivo</string>
+    <string name="str_input_directory_name">Escribe el nombre del directorio.</string>
+    <string name="str_input_file_name">Escribe el nombre del archivo.</string>
+    <string name="str_create">Nuevo</string>
+    <string name="str_no_add_info">No hay información adicional.</string>
+    <string name="str_account_manager">Administrador de Cuentas</string>
+
+    <string-array name="strarr_account_manager_handle">
+        <item>Subir</item>
+        <item>Bajar</item>
+        <item>Borrar</item>
+    </string-array>
+
+    <string name="str_confirm_delete_account">¿Borrar esta cuenta?</string>
+    <string name="str_other">Otro</string>
+    <string name="str_about_this_app">A cerca de...</string>
+    <string name="str_dot">・</string>
+    <string name="str_mail">E-Mail:</string>
+    <string name="str_web">Web:</string>
+    <string name="str_copyright_desc">Esta app está registrada bajo la siguiente licencia.</string>
+    <string name="str_use_libs">A demás, utiliza los siguientes recursos y librerías externas.</string>
+    <string name="str_press_color_to_apply">Toca un color a aplicar</string>
+    <string name="str_dialog_color_picker">Selector de Color</string>
+    <string name="str_color_background">Color de Fondo</string>
+    <string name="str_color_font">Color del Texto</string>
+    <string name="str_desc_console_background_color">Selecciona el color de fondo de la consola.</string>
+    <string name="str_desc_console_font_color">Selecciona el color del texto de la consola.</string>
+    <string name="str_desc_console_font_size">Selecciona el tamaño de texto de la consola.</string>
+    <string name="str_desc_chat_background_color">Selecciona el color de fondo del chat.</string>
+    <string name="str_desc_chat_font_color">Selecciona el color del texto del chat.</string>
+    <string name="str_desc_chat_font_size">Selecciona el tamaño de texto del chat.</string>
+    <string name="str_dynmap">Dynmap</string>
+    <string name="str_log">Log</string>
+    <string name="str_save_log">Guardar log</string>
+    <string name="str_save_log_desc">Selecciona si quieres guardar un archivo con el log.</string>
+    <string name="str_copy_log_dir">Copiar la ruta del directorio log</string>
+    <string name="str_copied">Copiado</string>
+    <string name="str_cant_copy">No copiado</string>
+    <string name="str_refresh">Actualizar</string>
+    <string name="str_status">Estado:</string>
+    <string name="str_enabled">Activado</string>
+    <string name="str_disabled">Desactivado</string>
+    <string name="str_view">Información</string>
+    <string name="str_enable">Activar plugin</string>
+    <string name="str_disable">Desactivar plugin</string>
+    <string name="str_no_plugin">Plugin no encontrado.</string>
+    <string name="str_plugin_already_enabled">El plugin ya está activado.</string>
+    <string name="str_plugin_already_disabled">El plugin ya está desactivado.</string>
+    <string name="str_name">Nombre:</string>
+    <string name="str_version">Versión:</string>
+    <string name="str_author">Autor:</string>
+    <string name="str_commands">Comandos</string>
+    <string name="str_permissions">Permisos (nodos)</string>
+    <string name="str_alias">Alias:</string>
+    <string name="str_permission">Permisos:</string>
+    <string name="str_usage">Uso:</string>
+    <string name="str_description">Descripción:</string>
+    <string name="str_default">Predeterminado:</string>
+    <string name="str_children">Children:</string>
+    <string name="str_inherits">Heredados:</string>
+    <string name="str_access_denied">Acceso denegado</string>
+    <string name="str_auto_update">Auto-Actualizar</string>
+    <string name="str_auto_update_desc">Conectar al servidor automáticamente y comprobar los errores que pueden ocurrir.\nNecesario para el wiget.</string>
+    <string name="str_update_interval">Intervalo de actualización:</string>
+    <string name="str_minute">min</string>
+    <string name="str_edit">Editar</string>
+    <string name="str_save">Guardar</string>
+    <string name="str_notification">Notificación</string>
+    <string name="str_summons">Citas</string>
+    <string name="str_console_error">Error de Consola</string>
+    <string name="str_unknown">Desconocido</string>
+    <string name="str_exception">Excepción</string>
+    <string name="str_mark_as_read_all">Marcar todo como leído</string>
+    <string name="str_no_notification_unread">Notificaciones no leídas</string>
+
+    <plurals name="str_plurals_notification_unread">
+        <item quantity="one">%1$d notificación sin leer</item>
+        <item quantity="other">%1$d notificaciones sin leer</item>
+    </plurals>
+
+    <string name="str_sound">Sonido</string>
+    <string name="str_sound_desc">Seleccionar si quieres recibir notificaciones con sonido.</string>
+    <string name="str_vibrate">Vibración</string>
+    <string name="str_vibrate_desc">Seleccionar si quieres recibir notificaciones con vibración.</string>
+    <string name="str_light">Iluminación</string>
+    <string name="str_light_desc">Seleccionar si quieres recibir notificaciones con iluminación.</string>
+    <string name="str_select_account">Seleccionar cuenta</string>
+
+</resources>

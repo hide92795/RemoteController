@@ -129,6 +129,17 @@
                 <action android:name="hide92795.android.remotecontroller.NOTIFICATION_PUBLISH" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".widget.WidgetProvider"
+            android:label="@string/info_app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_server_info"
+                />
+        </receiver>
     </application>
 
 </manifest>

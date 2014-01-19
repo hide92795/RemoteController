@@ -17,6 +17,8 @@ import hide92795.android.remotecontroller.ui.dialog.NotRecommendedVersionServerD
 import hide92795.android.remotecontroller.util.LogUtil;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,11 +44,7 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 		LogUtil.d("LoginServerActivity#onCreate()");
 		setContentView(R.layout.activity_login_server);
 		setListener();
-		Bundle data = getIntent().getBundleExtra("DISCONNECT");
-		if (data != null) {
-			getIntent().removeExtra("DISCONNECT");
-			showDisconnectDialog(data);
-		}
+		checkIntent();
 		((Session) getApplication()).startAutoUpdateAlarmManagerOnlyNotStarted();
 	}
 
@@ -106,6 +104,21 @@ public class LoginServerActivity extends ActionBarActivity implements OnClickLis
 		default:
 		}
 		return ret;
+	}
+
+	private void checkIntent() {
+		Intent intent = getIntent();
+		if (intent.hasExtra("DISCONNECT")) {
+			Bundle data = intent.getBundleExtra("DISCONNECT");
+			intent.removeExtra("DISCONNECT");
+			showDisconnectDialog(data);
+		}
+		if (intent.hasExtra("NOTIFICATION")) {
+			int id = intent.getIntExtra("NOTIFICATION", 0);
+			intent.removeExtra("NOTIFICATION");
+			NotificationManager manager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
+			manager.cancel(id);
+		}
 	}
 
 	private void checkSavedConnection() {

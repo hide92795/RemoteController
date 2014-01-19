@@ -39,12 +39,23 @@ public class AutoUpdatePublishBroadcastReceiver extends BroadcastReceiver {
 		} else if (notification_unread_count.getCount() != 0) {
 			// has notification
 			createNotification((Session) context.getApplicationContext(), uuid, address, server_info, notification_unread_count);
+		} else {
+			// no notification
+			removeNotification((Session) context.getApplicationContext(), uuid);
 		}
+
+		// Widget
+	}
+
+	private void removeNotification(Session session, String uuid) {
+		NotificationManager manager = (NotificationManager) session.getSystemService(Service.NOTIFICATION_SERVICE);
+		manager.cancel(uuid.hashCode());
 	}
 
 	private void createNotificationError(Session session, String uuid, String address) {
 		Intent launch_app = new Intent(session, LoginServerActivity.class);
-		launch_app.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		launch_app.putExtra("NOTIFICATION", uuid.hashCode());
+		launch_app.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent pending_intent = PendingIntent.getActivity(session, 0, launch_app, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		String message = session.getString(R.string.str_error_on_server_data);
@@ -65,6 +76,7 @@ public class AutoUpdatePublishBroadcastReceiver extends BroadcastReceiver {
 
 	private void createNotification(Session session, String uuid, String address, ServerData server_info, NotificationUnreadCountData notification_unread_count) {
 		Intent launch_app = new Intent(session, LoginServerActivity.class);
+		launch_app.putExtra("NOTIFICATION", uuid.hashCode());
 		launch_app.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent pending_intent = PendingIntent.getActivity(session, 0, launch_app, PendingIntent.FLAG_UPDATE_CURRENT);
 
