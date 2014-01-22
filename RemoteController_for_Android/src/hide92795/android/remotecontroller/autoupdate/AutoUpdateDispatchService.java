@@ -24,8 +24,10 @@ public class AutoUpdateDispatchService extends IntentService {
 		LogUtil.d("AutoUpdateDispatchService#onHandleIntent()");
 		String uuid = intent.getStringExtra("UUID");
 		ConnectionData data = (ConnectionData) intent.getSerializableExtra("CONNECTION_DATA");
-		AutoUpdateConnection connection = new AutoUpdateConnection((Session) getApplication(), new ConnectionDataPair(uuid, data));
-		connection.start();
+		if (data != null) {
+			AutoUpdateConnection connection = new AutoUpdateConnection((Session) getApplication(), new ConnectionDataPair(uuid, data));
+			connection.start();
+		}
 	}
 
 	@Override

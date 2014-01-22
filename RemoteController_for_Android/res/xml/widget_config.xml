@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hide92795="http://schemas.android.com/apk/res/hide92795.android.remotecontroller" >
+
+    <PreferenceCategory android:title="@string/str_select_account" >
+        <ListPreference
+            android:key="@string/conf_key_widget_account"
+            android:title="@string/str_account" android:summary="@string/str_not_select"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/str_appearance" >
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/translucent_black"
+            android:key="@string/conf_key_widget_background_color"
+            android:summary="@string/str_desc_widget_background_color"
+            android:title="@string/str_color_background"
+            hide92795:alphaSlider="true"
+            hide92795:hexValue="true" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference
+            android:defaultValue="@color/opaque_white"
+            android:key="@string/conf_key_widget_font_color"
+            android:summary="@string/str_desc_widget_font_color"
+            android:title="@string/str_color_font"
+            hide92795:alphaSlider="true"
+            hide92795:hexValue="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

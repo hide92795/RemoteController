@@ -13,7 +13,7 @@ public class CommandServerInfo implements Command {
 	public synchronized void doCommand(RemoteController plugin, ClientConnection connection, int pid, String arg) {
 		try {
 			if (connection.isAuthorized()) {
-				String servername = plugin.getServer().getServerName();
+				String servername = plugin.getServer().getServerName().replaceAll("\r\n", "\n");
 				String port = String.valueOf(plugin.getServer().getPort());
 				String max = String.valueOf(plugin.getServer().getMaxPlayers());
 				String current = String.valueOf(plugin.getServer().getOnlinePlayers().length);

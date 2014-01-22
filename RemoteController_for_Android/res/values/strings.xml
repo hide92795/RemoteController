@@ -149,7 +149,7 @@
     <string name="str_copy_log_dir">Copy log directory path</string>
     <string name="str_copied">Copied</string>
     <string name="str_cant_copy">Could\'t copy</string>
-    <string name="str_refresh">Refres</string>
+    <string name="str_refresh">Refresh</string>
     <string name="str_status">Status:</string>
     <string name="str_enabled">Enabled</string>
     <string name="str_disabled">Disabled</string>
@@ -199,5 +199,18 @@
     <string name="str_light_desc">Choose whether to notify with light.</string>
     <string name="str_select_account">Select account</string>
     <string name="str_notification_widget">Notification:</string>
+    <string name="str_widget_config">Widget configuration</string>
+    <string name="str_desc_widget_background_color">Select widget background color.</string>
+    <string name="str_desc_widget_font_color">Select widget font color.</string>
+    <string name="str_appearance">Appearance</string>
+    <string name="str_select_account">Select account</string>
+    <string name="str_account">Account</string>
+    <string name="str_server_online">○</string>
+    <string name="str_server_offline">×</string>
+    <string name="str_not_available">n/a</string>
+    <string name="str_service_not_available">Service not available\nTap here to open configuration.</string>
+    <string name="str_waiting_for_first_reception">Waiting for the first reception\nTap here to refresh immediately.</string>
+    <string name="str_last_update">Updated:</string>
+    <string name="str_not_select">Not selected</string>
 
 </resources>

@@ -21,5 +21,6 @@
     <color name="item_background">#8B8B8B</color>
     <color name="color_enabled">#33CC33</color>
     <color name="translucent_black">#80000000</color>
+    <color name="opaque_white">#FFFFFFFF</color>
 
 </resources>

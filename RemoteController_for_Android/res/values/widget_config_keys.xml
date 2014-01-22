@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="conf_key_widget_account">conf_widget_account</string>
+    <string name="conf_key_widget_background_color">conf_widget_background_color</string>
+    <string name="conf_key_widget_font_color">conf_widget_font_color</string>
+
+</resources>

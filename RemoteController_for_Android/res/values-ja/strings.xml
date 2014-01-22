@@ -136,12 +136,12 @@
     <string name="str_press_color_to_apply">色をタップして決定</string>
     <string name="str_dialog_color_picker">色選択</string>
     <string name="str_color_background">背景色</string>
-    <string name="str_color_font">フォント色</string>
+    <string name="str_color_font">文字色</string>
     <string name="str_desc_console_background_color">コンソール画面の背景色を選択します。</string>
-    <string name="str_desc_console_font_color">コンソール画面のフォント色を選択します。</string>
+    <string name="str_desc_console_font_color">コンソール画面の文字色を選択します。</string>
     <string name="str_desc_console_font_size">コンソール画面のフォントサイズを選択します。</string>
     <string name="str_desc_chat_background_color">チャット画面の背景色を選択します。</string>
-    <string name="str_desc_chat_font_color">チャット画面のフォント色を選択します。</string>
+    <string name="str_desc_chat_font_color">チャット画面の文字色を選択します。</string>
     <string name="str_desc_chat_font_size">チャット画面のフォントサイズを選択します。</string>
     <string name="str_dynmap">Dynmap</string>
     <string name="str_log">ログ</string>
@@ -199,5 +199,18 @@
     <string name="str_light_desc">ライトでの通知を行うかを選択します。</string>
     <string name="str_select_account">アカウント選択</string>
     <string name="str_notification_widget">通知:</string>
+    <string name="str_widget_config">ウィジェット設定</string>
+    <string name="str_desc_widget_background_color">ウィジェットの背景色を選択します。</string>
+    <string name="str_desc_widget_font_color">ウィジェットの文字色を選択します。</string>
+    <string name="str_appearance">外観</string>
+    <string name="str_select_account">アカウント選択</string>
+    <string name="str_account">アカウント</string>
+    <string name="str_server_online">○</string>
+    <string name="str_server_offline">×</string>
+    <string name="str_not_available">N/A</string>
+    <string name="str_service_not_available">サービスが起動していません\nタップすると設定画面を表示します。</string>
+    <string name="str_waiting_for_first_reception">最初の受信の待機中\nタップするとすぐに更新します。</string>
+    <string name="str_last_update">更新:</string>
+    <string name="str_not_select">選択されていません</string>
 
 </resources>

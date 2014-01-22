@@ -4,6 +4,7 @@ import hide92795.android.remotecontroller.activity.LoginServerActivity;
 import hide92795.android.remotecontroller.autoupdate.AutoUpdateService;
 import hide92795.android.remotecontroller.config.AutoUpdateConfig;
 import hide92795.android.remotecontroller.config.ConnectionConfig;
+import hide92795.android.remotecontroller.config.WidgetConfig;
 import hide92795.android.remotecontroller.ui.adapter.ChatListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.ConsoleListAdapter;
 import hide92795.android.remotecontroller.ui.adapter.NotificationListAdapter;
@@ -13,6 +14,9 @@ import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
 import hide92795.android.remotecontroller.util.ConfigDefaults;
 import hide92795.android.remotecontroller.util.ConfigKeys;
 import hide92795.android.remotecontroller.util.LogUtil;
+import hide92795.android.remotecontroller.util.Utils;
+import hide92795.android.remotecontroller.widget.WidgetData;
+import hide92795.android.remotecontroller.widget.WidgetProvider;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,14 +24,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -42,8 +47,9 @@ import android.util.Log;
 public class Session extends Application {
 	public static AtomicBoolean debug;
 	// Config
-	private ConnectionConfig saved_connection;
-	private AutoUpdateConfig auto_update;
+	private ConnectionConfig config_saved_connection;
+	private AutoUpdateConfig config_auto_update;
+	private WidgetConfig config_widgets;
 	// Manager
 	private PlayerFaceManager face_manager;
 	private ServerIconManager server_icon_manager;
@@ -65,8 +71,9 @@ public class Session extends Application {
 		this.handler = new Handler();
 		this.face_manager = new PlayerFaceManager(this);
 		this.server_icon_manager = new ServerIconManager(this);
-		loadSavedConnection();
-		loadAutoUpdate();
+		loadSavedConnectionConfig();
+		loadAutoUpdateConfig();
+		loadWidgetsConfig();
 	}
 
 	@Override
@@ -90,36 +97,26 @@ public class Session extends Application {
 		}
 	}
 
-	private void loadAutoUpdate() {
+	private void loadAutoUpdateConfig() {
 		try {
-			FileInputStream fis = openFileInput("auto_update.v1.dat");
+			FileInputStream fis = openFileInput("config_auto_update.v1.dat");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.auto_update = (AutoUpdateConfig) ois.readObject();
+			this.config_auto_update = (AutoUpdateConfig) ois.readObject();
 		} catch (Exception e) {
-			createNewAutoUpdate();
+			createNewAutoUpdateConfig();
 		}
 	}
 
-	private void createNewAutoUpdate() {
-		this.auto_update = new AutoUpdateConfig();
-		saveAutoUpdate();
+	private void createNewAutoUpdateConfig() {
+		this.config_auto_update = new AutoUpdateConfig();
+		saveAutoUpdateConfig();
 	}
 
-	public void addAutoUpdate(String uuid) {
-		this.auto_update.getAutoUpdateList().add(uuid);
-		saveAutoUpdate();
-	}
-
-	public void removeAutoUpdate(String uuid) {
-		this.auto_update.getAutoUpdateList().remove(uuid);
-		saveAutoUpdate();
-	}
-
-	private void saveAutoUpdate() {
+	private void saveAutoUpdateConfig() {
 		try {
-			FileOutputStream fos = openFileOutput("auto_update.v1.dat", MODE_PRIVATE);
+			FileOutputStream fos = openFileOutput("config_auto_update.v1.dat", MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(auto_update);
+			oos.writeObject(config_auto_update);
 			oos.flush();
 			oos.close();
 		} catch (Exception e) {
@@ -127,57 +124,119 @@ public class Session extends Application {
 		}
 	}
 
-	private void loadSavedConnection() {
+	private void loadSavedConnectionConfig() {
 		try {
 			FileInputStream fis = openFileInput("connection.v2.dat");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.saved_connection = (ConnectionConfig) ois.readObject();
+			this.config_saved_connection = (ConnectionConfig) ois.readObject();
 		} catch (FileNotFoundException e) {
 			try {
 				FileInputStream fis = openFileInput("connection.dat");
-				this.saved_connection = ConnectionDataMigration.v1Tov2(fis);
-				saveConnection();
+				this.config_saved_connection = ConnectionDataMigration.v1Tov2(fis);
+				saveConnectionConfig();
 				fis.close();
 			} catch (Exception e1) {
-				createNewConnection();
+				createNewConnectionConfig();
 			}
 		} catch (OptionalDataException e) {
-			createNewConnection();
+			createNewConnectionConfig();
 		} catch (ClassNotFoundException e) {
-			createNewConnection();
+			createNewConnectionConfig();
 		} catch (IOException e) {
-			createNewConnection();
+			createNewConnectionConfig();
 		}
 	}
 
-	private void createNewConnection() {
-		this.saved_connection = new ConnectionConfig();
-		saveConnection();
+	private void createNewConnectionConfig() {
+		this.config_saved_connection = new ConnectionConfig();
+		saveConnectionConfig();
 	}
 
-	private void saveConnection() {
+	private void saveConnectionConfig() {
 		try {
 			FileOutputStream fos = openFileOutput("connection.v2.dat", MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(saved_connection);
+			oos.writeObject(config_saved_connection);
 			oos.flush();
 			oos.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void loadWidgetsConfig() {
+		try {
+			FileInputStream fis = openFileInput("widgets.v1.dat");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			this.config_widgets = (WidgetConfig) ois.readObject();
+			checkValidWidgets();
+		} catch (Exception e) {
+			createNewWidgetsConfig();
+		}
+	}
+
+	private void createNewWidgetsConfig() {
+		this.config_widgets = new WidgetConfig();
+		saveWidgetsConfig();
+	}
+
+	private void saveWidgetsConfig() {
+		checkValidWidgets();
+		try {
+			FileOutputStream fos = openFileOutput("widgets.v1.dat", MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(config_widgets);
+			oos.flush();
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void checkValidWidgets() {
+		ComponentName provider = new ComponentName(this, WidgetProvider.class);
+		AppWidgetManager manager = AppWidgetManager.getInstance(this);
+		int[] ids = manager.getAppWidgetIds(provider);
+		Arrays.sort(ids);
+		HashSet<Integer> saved_ids = new HashSet<Integer>(config_widgets.getWidgetDatas().keySet());
+		for (int saved_id : saved_ids) {
+			if (Arrays.binarySearch(ids, saved_id) < 0) {
+				removeWigdet(saved_id);
+			}
 		}
 	}
 
 	public void addSavedConnection(ConnectionData connection_data) {
 		String uuid = UUID.randomUUID().toString();
-		saved_connection.getIds().add(uuid);
-		saved_connection.getDatas().put(uuid, connection_data);
-		saveConnection();
+		config_saved_connection.getIds().add(uuid);
+		config_saved_connection.getDatas().put(uuid, connection_data);
+		saveConnectionConfig();
 	}
 
 	public void removeSavedConnection(int position) {
-		String uuid = saved_connection.getIds().remove(position);
-		saved_connection.getDatas().remove(uuid);
-		saveConnection();
+		String uuid = config_saved_connection.getIds().remove(position);
+		config_saved_connection.getDatas().remove(uuid);
+		saveConnectionConfig();
+	}
+
+	public void addAutoUpdate(String uuid) {
+		this.config_auto_update.getAutoUpdateList().add(uuid);
+		saveAutoUpdateConfig();
+	}
+
+	public void removeAutoUpdate(String uuid) {
+		this.config_auto_update.getAutoUpdateList().remove(uuid);
+		saveAutoUpdateConfig();
+	}
+
+	public void addWidget(int widget_id, WidgetData data) {
+		this.config_widgets.getWidgetDatas().put(widget_id, data);
+		saveWidgetsConfig();
+	}
+
+	public void removeWigdet(int widget_id) {
+		this.config_widgets.getWidgetDatas().remove(widget_id);
+		saveWidgetsConfig();
 	}
 
 	public synchronized void close(boolean moveActivity, final String reason) {
@@ -233,11 +292,15 @@ public class Session extends Application {
 	}
 
 	public ConnectionConfig getSavedConnection() {
-		return saved_connection;
+		return config_saved_connection;
 	}
 
 	public AutoUpdateConfig getAutoUpdate() {
-		return auto_update;
+		return config_auto_update;
+	}
+
+	public WidgetConfig getWidgets() {
+		return config_widgets;
 	}
 
 	public void showProgressDialog(FragmentActivity activity, boolean cancelable, OnCancelListener listener) {
@@ -294,7 +357,7 @@ public class Session extends Application {
 		PendingIntent pendingIntent = PendingIntent.getService(this, 92795, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager am = (AlarmManager) this.getSystemService(ALARM_SERVICE);
 
-		if (auto_update.getAutoUpdateList().size() == 0) {
+		if (config_auto_update.getAutoUpdateList().size() == 0) {
 			stopService(intent);
 			am.cancel(pendingIntent);
 		} else {
@@ -303,19 +366,8 @@ public class Session extends Application {
 	}
 
 	public void startAutoUpdateAlarmManagerOnlyNotStarted() {
-		if (!isServiceRunning()) {
+		if (!Utils.isServiceRunning(this, AutoUpdateService.class)) {
 			checkAutoUpdate();
 		}
-	}
-
-	private boolean isServiceRunning() {
-		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		List<RunningServiceInfo> runningService = am.getRunningServices(Integer.MAX_VALUE);
-		for (RunningServiceInfo i : runningService) {
-			if (i.service.getClassName().equals(AutoUpdateService.class.getName())) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

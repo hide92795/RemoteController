@@ -111,6 +111,15 @@
             android:label="@string/str_notification"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.WidgetConfigActivity"
+            android:label="@string/str_widget_config"
+            android:screenOrientation="portrait"
+            android:theme="@style/PreferenceTheme" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
         <service android:name=".autoupdate.AutoUpdateService" >
         </service>
@@ -131,14 +140,17 @@
         </receiver>
         <receiver
             android:name=".widget.WidgetProvider"
-            android:label="@string/info_app_name">
+            android:label="@string/info_app_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_server_info"
-                />
+                android:resource="@xml/widget_server_info" />
         </receiver>
     </application>
 

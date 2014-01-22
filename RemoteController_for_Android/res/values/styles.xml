@@ -2,19 +2,23 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.    -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
+    </style>
+
+     <!-- Preference category theme. -->
+    <style name="PreferenceCategory">
+        <item name="android:layout">@layout/pref_title_layout</item>
     </style>
 
     <!-- Preference theme. -->
     <style name="PreferenceTheme" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:preferenceCategoryStyle">@style/PreferenceCategory</item>
     </style>
 
     <!-- Application theme. -->
