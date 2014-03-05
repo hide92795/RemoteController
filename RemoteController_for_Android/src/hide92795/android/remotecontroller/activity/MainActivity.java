@@ -13,10 +13,7 @@ import hide92795.android.remotecontroller.ui.adapter.NotificationListAdapter.OnA
 import hide92795.android.remotecontroller.ui.dialog.DisconnectDialogFragment;
 import hide92795.android.remotecontroller.util.LogUtil;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -53,11 +50,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 	protected void onResume() {
 		super.onResume();
 		LogUtil.d("MainActivity#onResume()");
-		Bitmap map = ((Session) getApplication()).getServerIconManager().getServerIcon(
-				(String) ((Session) getApplication()).getSavedConnection().getDatas().entrySet().toArray(new java.util.Map.Entry[0])[0].getKey());
-
-		ActionBar bar = getSupportActionBar();
-		bar.setIcon(new BitmapDrawable(getResources(), map));
+		// Bitmap map = ((Session) getApplication()).getServerIconManager().getServerIcon(
+		// (String) ((Session) getApplication()).getSavedConnection().getDatas().entrySet().toArray(new java.util.Map.Entry[0])[0].getKey());
+		//
+		// ActionBar bar = getSupportActionBar();
+		// bar.setIcon(new BitmapDrawable(getResources(), map));
 		if (first_show) {
 			first_show = false;
 		} else {
