@@ -1,0 +1,15 @@
+name: RemoteController_BroadcastEvent
+main: org.bukkit.event.server.ServerBroadcastEvent
+version: 1.6.4_3
+description: RemoteController
+author: hide92795
+depend: [hide92795CoreLib]
+softdepend: [dynmap]
+
+commands:
+  remotecontroller:
+    permission: remotecontroller
+    aliases: [rc]
+  remotecontroller-user:
+    permission: remotecontroller.user
+    aliases: [rcu]
